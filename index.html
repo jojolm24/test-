@@ -1,329 +1,178 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Calculatrice Stylée</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Orbitron', Arial, sans-serif;
-    }
-    .calc-container {
-      background: rgba(32, 37, 49, 0.95);
-      border-radius: 24px;
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-      padding: 24px;
-      width: 340px;
-      max-width: 95vw;
-      border: 2px solid #00C9FF;
-    }
-    .calc-display {
-      background: #222;
-      color: #fff;
-      font-size: 2em;
-      padding: 16px;
-      border-radius: 12px;
-      margin-bottom: 18px;
-      text-align: right;
-      box-shadow: 0 4px 24px rgba(44, 62, 80, 0.12);
-      letter-spacing: 2px;
-      border: none;
-      width: 100%;
-    }
-    .calc-buttons {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-    button {
-      padding: 16px;
-      font-size: 1.2em;
-      border: none;
-      border-radius: 8px;
-      background: linear-gradient(125deg, #00C9FF 0%, #92FE9D 100%);
-      color: #222;
-      cursor: pointer;
-      box-shadow: 0 4px 18px rgba(44, 62, 80, 0.10);
-      transition: 0.18s;
-    }
-    button:active {
-      background: linear-gradient(125deg, #92FE9D 0%, #00C9FF 100%);
-      transform: scale(0.98);
-    }
-    .button-effacer {
-      background: linear-gradient(135deg, #ff4e50 0%, #f9d423 100%);
-      color: white;
-      font-weight: bold;
-    }
-    .button-egale {
-      background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
-      color: #fff;
-      font-weight: bold;
-      grid-column: span 2;
-    }
-  </style>
-</head>
-<body>
-  <div class="calc-container">
-    <input type="text" class="calc-display" id="display" readonly />
-    <div class="calc-buttons">
-      <button onclick="press('7')">7</button>
-      <button onclick="press('8')">8</button>
-      <button onclick="press('9')">9</button>
-      <button onclick="press('/')">÷</button>
-
-      <button onclick="press('4')">4</button>
-      <button onclick="press('5')">5</button>
-      <button onclick="press('6')">6</button>
-      <button onclick="press('*')">×</button>
-
-      <button onclick="press('1')">1</button>
-      <button onclick="press('2')">2</button>
-      <button onclick="press('3')">3</button>
-      <button onclick="press('-')">−<<!doctype html>
+<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Boutique de Bots — Demo</title>
+  <title>Discord Factory — Boutique de Bots</title>
   <style>
-    :root{ --bg:#0f1724; --card:#0b1220; --accent:#7c3aed; --muted:#94a3b8; --glass: rgba(255,255,255,0.03)}
-    *{box-sizing:border-box}
-    body{font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial; margin:0; background:linear-gradient(180deg,#071024 0%, #071730 60%); color:#e6eef8;}
-    .container{max-width:1100px;margin:28px auto;padding:20px}
-    header{display:flex;align-items:center;gap:16px}
-    h1{margin:0;font-size:1.6rem}
-    p.lead{margin:6px 0 0;color:var(--muted)}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0a0f1a;color:white}
+    header{padding:20px;text-align:center;background:#11172a;border-bottom:1px solid #1e293b}
+    h1{margin:0;font-size:2rem}
 
-    /* search & controls */
-    .controls{display:flex;gap:12px;margin:18px 0;flex-wrap:wrap}
-    .search{flex:1;display:flex}
-    .search input{flex:1;padding:10px 12px;border-radius:10px 0 0 10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit}
-    .search button{padding:10px 14px;border-radius:0 10px 10px 0;background:var(--accent);border:none;color:white;cursor:pointer}
-    .select, .cart-button{padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:var(--glass);color:inherit}
+    .container{max-width:1100px;margin:auto;padding:20px}
 
-    /* grid */
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 6px 18px rgba(2,6,23,0.6)}
-    .card img{width:100%;height:120px;object-fit:cover;border-radius:8px}
-    .card h3{margin:10px 0 6px;font-size:1.05rem}
-    .meta{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:0.9rem}
-    .price{font-weight:700;color:var(--accent)}
-    .card p{margin:8px 0 12px;color:var(--muted);font-size:0.95rem}
-    .card button{width:100%;padding:10px;border-radius:8px;border:none;background:var(--accent);color:white;cursor:pointer}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:20px}
+    .card{background:#11172a;padding:16px;border-radius:10px;border:1px solid #1e293b}
+    .card h3{margin-top:0}
+    .card button{width:100%;padding:10px;border:none;border-radius:8px;background:#4f46e5;color:white;cursor:pointer;margin-top:10px}
 
-    /* cart */
-    .cart-panel{position:fixed;right:18px;top:18px;background:var(--card);padding:12px;border-radius:12px;width:320px;box-shadow:0 10px 40px rgba(2,6,23,0.7);border:1px solid rgba(255,255,255,0.03)}
-    .cart-panel h4{margin:0 0 10px}
-    .cart-item{display:flex;gap:10px;align-items:center;margin-bottom:8px}
-    .cart-item .info{flex:1}
-    .badge{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:6px;font-size:0.85rem}
-    .checkout{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
-    .checkout button{padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:white;cursor:pointer}
+    #cartPanel{position:fixed;right:20px;top:20px;background:#11172a;padding:16px;border-radius:10px;border:1px solid #1e293b;width:300px}
 
-    /* modal */
-    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:flex;align-items:center;justify-content:center}
-    .modal{background:var(--card);padding:18px;border-radius:12px;width:420px;border:1px solid rgba(255,255,255,0.03)}
-    .modal h3{margin-top:0}
-    .field{margin:8px 0}
-    .field input, .field textarea{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
-
-    footer{margin:30px 0 60px;color:var(--muted);font-size:0.9rem}
-
-    @media (max-width:700px){.cart-panel{position:static;width:100%;margin-top:14px}}
+    /* ADMIN */
+    #adminLogin,#adminPanel{margin-top:40px;padding:20px;background:#11172a;border-radius:10px;border:1px solid #1e293b}
+    #adminLogin input,#adminPanel input,#adminPanel textarea{width:100%;padding:8px;margin-bottom:10px;border:none;border-radius:6px;background:#0d1320;color:white}
+    #adminLogin button,#adminPanel button{padding:10px 14px;background:#4f46e5;border:none;border-radius:6px;color:white;cursor:pointer}
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='44' height='44'><rect rx='10' width='44' height='44' fill='%237c3aed'/><text x='50%' y='55%' fill='white' font-family='Arial' font-size='20' text-anchor='middle' dominant-baseline='middle'>B</text></svg>" alt="logo" style="width:44px;height:44px;border-radius:10px">
-      <div>
-        <h1>Boutique de Bots</h1>
-        <p class="lead">Découvre, teste et achète des bots prêts à l'emploi pour ton serveur, site ou projet.</p>
-      </div>
-    </header>
+  <header>
+    <h1>Discord Factory — Boutique de Bots</h1>
+    <p>Ajoute des bots gratuits à ton serveur</p>
+  </header>
 
-    <div class="controls">
-      <div class="search">
-        <input id="search" placeholder="Rechercher un bot (ex: modération, musique, mini-jeu...)" />
-        <button id="searchBtn">Rechercher</button>
-      </div>
-      <select id="category" class="select">
-        <option value="all">Toutes catégories</option>
-        <option value="moderation">Modération</option>
-        <option value="music">Musique</option>
-        <option value="fun">Divertissement</option>
-        <option value="utility">Utilitaire</option>
-      </select>
-      <div class="cart-button badge" id="cartToggle">Panier (0)</div>
+  <div class="container">
+
+    <h2>Bots disponibles</h2>
+    <section id="catalog" class="grid"></section>
+
+    <aside id="cartPanel">
+      <h3>Panier (gratuit)</h3>
+      <div id="cartList"></div>
+      <button id="checkoutBtn">Télécharger les bots</button>
+    </aside>
+
+    <!-- LOGIN ADMIN -->
+    <div id="adminLogin" style="display:none;">
+      <h2>Connexion Admin</h2>
+      <input id="loginPass" type="password" placeholder="Mot de passe admin">
+      <button id="loginBtn">Se connecter</button>
     </div>
 
-    <main>
-      <section class="grid" id="catalog"></section>
+    <!-- PANEL ADMIN -->
+    <div id="adminPanel" style="display:none;">
+      <h2>Admin — Ajouter / Modifier un bot</h2>
+      <input id="botName" placeholder="Nom du bot">
+      <textarea id="botDesc" placeholder="Description du bot"></textarea>
+      <input id="botCategory" placeholder="Catégorie (modération, musique…)">
+      <input id="botLink" placeholder="Lien d'installation / invite du bot">
+      <button id="addBotBtn">Ajouter / Mettre à jour</button>
+    </div>
 
-      <aside class="cart-panel" id="cartPanel">
-        <h4>Ton panier</h4>
-        <div id="cartList"></div>
-        <div class="checkout">
-          <div class="badge" id="total">Total: 0 crédits</div>
-          <button id="checkoutBtn">Commander</button>
-        </div>
-      </aside>
-    </main>
-
-    <footer>
-      Prototype — Paiement simulé. Pour production, connecte une vraie passerelle (Stripe, PayPal...)
-    </footer>
   </div>
 
-  <!-- Modal: Détails / Checkout -->
-  <div id="modalRoot" style="display:none"></div>
+<script>
+  /* ------------------------------ */
+  /*        DONNÉES BOTS          */
+  /* ------------------------------ */
+  let bots = [
+    {id:1,name:"Modération+",desc:"Bot de modération complet.",cat:"modération",link:"#"},
+    {id:2,name:"MusicMaster",desc:"Bot musique premium.",cat:"musique",link:"#"},
+    {id:3,name:"FunZone",desc:"Mini-jeux et commandes fun.",cat:"fun",link:"#"}
+  ];
 
-  <script>
-    // Données de démonstration (tu peux remplacer par une requête fetch vers un backend)
-    const products = [
-      {id:1,name:'GuardianMod',category:'moderation',price:1200,desc:'Bot de modération avancé avec filtres, logs et anti-spam.',img:'https://picsum.photos/seed/g1/800/400'},
-      {id:2,name:'GrooveWave',category:'music',price:900,desc:'Lecteur musical avec playlists, queue et commandes vocales.',img:'https://picsum.photos/seed/m1/800/400'},
-      {id:3,name:'MiniGamesX',category:'fun',price:700,desc:'Pack de mini-jeux : quiz, roulette, tic-tac-toe.',img:'https://picsum.photos/seed/f1/800/400'},
-      {id:4,name:'HelperPlus',category:'utility',price:450,desc:'Rappels, sondages, prise de notes et gestion de rôles.',img:'https://picsum.photos/seed/u1/800/400'},
-      {id:5,name:'SafeGuard',category:'moderation',price:1500,desc:'Protection avancée avec modération automatique et backups.',img:'https://picsum.photos/seed/g2/800/400'}
-    ];
+  let cart = [];
 
-    // état
-    let state = { catalog: products.slice(), cart: [] };
+  /* ------------------------------ */
+  /*       AFFICHAGE BOUTIQUE       */
+  /* ------------------------------ */
+  function renderCatalog(){
+    const root = document.getElementById('catalog');
+    root.innerHTML = '';
+    bots.forEach(b=>{
+      const div = document.createElement('div');
+      div.className = 'card';
+      div.innerHTML = `<h3>${b.name}</h3><p>${b.desc}</p><small>${b.cat}</small><br><button onclick="addToCart(${b.id})">Ajouter au panier</button>`;
+      root.appendChild(div);
+    })
+  }
 
-    // util
-    const $ = id => document.getElementById(id);
+  function addToCart(id){
+    const b = bots.find(x=>x.id===id);
+    if(!cart.includes(b)) cart.push(b);
+    renderCart();
+  }
 
-    function renderCatalog(items){
-      const root = $('catalog'); root.innerHTML = '';
-      if(items.length===0){ root.innerHTML = '<p style="color:var(--muted)">Aucun bot trouvé.</p>'; return }
-      items.forEach(p=>{
-        const card = document.createElement('article'); card.className='card';
-        card.innerHTML = `
-          <img src="${p.img}" alt="${p.name}">
-          <h3>${p.name}</h3>
-          <div class="meta"><span class="badge">${p.category}</span><span class="price">${p.price} crédits</span></div>
-          <p>${p.desc}</p>
-          <button data-id="${p.id}">Ajouter au panier</button>
-        `;
-        root.appendChild(card);
-      });
+  function renderCart(){
+    const root = document.getElementById('cartList');
+    root.innerHTML = cart.length===0 ? '<p>Aucun bot ajouté</p>' : '';
+    cart.forEach(b=>{
+      const div = document.createElement('div');
+      div.innerHTML = `<strong>${b.name}</strong> <button onclick="removeBot(${b.id})">Retirer</button>`;
+      root.appendChild(div);
+    })
+  }
+
+  function removeBot(id){ cart = cart.filter(b=>b.id!==id); renderCart(); }
+
+  document.getElementById('checkoutBtn').onclick = ()=>{
+    if(cart.length===0) return alert("Aucun bot dans le panier.");
+    let list = cart.map(b=>`${b.name}: ${b.link}`).join("\n");
+    alert("Bots à installer :\n"+list);
+  };
+
+  /* ------------------------------ */
+  /*      SYSTÈME ADMIN OPTION 3    */
+  /* ------------------------------ */
+
+  // Si aucun mot de passe n'existe, on demande d'en créer un
+  if(!localStorage.getItem('adminPass')){
+    const newPass = prompt("Créer un mot de passe admin :");
+    if(newPass){ localStorage.setItem('adminPass',newPass); alert("Mot de passe admin créé !"); }
+    else alert("Aucun mot de passe créé — Admin désactivé.");
+  }
+
+  const adminPanel = document.getElementById('adminPanel');
+  const adminLogin = document.getElementById('adminLogin');
+
+  function showLogin(){ adminLogin.style.display='block'; }
+  function showAdmin(){ adminPanel.style.display='block'; adminLogin.style.display='none'; }
+
+  // Affiche la page login si mot de passe existe
+  showLogin();
+
+  document.getElementById('loginBtn').onclick = ()=>{
+    const typed = document.getElementById('loginPass').value;
+    const real = localStorage.getItem('adminPass');
+
+    if(typed === real){
+      alert("Connexion Admin réussie !");
+      showAdmin();
+    } else {
+      alert("Mot de passe incorrect.");
+    }
+  };
+
+  /* ------------------------------ */
+  /*      AJOUT / MODIF BOT         */
+  /* ------------------------------ */
+  document.getElementById('addBotBtn').onclick = ()=>{
+    const n = botName.value.trim();
+    const d = botDesc.value.trim();
+    const c = botCategory.value.trim();
+    const l = botLink.value.trim();
+
+    if(!n||!d||!c||!l) return alert("Remplis tous les champs.");
+
+    const exists = bots.find(b=>b.name.toLowerCase()===n.toLowerCase());
+
+    if(exists){
+      exists.desc = d;
+      exists.cat = c;
+      exists.link = l;
+      alert("Bot mis à jour !");
+    } else {
+      bots.push({id:Date.now(),name:n,desc:d,cat:c,link:l});
+      alert("Bot ajouté !");
     }
 
-    function updateCartUI(){
-      const list = $('cartList'); list.innerHTML='';
-      const cartCount = state.cart.reduce((s,i)=>s+i.qty,0);
-      $('cartToggle').textContent = `Panier (${cartCount})`;
-      if(state.cart.length===0){ list.innerHTML = '<p style="color:var(--muted)">Ton panier est vide.</p>'; $('total').textContent='Total: 0 crédits'; return }
-      state.cart.forEach(item=>{
-        const div = document.createElement('div'); div.className='cart-item';
-        div.innerHTML = `
-          <div style="width:44px;height:44px;border-radius:8px;overflow:hidden"><img src="${item.img}" style="width:100%;height:100%;object-fit:cover"></div>
-          <div class="info">
-            <div style="display:flex;justify-content:space-between;align-items:center"><strong>${item.name}</strong><small>${item.price}c</small></div>
-            <div style="display:flex;gap:8px;margin-top:6px;align-items:center">
-              <button data-action="dec" data-id="${item.id}" class="badge">-</button>
-              <div class="badge">Quantité: ${item.qty}</div>
-              <button data-action="inc" data-id="${item.id}" class="badge">+</button>
-              <button data-action="rm" data-id="${item.id}" class="badge">Suppr</button>
-            </div>
-          </div>
-        `;
-        list.appendChild(div);
-      });
-      const total = state.cart.reduce((s,i)=>s+i.price*i.qty,0);
-      $('total').textContent = `Total: ${total} crédits`;
-    }
+    renderCatalog();
+  }
 
-    // events
-    function addToCart(id){
-      const prod = products.find(p=>p.id==id); if(!prod) return;
-      const existing = state.cart.find(c=>c.id==id);
-      if(existing) existing.qty++;
-      else state.cart.push({...prod,qty:1});
-      updateCartUI();
-    }
+  renderCatalog();
+  renderCart();
+</script>
 
-    function changeQty(id,delta){
-      const item = state.cart.find(c=>c.id==id); if(!item) return;
-      item.qty += delta; if(item.qty<=0){ state.cart = state.cart.filter(c=>c.id!==id) }
-      updateCartUI();
-    }
-
-    // simple search / filter
-    function applyFilters(){
-      const q = $('search').value.trim().toLowerCase();
-      const cat = $('category').value;
-      let res = products.filter(p=> (cat==='all' ? true : p.category===cat) );
-      if(q) res = res.filter(p=> (p.name+ ' ' + p.desc + ' ' + p.category).toLowerCase().includes(q));
-      renderCatalog(res);
-    }
-
-    // modal helpers
-    function openModal(content){
-      const root = $('modalRoot'); root.innerHTML = `
-        <div class="modal-backdrop">
-          <div class="modal">${content}</div>
-        </div>
-      `; root.style.display='block';
-      root.querySelector('.modal-backdrop').addEventListener('click',(e)=>{ if(e.target.classList.contains('modal-backdrop')) closeModal() });
-    }
-    function closeModal(){ $('modalRoot').style.display='none'; $('modalRoot').innerHTML=''; }
-
-    function checkout(){
-      if(state.cart.length===0){ alert('Ton panier est vide.'); return }
-      const total = state.cart.reduce((s,i)=>s+i.price*i.qty,0);
-      const itemsHtml = state.cart.map(i=>`<li>${i.name} x${i.qty} — ${i.price*i.qty}c</li>`).join('');
-      openModal(`
-        <h3>Récapitulatif de commande</h3>
-        <p>Montant total: <strong>${total} crédits</strong></p>
-        <ul>${itemsHtml}</ul>
-        <div style="margin-top:10px" class="field"><input id="clientName" placeholder="Ton pseudo / nom"></div>
-        <div class="field"><textarea id="notes" placeholder="Information (ex: serveur, token d'invitation)"></textarea></div>
-        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
-          <button id="cancelBtn" class="badge">Annuler</button>
-          <button id="confirmBtn">Confirmer (Simulé)</button>
-        </div>
-      `);
-      setTimeout(()=>{
-        $('confirmBtn').addEventListener('click',()=>{
-          // ici tu enverrais la commande au serveur
-          alert('Commande confirmée — ceci est une simulation.');
-          state.cart = []; updateCartUI(); closeModal();
-        });
-        $('cancelBtn').addEventListener('click',()=>closeModal());
-      },50);
-    }
-
-    // init
-    document.addEventListener('DOMContentLoaded',()=>{
-      renderCatalog(products);
-      updateCartUI();
-
-      // délégation pour ajouter au panier
-      document.body.addEventListener('click',(e)=>{
-        if(e.target.tagName==='BUTTON' && e.target.dataset.id){ addToCart(Number(e.target.dataset.id)); }
-        if(e.target.dataset.action){ const id=Number(e.target.dataset.id); if(e.target.dataset.action==='inc') changeQty(id,1); if(e.target.dataset.action==='dec') changeQty(id,-1); if(e.target.dataset.action==='rm') changeQty(id,-999); }
-      });
-
-      $('searchBtn').addEventListener('click',applyFilters);
-      $('search').addEventListener('keydown',e=>{ if(e.key==='Enter') applyFilters(); });
-      $('category').addEventListener('change',applyFilters);
-      $('cartToggle').addEventListener('click',()=>{
-        const panel = $('cartPanel'); panel.style.display = panel.style.display==='none' || !panel.style.display ? 'block' : 'none';
-      });
-      $('checkoutBtn').addEventListener('click',checkout);
-
-      // small improvement: hide cart on small screens if empty
-      if(window.innerWidth<700) $('cartPanel').style.display='none';
-    });
-
-  </script>
 </body>
 </html>
+</html>
+

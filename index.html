@@ -5,24 +5,97 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Discord Factory — Boutique de Bots</title>
   <style>
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0a0f1a;color:white}
-    header{padding:20px;text-align:center;background:#11172a;border-bottom:1px solid #1e293b}
-    h1{margin:0;font-size:2rem}
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: #0d0f17;
+        color: #fff;
+    }
 
-    .container{max-width:1100px;margin:auto;padding:20px}
+    header {
+        background: #111525;
+        padding: 20px;
+        text-align: center;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
 
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:20px}
-    .card{background:#11172a;padding:16px;border-radius:10px;border:1px solid #1e293b}
-    .card h3{margin-top:0}
-    .card button{width:100%;padding:10px;border:none;border-radius:8px;background:#4f46e5;color:white;cursor:pointer;margin-top:10px}
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+    }
 
-    #cartPanel{position:fixed;right:20px;top:20px;background:#11172a;padding:16px;border-radius:10px;border:1px solid #1e293b;width:300px}
+    .bot-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
 
-    /* ADMIN */
-    #adminLogin,#adminPanel{margin-top:40px;padding:20px;background:#11172a;border-radius:10px;border:1px solid #1e293b}
-    #adminLogin input,#adminPanel input,#adminPanel textarea{width:100%;padding:8px;margin-bottom:10px;border:none;border-radius:6px;background:#0d1320;color:white}
-    #adminLogin button,#adminPanel button{padding:10px 14px;background:#4f46e5;border:none;border-radius:6px;color:white;cursor:pointer}
-  </style>
+    .bot-card {
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 18px;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        transition: 0.2s;
+    }
+
+    .bot-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    .bot-name {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .bot-desc {
+        font-size: 14px;
+        opacity: 0.85;
+        margin-bottom: 15px;
+    }
+
+    button {
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        background: #5865F2;
+        color: white;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        background: #4752C4;
+    }
+
+    #adminPanel {
+        margin-top: 40px;
+        background: rgba(255,255,255,0.05);
+        padding: 20px;
+        border-radius: 15px;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+        margin-bottom: 12px;
+        background: rgba(255,255,255,0.08);
+        color: white;
+    }
+
+</style>
 </head>
 <body>
   <header>
@@ -106,8 +179,10 @@
 
   document.getElementById('checkoutBtn').onclick = ()=>{
     if(cart.length===0) return alert("Aucun bot dans le panier.");
-    let list = cart.map(b=>`${b.name}: ${b.link}`).join("\n");
-    alert("Bots à installer :\n"+list);
+    let list = cart.map(b=>`${b.name}: ${b.link}`).join("
+");
+    alert("Bots à installer :
+"+list);
   };
 
   /* ------------------------------ */
@@ -174,5 +249,6 @@
 
 </body>
 </html>
-</html>
+
+
 

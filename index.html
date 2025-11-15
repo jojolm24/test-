@@ -3,235 +3,229 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arthur & Jojo - Site Officiel</title>
-
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.30.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.30.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.30.0/firebase-database-compat.js"></script>
-
+<title>Arthur & Jojo - YouTube</title>
 <style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(120deg,#111,#222,#111);
-    color: #fff;
-    cursor: url('https://cdn.iconscout.com/icon/free/png-256/magic-wand-107967.png'), auto;
-}
-header {
-    padding: 1rem;
-    text-align: center;
-    background: linear-gradient(90deg,#222,#444);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-}
-h1 { font-size: 2.5rem; }
-nav { 
-    display: flex; 
-    justify-content: flex-end; 
-    background:#222; 
-    padding:0.5rem 1rem;
-}
-nav button {
-    background: linear-gradient(135deg,#444,#666);
-    border:none;
-    color:#fff;
-    padding:0.6rem 1rem;
-    margin-left:0.5rem;
-    border-radius:10px;
-    cursor:pointer;
-    transition:0.3s;
-}
-nav button:hover { transform: scale(1.1); background: linear-gradient(135deg,#666,#888); }
+    /* ======================== */
+    /* Styles généraux */
+    /* ======================== */
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg,#0d0d0d,#1a1a1a); color:#fff; overflow-x:hidden; cursor: url('https://i.ibb.co/Xxsd0qR/cursor.png'), auto;}
+    a {color:#fff; text-decoration:none;}
+    button {cursor:pointer;}
+    h1,h2,h3 {font-weight:bold;}
+    ul {list-style:none;}
 
-.container { max-width:1200px; margin:2rem auto; padding:1rem; }
-section { margin-bottom:2rem; background:#1a1a1a; border-radius:10px; padding:1rem; box-shadow:0 0 10px rgba(0,0,0,0.5);}
-button.styled { background:linear-gradient(135deg,#555,#777); border:none; padding:0.8rem 1.2rem; border-radius:15px; cursor:pointer; color:#fff; margin-top:0.5rem; transition:0.3s; }
-button.styled:hover { transform:scale(1.05); background:linear-gradient(135deg,#777,#999); }
+    /* ======================== */
+    /* Header & Menu */
+    /* ======================== */
+    header {padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; background:linear-gradient(135deg,#111,#222);}
+    .logo {font-size:1.8rem; background: linear-gradient(90deg,#ff5f6d,#ffc371); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
+    nav {display:flex; gap:1rem;}
+    .menu-btn {background:#333; border:none; padding:0.5rem 1rem; border-radius:8px; transition:0.3s;}
+    .menu-btn:hover {background:#555;}
+    .dropdown {position:relative;}
+    .dropdown-content {display:none; position:absolute; right:0; background:#222; min-width:150px; border-radius:8px; overflow:hidden; margin-top:0.5rem; box-shadow:0 4px 10px rgba(0,0,0,0.5);}
+    .dropdown-content button {display:block; width:100%; background:none; border:none; padding:0.7rem 1rem; text-align:left; transition:0.2s;}
+    .dropdown-content button:hover {background:#444;}
+    .dropdown.show .dropdown-content {display:block;}
 
-.admin-panel {
-    display:none;
-    position:fixed;
-    top:5%; left:5%; right:5%; bottom:5%;
-    background:linear-gradient(135deg,#111,#333);
-    border:2px solid #444;
-    border-radius:15px;
-    overflow:auto;
-    padding:1rem;
-    z-index:1000;
-}
+    /* ======================== */
+    /* Sections */
+    /* ======================== */
+    section {padding:2rem; margin:1rem auto; max-width:1000px; border-radius:12px; background: linear-gradient(135deg,#1a1a1a,#111);}
+    h2 {margin-bottom:1rem; background: linear-gradient(90deg,#ff5f6d,#ffc371); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
 
-.tabs { display:flex; margin-bottom:1rem; }
-.tab { flex:1; text-align:center; padding:0.5rem; cursor:pointer; border-bottom:2px solid #444; transition:0.3s; }
-.tab.active { border-bottom:3px solid #ffcc00; font-weight:bold; }
+    /* ======================== */
+    /* Vidéos */
+    /* ======================== */
+    .video-list {display:grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap:1rem;}
+    .video-card {background:#222; padding:1rem; border-radius:10px; transition:0.3s;}
+    .video-card:hover {transform:translateY(-5px); box-shadow:0 0 20px rgba(255,255,255,0.2);}
+    .video-card iframe {width:100%; height:200px; border-radius:8px;}
 
-.tab-content { display:none; }
-.tab-content.active { display:block; }
+    /* ======================== */
+    /* Tickets */
+    /* ======================== */
+    #tickets {display:flex; flex-direction:column; gap:1rem;}
+    .ticket {background:#333; padding:1rem; border-radius:8px; position:relative;}
+    .ticket-header {display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;}
+    .ticket-header span {font-weight:bold;}
+    .ticket-body {max-height:150px; overflow-y:auto; background:#222; padding:0.5rem; border-radius:6px;}
+    .ticket-body p {margin-bottom:0.5rem;}
+    .ticket-input {display:flex; gap:0.5rem; margin-top:0.5rem;}
+    .ticket-input input {flex:1; padding:0.5rem; border-radius:6px; border:none; background:#1a1a1a; color:#fff;}
+    .ticket-input button {padding:0.5rem 1rem; border:none; border-radius:6px; background:linear-gradient(90deg,#ff5f6d,#ffc371); color:#000; font-weight:bold; transition:0.3s;}
+    .ticket-input button:hover {opacity:0.8;}
 
-.ticket { background:#222; padding:0.8rem; margin-bottom:0.5rem; border-radius:10px; }
-.ticket .messages { max-height:200px; overflow-y:auto; margin-top:0.5rem; }
-.ticket input { width:80%; padding:0.5rem; border-radius:5px; border:none; margin-right:0.5rem; }
-.ticket button { padding:0.5rem 1rem; border:none; border-radius:5px; cursor:pointer; background:#ffcc00; color:#000; }
+    /* ======================== */
+    /* Admin Panel */
+    /* ======================== */
+    #adminPanel {display:none; padding:1rem; background:#222; border-radius:12px; margin-top:1rem;}
+    #adminPanel h3 {margin-bottom:1rem;}
+    #adminPanel input, #adminPanel textarea {width:100%; margin-bottom:1rem; padding:0.7rem; border-radius:6px; border:none; background:#111; color:#fff;}
+    #adminPanel button {padding:0.7rem 1rem; border:none; border-radius:8px; background:linear-gradient(90deg,#ff5f6d,#ffc371); color:#000; font-weight:bold; transition:0.3s;}
+    #adminPanel button:hover {opacity:0.8;}
 
-.annonce { background:#333; padding:0.8rem; margin-bottom:0.5rem; border-radius:10px; }
-
-.dark-mode { background: linear-gradient(120deg,#111,#222,#111); color:#fff; }
-.light-mode { background: linear-gradient(120deg,#eee,#ccc,#eee); color:#000; }
+    /* ======================== */
+    /* Mode sombre/clair */
+    /* ======================== */
+    .theme-btn {position:fixed; bottom:20px; right:20px; padding:0.5rem 1rem; border:none; border-radius:10px; background:#ff5f6d; color:#000; font-weight:bold; z-index:999; transition:0.3s;}
+    .theme-btn:hover {opacity:0.8;}
 </style>
 </head>
 <body>
 
 <header>
-    <h1>Arthur & Jojo 🎬</h1>
+    <div class="logo">Arthur & Jojo</div>
+    <div class="dropdown">
+        <button class="menu-btn" onclick="toggleDropdown()">Se connecter</button>
+        <div class="dropdown-content">
+            <button onclick="googleLogin()">Utilisateur (Google)</button>
+            <button onclick="adminLogin()">Accès administratif</button>
+        </div>
+    </div>
 </header>
 
-<nav>
-    <button id="menuBtn">☰ Se connecter</button>
-</nav>
-
-<div class="container">
-
-    <section id="annonces-section">
-        <h2>📢 Annonces</h2>
-        <div id="annonces"></div>
-        <button class="styled" id="newAnnonceBtn">➕ Ajouter Annonce</button>
-    </section>
-
-    <section id="tickets-section">
-        <h2>🎫 Tickets</h2>
-        <div id="tickets"></div>
-        <button class="styled" id="newTicketBtn">➕ Ouvrir un Ticket</button>
-    </section>
-
-</div>
-
-<div class="admin-panel" id="adminPanel">
-    <div class="tabs">
-        <div class="tab active" data-tab="annonces">Annonces</div>
-        <div class="tab" data-tab="tickets">Tickets</div>
+<section id="videos">
+    <h2>📺 Nos vidéos</h2>
+    <div class="video-list" id="videoList">
+        <!-- Vidéos ajoutées depuis admin -->
     </div>
-    <div class="tab-content active" id="admin-annonces">
-        <h3>Gestion Annonces</h3>
-        <div id="adminAnnonces"></div>
-        <input type="text" id="annonceInput" placeholder="Nouvelle annonce...">
-        <button onclick="addAnnonce()">Ajouter</button>
+</section>
+
+<section id="ticketsSection">
+    <h2>🎫 Tickets / Discussions</h2>
+    <button onclick="openTicket()" style="padding:0.7rem 1rem; border:none; border-radius:8px; background:linear-gradient(90deg,#ff5f6d,#ffc371); font-weight:bold;">Ouvrir un ticket</button>
+    <div id="tickets">
+        <!-- Tickets créés -->
     </div>
-    <div class="tab-content" id="admin-tickets">
-        <h3>Gestion Tickets</h3>
-        <div id="adminTickets"></div>
+</section>
+
+<section id="adminPanel">
+    <h3>🔑 Panel Administratif</h3>
+    <input type="text" id="videoURL" placeholder="URL de la vidéo YouTube">
+    <textarea id="videoDesc" placeholder="Description de la vidéo"></textarea>
+    <button onclick="addVideo()">Ajouter Vidéo</button>
+
+    <textarea id="annonceText" placeholder="Nouvelle annonce"></textarea>
+    <button onclick="addAnnonce()">Ajouter Annonce</button>
+
+    <h4>📋 Tickets</h4>
+    <div id="adminTickets">
+        <!-- Tickets côté admin -->
     </div>
-    <button onclick="closeAdminPanel()" class="styled">❌ Fermer</button>
-</div>
+</section>
+
+<button class="theme-btn" onclick="toggleTheme()">Mode Sombre/Clair</button>
 
 <script>
-// ---------------- Firebase Setup ----------------
-const firebaseConfig = {
-    apiKey: "VOTRE_API_KEY",
-    authDomain: "VOTRE_PROJECT.firebaseapp.com",
-    databaseURL: "https://VOTRE_PROJECT.firebaseio.com",
-    projectId: "VOTRE_PROJECT",
-    storageBucket: "VOTRE_PROJECT.appspot.com",
-    messagingSenderId: "VOTRE_SENDER",
-    appId: "VOTRE_APPID"
-};
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.database();
+    /* ========== Menu ========== */
+    function toggleDropdown() {
+        document.querySelector('.dropdown').classList.toggle('show');
+    }
 
-// ---------------- Mode Admin ----------------
-let isAdmin = false;
-
-function openAdminPanel() { document.getElementById('adminPanel').style.display='block'; }
-function closeAdminPanel() { document.getElementById('adminPanel').style.display='none'; }
-
-// ---------------- Tabs Admin ----------------
-document.querySelectorAll('.tab').forEach(tab=>{
-    tab.addEventListener('click',()=>{
-        document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById('admin-'+tab.dataset.tab).classList.add('active');
-    });
-});
-
-// ---------------- Annonces ----------------
-function addAnnonce() {
-    if(!isAdmin) return alert('❌ Admin requis');
-    const value = document.getElementById('annonceInput').value;
-    if(!value) return;
-    const key = db.ref('annonces').push().key;
-    db.ref('annonces/'+key).set({ text:value });
-    document.getElementById('annonceInput').value='';
-}
-
-db.ref('annonces').on('value', snapshot=>{
-    const annonces = snapshot.val() || {};
-    document.getElementById('annonces').innerHTML='';
-    document.getElementById('adminAnnonces').innerHTML='';
-    for(let key in annonces){
-        let div = document.createElement('div');
-        div.className='annonce';
-        div.innerText=annonces[key].text;
-        document.getElementById('annonces').appendChild(div);
-
-        if(isAdmin){
-            let divAdmin = div.cloneNode(true);
-            let btnDel = document.createElement('button'); btnDel.innerText='❌'; btnDel.onclick=()=>db.ref('annonces/'+key).remove();
-            divAdmin.appendChild(btnDel);
-            document.getElementById('adminAnnonces').appendChild(divAdmin);
+    window.onclick = function(e) {
+        if(!e.target.matches('.menu-btn')) {
+            document.querySelector('.dropdown').classList.remove('show');
         }
     }
-});
 
-// ---------------- Tickets ----------------
-function newTicket() {
-    const uid = auth.currentUser.uid;
-    const key = db.ref('tickets').push().key;
-    db.ref('tickets/'+key).set({ user: uid, messages: {} });
-}
-
-document.getElementById('newTicketBtn').addEventListener('click', newTicket);
-
-db.ref('tickets').on('value', snapshot=>{
-    const tickets = snapshot.val()||{};
-    const ticketsDiv = document.getElementById('tickets');
-    ticketsDiv.innerHTML='';
-    const adminTicketsDiv = document.getElementById('adminTickets');
-    adminTicketsDiv.innerHTML='';
-    for(let key in tickets){
-        const t = tickets[key];
-        if(t.user===auth.currentUser?.uid || isAdmin){
-            let div = document.createElement('div'); div.className='ticket';
-            div.innerHTML=`<strong>Ticket ID: ${key}</strong><div class="messages"></div><input placeholder="Message..."><button>Envoyer</button>`;
-            const messagesDiv = div.querySelector('.messages');
-            for(let m in t.messages){ messagesDiv.innerHTML+=`<div>${t.messages[m].text}</div>`; }
-
-            const input = div.querySelector('input');
-            const btn = div.querySelector('button');
-            btn.onclick=()=>{
-                if(!input.value) return;
-                db.ref('tickets/'+key+'/messages').push({ text: input.value, from: auth.currentUser.displayName||'Utilisateur' });
-                input.value='';
-            };
-            ticketsDiv.appendChild(div);
-
-            if(isAdmin){ adminTicketsDiv.appendChild(div.cloneNode(true)); }
-        }
+    /* ========== Google Login (simulé) ========== */
+    function googleLogin() {
+        alert('✅ Connecté avec Google ! (simulation)');
     }
-});
 
-// ---------------- Connexion Google ----------------
-document.getElementById('menuBtn').addEventListener('click',()=>{
-    const choix = prompt("Tapez 'admin' pour accès admin ou 'user' pour connexion Google");
-    if(choix==='admin'){
-        const code = prompt("Entrez le code admin:");
-        if(code==='2516'){ isAdmin=true; openAdminPanel(); alert("✅ Accès admin activé"); }
-    } else if(choix==='user'){
-        const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider).then(result=>{
-            alert('✅ Connecté en tant que '+result.user.displayName);
+    /* ========== Admin Login ========== */
+    function adminLogin() {
+        const code = prompt('Entrez le code admin:');
+        if(code==='2516') {
+            document.getElementById('adminPanel').style.display='block';
+            alert('🔑 Accès administrateur activé !');
+        } else alert('❌ Code incorrect !');
+    }
+
+    /* ========== Videos ========== */
+    let videos = JSON.parse(localStorage.getItem('videos'))||[];
+
+    function displayVideos() {
+        const container = document.getElementById('videoList');
+        container.innerHTML='';
+        videos.forEach(v=>{
+            const div=document.createElement('div');
+            div.className='video-card';
+            div.innerHTML=`<iframe src="${v.url}" frameborder="0" allowfullscreen></iframe>
+                           <p>${v.desc}</p>`;
+            container.appendChild(div);
         });
     }
-});
+
+    function addVideo() {
+        const url=document.getElementById('videoURL').value.trim();
+        const desc=document.getElementById('videoDesc').value.trim();
+        if(url){videos.push({url,desc}); localStorage.setItem('videos',JSON.stringify(videos)); displayVideos();
+        document.getElementById('videoURL').value=''; document.getElementById('videoDesc').value='';}
+    }
+
+    displayVideos();
+
+    /* ========== Tickets ========== */
+    let tickets = JSON.parse(localStorage.getItem('tickets'))||[];
+
+    function displayTickets() {
+        const container = document.getElementById('tickets');
+        const adminContainer = document.getElementById('adminTickets');
+        container.innerHTML=''; adminContainer.innerHTML='';
+        tickets.forEach((t,i)=>{
+            // Utilisateur
+            const div = document.createElement('div');
+            div.className='ticket';
+            div.innerHTML=`<div class="ticket-header"><span>Ticket #${i+1}</span></div>
+                <div class="ticket-body">${t.messages.map(m=>`<p>${m}</p>`).join('')}</div>
+                <div class="ticket-input"><input type="text" placeholder="Répondre..." id="ticketInput${i}">
+                <button onclick="replyTicket(${i},false)">Envoyer</button></div>`;
+            container.appendChild(div);
+            // Admin
+            const adminDiv = document.createElement('div');
+            adminDiv.className='ticket';
+            adminDiv.innerHTML=`<div class="ticket-header"><span>Ticket #${i}</span></div>
+                <div class="ticket-body">${t.messages.map(m=>`<p>${m}</p>`).join('')}</div>
+                <div class="ticket-input"><input type="text" placeholder="Répondre..." id="adminTicketInput${i}">
+                <button onclick="replyTicket(${i},true)">Envoyer</button></div>`;
+            adminContainer.appendChild(adminDiv);
+        });
+    }
+
+    function openTicket() {
+        tickets.push({messages:['Ticket ouvert 🎫']});
+        localStorage.setItem('tickets',JSON.stringify(tickets));
+        displayTickets();
+    }
+
+    function replyTicket(index,isAdmin){
+        const input=document.getElementById(isAdmin?`adminTicketInput${index}`:`ticketInput${index}`);
+        const val=input.value.trim();
+        if(val){tickets[index].messages.push((isAdmin?'Staff: ':'Vous: ')+val); localStorage.setItem('tickets',JSON.stringify(tickets)); displayTickets(); input.value='';}
+    }
+
+    displayTickets();
+
+    /* ========== Annonces ========== */
+    let annonces = JSON.parse(localStorage.getItem('annonces'))||[];
+    function addAnnonce() {
+        const text=document.getElementById('annonceText').value.trim();
+        if(text){annonces.push(text); localStorage.setItem('annonces',JSON.stringify(annonces)); alert('Annonce ajoutée !'); document.getElementById('annonceText').value='';}
+    }
+
+    /* ========== Thème sombre/clair ========== */
+    function toggleTheme() {
+        if(document.body.style.background.includes('#0d0d0d')){
+            document.body.style.background='linear-gradient(135deg,#fff,#ccc)'; document.body.style.color='#000';
+        } else {
+            document.body.style.background='linear-gradient(135deg,#0d0d0d,#1a1a1a)'; document.body.style.color='#fff';
+        }
+    }
 </script>
+
 </body>
 </html>
+

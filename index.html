@@ -1,328 +1,282 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arthur & Jojo</title>
-<style>
-  /* --- Style Global --- */
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #1b1b1b, #111);
-    color: #fff;
-    overflow-x: hidden;
-  }
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background: #111;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.7);
-  }
-  .logo { font-size: 1.5rem; font-weight: bold; color: #ff5f6d; }
-  nav { position: relative; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arthur & Jojo - Site</title>
+  <script src="https://www.gstatic.com/firebasejs/9.30.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.30.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.30.0/firebase-database-compat.js"></script>
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg,#111,#222); color:#fff; }
+    header { display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; background:#111; box-shadow:0 2px 10px rgba(0,0,0,0.7); }
+    .logo { font-size:1.8rem; color:#ff5f6d; }
+    nav { position:relative; }
+    .menu-btn { background: linear-gradient(90deg,#444,#222); border:none; padding:0.5rem 1rem; border-radius:8px; cursor:pointer; transition:0.3s; }
+    .menu-btn:hover { background: linear-gradient(90deg,#555,#333); }
+    .dropdown { position:absolute; right:0; top:2.8rem; display:none; flex-direction:column; background:#222; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.7); overflow:hidden; }
+    .dropdown.show { display:flex; }
+    .login-btn { padding:0.8rem 1.2rem; background:#333; border:none; color:#fff; text-align:left; cursor:pointer; transition:0.3s; }
+    .login-btn:hover { background: linear-gradient(90deg,#ff5f6d,#ffc371); color:#000; }
 
-  /* Menu connexion */
-  .menu-btn {
-    background: linear-gradient(90deg,#444,#222);
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius:10px;
-    font-size:1rem;
-    color:#fff;
-    cursor:pointer;
-    box-shadow:0 4px 10px rgba(0,0,0,0.5);
-    transition:0.3s;
-  }
-  .menu-btn:hover { background: linear-gradient(90deg,#555,#333); }
+    .container { max-width:1000px; margin:2rem auto; padding:0 1rem; }
+    section { margin-bottom:2rem; background:#1a1a1a; padding:1rem; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.7); }
+    h2 { margin-bottom:1rem; color:#ff5f6d; }
 
-  .dropdown { 
-    position:absolute; 
-    right:0; top:3rem; 
-    display:none; 
-    flex-direction: column; 
-    background:#222; 
-    border-radius:10px; 
-    box-shadow:0 4px 10px rgba(0,0,0,0.7); 
-    overflow:hidden;
-  }
-  .dropdown.show { display:flex; }
-  .login-btn {
-    padding:0.8rem 1.2rem;
-    border:none;
-    background:#333;
-    color:#fff;
-    font-weight:bold;
-    text-align:left;
-    cursor:pointer;
-    transition:0.3s;
-  }
-  .login-btn:hover { background: linear-gradient(90deg,#ff5f6d,#ffc371); color:#000; }
+    .ticket-btn { background: linear-gradient(90deg,#ff5f6d,#ffc371); color:#000; padding:0.8rem 1.5rem; border:none; border-radius:12px; font-size:1.1rem; cursor:pointer; box-shadow:0 4px 15px rgba(255,193,113,0.6); transition:0.3s; }
+    .ticket-btn:hover { transform: translateY(-3px); box-shadow:0 6px 20px rgba(255,193,113,0.8); }
 
-  /* Container principal */
-  .container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 2rem;
-  }
-  section {
-    margin-bottom: 2rem;
-    background: #1c1c1c;
-    padding: 1.5rem;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.7);
-  }
+    .video-list { display:flex; flex-direction:column; gap:1rem; }
+    .video-card iframe { width:100%; height:300px; border-radius:8px; border:none; }
 
-  h2 { margin-bottom:1rem; color: #ff5f6d; }
+    .annonce { background:#333; padding:0.8rem 1rem; border-radius:8px; display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; }
+    .delete-btn { background:#ff5f6d; border:none; padding:0.2rem 0.5rem; border-radius:5px; cursor:pointer; }
 
-  /* Bouton ticket */
-  .ticket-btn {
-    background: linear-gradient(90deg,#ff5f6d,#ffc371);
-    color:#000;
-    font-weight:bold;
-    padding:0.8rem 1.5rem;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    font-size:1.2rem;
-    box-shadow:0 4px 15px rgba(255,193,113,0.6);
-    transition:0.3s;
-    margin-bottom:1rem;
-  }
-  .ticket-btn:hover { transform: translateY(-3px); box-shadow:0 6px 20px rgba(255,193,113,0.8); }
+    #adminPanel { display:none; background:#222; padding:1rem; border-radius:12px; box-shadow:0 0 15px rgba(0,0,0,0.8); }
+    #adminPanel input, #adminPanel textarea { width:100%; padding:0.6rem; margin-bottom:0.6rem; border:none; border-radius:6px; background:#111; color:#fff; }
+    #adminPanel button { padding:0.6rem 1rem; border:none; border-radius:8px; cursor:pointer; background: linear-gradient(90deg,#ff5f6d,#ffc371); color:#000; margin-right:0.5rem; transition:0.3s; }
+    #adminPanel button:hover { opacity:0.9; }
 
-  /* Vignettes vidéo */
-  .video-list iframe {
-    width: 100%;
-    max-width: 600px;
-    height: 340px;
-    margin-bottom: 1rem;
-    border-radius: 10px;
-    border: none;
-  }
+    .ticket-discussion { background:#333; padding:0.8rem; border-radius:10px; margin-bottom:1rem; }
+    .ticket-message { margin-bottom:0.5rem; }
+    .ticket-message span { font-weight:bold; }
 
-  /* Annonces */
-  .annonce {
-    background: #333;
-    padding: 0.8rem 1rem;
-    margin-bottom: 0.5rem;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .delete-btn {
-    background: #ff5f6d;
-    border: none;
-    padding: 0.2rem 0.5rem;
-    border-radius:5px;
-    cursor:pointer;
-  }
-
-  /* Panel Admin */
-  #adminPanel {
-    background: #222;
-    padding: 1rem;
-    border-radius:15px;
-    display:none;
-  }
-  #adminPanel input, #adminPanel textarea {
-    width: 100%;
-    padding:0.5rem;
-    margin-bottom:0.5rem;
-    border-radius:5px;
-    border:none;
-  }
-  #adminPanel button {
-    padding:0.5rem 1rem;
-    border-radius:8px;
-    border:none;
-    cursor:pointer;
-    margin-right:0.5rem;
-  }
-
-  /* Tickets discussion */
-  .ticket-discussion {
-    background:#333;
-    padding:1rem;
-    border-radius:10px;
-    max-height:300px;
-    overflow-y:auto;
-    margin-top:0.5rem;
-  }
-  .ticket-message { margin-bottom:0.5rem; }
-  .ticket-message span { font-weight:bold; }
-
-  /* Footer */
-  footer { text-align:center; margin:2rem 0; font-size:0.9rem; color:#aaa; }
-</style>
+    footer { text-align:center; margin-top:2rem; color:#aaa; }
+  </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">Arthur & Jojo ❤</div>
+  <div class="logo">Arthur & Jojo ❤️</div>
   <nav>
     <button class="menu-btn" onclick="toggleMenu()">☰ Se connecter</button>
     <div class="dropdown" id="menuDropdown">
-      <button class="login-btn" onclick="loginUser()">
-        <span>👤 Utilisateur</span>
-      </button>
-      <button class="login-btn" onclick="loginAdmin()">
-        <span>🛡️ Accès Administratif</span>
-      </button>
+      <button class="login-btn" onclick="loginUser()">👤 Utilisateur</button>
+      <button class="login-btn" onclick="loginAdmin()">🛡️ Admin</button>
     </div>
   </nav>
 </header>
 
 <div class="container">
-
-  <!-- Vidéos -->
   <section id="videosSection">
     <h2>🎥 Vidéos</h2>
-    <div class="video-list">
-      <iframe src="https://www.youtube.com/embed/UCUk7-ajL9QIou0-klV9EeGQ" allowfullscreen></iframe>
-    </div>
+    <div class="video-list" id="videoList"></div>
   </section>
 
-  <!-- Annonces -->
   <section id="annoncesSection">
     <h2>📢 Annonces</h2>
     <div id="annoncesList"></div>
   </section>
 
-  <!-- Tickets -->
   <section id="ticketsSection">
     <h2>🎫 Tickets</h2>
     <button class="ticket-btn" onclick="openTicket()">➕ Ouvrir un ticket</button>
     <div id="tickets"></div>
   </section>
 
-  <!-- Admin Panel -->
   <section id="adminPanel">
-    <h2>🛠️ Panel Admin</h2>
-    <input type="text" id="annonceInput" placeholder="Nouvelle annonce">
-    <button onclick="addAnnonce()">Ajouter annonce</button>
-    <h3>Tickets</h3>
+    <h2>🛠️ Admin Panel</h2>
+    <h3>Vidéos</h3>
+    <input type="text" id="videoUrl" placeholder="URL YouTube embed">
+    <textarea id="videoDesc" placeholder="Description"></textarea>
+    <button onclick="adminAddVideo()">Ajouter Vidéo</button>
+
+    <h3>Annonces</h3>
+    <textarea id="annonceText" placeholder="Nouvelle annonce"></textarea>
+    <button onclick="adminAddAnnonce()">Ajouter Annonce</button>
+
+    <h3>Tickets (admin)</h3>
     <div id="adminTickets"></div>
   </section>
-
 </div>
 
-<footer>Codé par Jojo fait avec le ❤</footer>
+<footer>Codé par Jojo fait avec le ❤️</footer>
 
 <script>
-/* --- Connexion menu --- */
-function toggleMenu() {
-  document.getElementById('menuDropdown').classList.toggle('show');
-}
+  // --- Firebase init ---
+  const firebaseConfig = {
+    apiKey: "VOTRE_API_KEY",
+    authDomain: "VOTRE_PROJET.firebaseapp.com",
+    databaseURL: "https://VOTRE_PROJET.firebaseio.com",
+    projectId: "VOTRE_PROJET",
+    storageBucket: "VOTRE_PROJET.appspot.com",
+    messagingSenderId: "VOTRE_SENDER_ID",
+    appId: "VOTRE_APP_ID"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.database();
 
-/* --- Simulation stockage persistant (localStorage) --- */
-let annonces = JSON.parse(localStorage.getItem('annonces')||'[]');
-let tickets = JSON.parse(localStorage.getItem('tickets')||'[]');
-let ticketIdCounter = Number(localStorage.getItem('ticketCounter')||0);
+  let currentUser = null;
+  let isAdmin = false;
 
-function renderAnnonces() {
-  const list = document.getElementById('annoncesList');
-  list.innerHTML = '';
-  annonces.forEach((annonce, i) => {
-    const div = document.createElement('div');
-    div.className = 'annonce';
-    div.innerHTML = `<span>${annonce}</span> <button class="delete-btn" onclick="deleteAnnonce(${i})">❌</button>`;
-    list.appendChild(div);
-  });
-}
-
-function deleteAnnonce(i) {
-  annonces.splice(i,1);
-  localStorage.setItem('annonces',JSON.stringify(annonces));
-  renderAnnonces();
-}
-
-function addAnnonce() {
-  const val = document.getElementById('annonceInput').value.trim();
-  if(val) {
-    annonces.push(val);
-    localStorage.setItem('annonces',JSON.stringify(annonces));
-    document.getElementById('annonceInput').value='';
-    renderAnnonces();
+  // --- Menu Connexion ---
+  function toggleMenu() {
+    document.getElementById('menuDropdown').classList.toggle('show');
   }
-}
+  window.onclick = e => {
+    if (!e.target.matches('.menu-btn')) {
+      document.getElementById('menuDropdown').classList.remove('show');
+    }
+  };
 
-/* --- Tickets --- */
-function openTicket() {
-  const name = prompt('Nom pour le ticket ?');
-  if(!name) return;
-  const id = ticketIdCounter++;
-  const ticket = {id, name, messages:[]};
-  tickets.push(ticket);
-  localStorage.setItem('tickets',JSON.stringify(tickets));
-  localStorage.setItem('ticketCounter', ticketIdCounter);
-  renderTickets();
-}
-
-function renderTickets() {
-  const div = document.getElementById('tickets');
-  div.innerHTML = '';
-  tickets.forEach(ticket => {
-    const tDiv = document.createElement('div');
-    tDiv.className = 'ticket-discussion';
-    tDiv.innerHTML = `<div class="ticket-message"><span>${ticket.name}:</span> Ticket ouvert !</div>
-      <input type="text" placeholder="Envoyer message..." onkeydown="if(event.key==='Enter') sendMessage(${ticket.id},this)">`;
-    div.appendChild(tDiv);
-  });
-}
-
-function sendMessage(id,input) {
-  const ticket = tickets.find(t=>t.id===id);
-  if(ticket && input.value.trim()!=='') {
-    ticket.messages.push({from:'Utilisateur', text: input.value});
-    input.value='';
-    localStorage.setItem('tickets',JSON.stringify(tickets));
-    renderTickets();
+  // --- Auth Google Utilisateur ---
+  function loginUser(){
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider)
+      .then(result => {
+        currentUser = result.user;
+        console.log("Connecté : ", currentUser);
+        loadAll();
+      })
+      .catch(e => { console.error(e); alert("Erreur login Google"); });
   }
-}
 
-/* --- Admin panel --- */
-function loginAdmin() {
-  const code = prompt('Code admin:');
-  if(code==='2516') {
-    document.getElementById('adminPanel').style.display='block';
-    renderAdminTickets();
-  } else alert('Code incorrect');
-}
+  // --- Login Admin (via code) ---
+  function loginAdmin(){
+    const code = prompt("Entrez le code admin :");
+    if(code === "2516") {
+      isAdmin = true;
+      document.getElementById('adminPanel').style.display = "block";
+      loadAll();
+      alert("Accès administrateur activé !");
+    } else {
+      alert("Code incorrect.");
+    }
+  }
 
-function loginUser() {
-  alert('Connexion Google non implémentée encore 😅');
-}
+  // --- VIDÉOS ---
+  function adminAddVideo(){
+    if(!isAdmin) return alert("Accès admin requis");
+    const url = document.getElementById('videoUrl').value;
+    const desc = document.getElementById('videoDesc').value;
+    const key = db.ref('videos').push().key;
+    db.ref('videos/' + key).set({ url, desc });
+    document.getElementById('videoUrl').value = "";
+    document.getElementById('videoDesc').value = "";
+  }
 
-function renderAdminTickets() {
-  const div = document.getElementById('adminTickets');
-  div.innerHTML='';
-  tickets.forEach(ticket => {
-    const tDiv = document.createElement('div');
-    tDiv.className='ticket-discussion';
-    tDiv.innerHTML=`<h4>${ticket.name}</h4>`;
-    ticket.messages.forEach(msg=>{
-      tDiv.innerHTML+=`<div class="ticket-message"><span>${msg.from}:</span> ${msg.text}</div>`;
+  function renderVideos(videos){
+    const list = document.getElementById('videoList');
+    list.innerHTML = "";
+    for(const key in videos){
+      const v = videos[key];
+      const div = document.createElement('div');
+      div.className = "video-card";
+      div.innerHTML = `<iframe src="${v.url}" allowfullscreen></iframe>
+                       <p>${v.desc || ""}</p>
+                       ${isAdmin ? `<button onclick="deleteVideo('${key}')">Supprimer</button>` : ""}`;
+      list.appendChild(div);
+    }
+  }
+
+  function deleteVideo(key){
+    if(!isAdmin) return;
+    db.ref('videos/' + key).remove();
+  }
+
+  db.ref('videos').on('value', snapshot => {
+    renderVideos(snapshot.val() || {});
+  });
+
+  // --- ANNONCES ---
+  function adminAddAnnonce(){
+    if(!isAdmin) return alert("Accès admin requis");
+    const text = document.getElementById('annonceText').value;
+    const key = db.ref('annonces').push().key;
+    db.ref('annonces/' + key).set({ text });
+    document.getElementById('annonceText').value = "";
+  }
+
+  function renderAnnonces(annonces){
+    const list = document.getElementById('annoncesList');
+    list.innerHTML = "";
+    for(const key in annonces){
+      const a = annonces[key];
+      const div = document.createElement('div');
+      div.className = "annonce";
+      div.innerHTML = `<span>${a.text}</span>` +
+        (isAdmin ? `<button class="delete-btn" onclick="deleteAnnonce('${key}')">❌</button>` : "");
+      list.appendChild(div);
+    }
+  }
+
+  function deleteAnnonce(key){
+    if(!isAdmin) return;
+    db.ref('annonces/' + key).remove();
+  }
+
+  db.ref('annonces').on('value', snapshot => {
+    renderAnnonces(snapshot.val() || {});
+  });
+
+  // --- TICKETS ---
+  function openTicket(){
+    if(!currentUser) { alert("Connectez-vous d’abord !"); return; }
+    const key = db.ref('tickets').push().key;
+    db.ref('tickets/' + key).set({ user: currentUser.uid, messages: {} });
+  }
+
+  function renderTickets(tickets){
+    const userDiv = document.getElementById('tickets');
+    const adminDiv = document.getElementById('adminTickets');
+    userDiv.innerHTML = "";
+    adminDiv.innerHTML = "";
+
+    for(const key in tickets){
+      const t = tickets[key];
+      if(currentUser && (t.user === currentUser.uid || isAdmin)){
+        const divUser = document.createElement('div');
+        divUser.className = "ticket-discussion";
+        let htmlUser = `<h4>Ticket ${key}</h4>`;
+        for(const mkey in t.messages){
+          const m = t.messages[mkey];
+          htmlUser += `<div class="ticket-message"><span>${m.from}:</span> ${m.text} ${isAdmin ? `<button onclick="deleteMessage('${key}','${mkey}')">🗑️</button>` : ""}</div>`;
+        }
+        htmlUser += `<input type="text" placeholder="Message..." id="inp-${key}"/><button onclick="sendMessage('${key}')">Envoyer</button>`;
+        divUser.innerHTML = htmlUser;
+        userDiv.appendChild(divUser);
+
+        if(isAdmin){
+          const divAdmin = divUser.cloneNode(true);
+          adminDiv.appendChild(divAdmin);
+        }
+      }
+    }
+  }
+
+  function sendMessage(ticketKey){
+    const inp = document.getElementById('inp-' + ticketKey);
+    const text = inp.value.trim();
+    if(!text) return;
+    const msgKey = db.ref('tickets/' + ticketKey + '/messages').push().key;
+    db.ref('tickets/' + ticketKey + '/messages/' + msgKey).set({
+      text,
+      from: isAdmin ? "Admin" : (currentUser.displayName || "User")
     });
-    const input = document.createElement('input');
-    input.placeholder="Répondre...";
-    input.onkeydown=function(e){if(e.key==='Enter'){ticket.messages.push({from:'Admin', text:this.value}); localStorage.setItem('tickets',JSON.stringify(tickets)); renderAdminTickets();}};
-    tDiv.appendChild(input);
-    div.appendChild(tDiv);
+    inp.value = "";
+  }
+
+  function deleteMessage(ticketKey, msgKey){
+    if(!isAdmin) return;
+    db.ref('tickets/' + ticketKey + '/messages/' + msgKey).remove();
+  }
+
+  db.ref('tickets').on('value', snapshot => {
+    renderTickets(snapshot.val() || {});
   });
-}
 
-/* --- Initialisation --- */
-renderAnnonces();
-renderTickets();
+  // --- Load initial state ---
+  auth.onAuthStateChanged(user => {
+    currentUser = user;
+    loadAll();
+    if(isAdmin) document.getElementById('adminPanel').style.display = "block";
+  });
 
+  function loadAll(){
+    // recharge vidéos, annonces, tickets via les listeners
+  }
 </script>
 </body>
 </html>
-

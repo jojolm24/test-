@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Collège Jacques Prévert — Site officiel</title>
+<title>Collège Jacques Prévert</title>
 <style>
 :root{
   --bg:#f6f9fc; --card:#fff; --text:#0f1724; --muted:#6b7280;
@@ -17,33 +17,44 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--text
 a{color:inherit;text-decoration:none;}
 header{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;position:sticky;top:0;z-index:1000;}
 header .brand{font-weight:800;font-size:20px;}
-header .google-login{background:#fff;color:var(--accent);padding:6px 12px;border-radius:8px;font-weight:700;cursor:pointer;}
+header .google-login{background:#fff;color:var(--accent);padding:6px 14px;border-radius:8px;font-weight:700;cursor:pointer;transition:0.3s;}
+header .google-login:hover{background:#e1e7f5;}
 .container{max-width:1100px;margin:20px auto;padding:0 20px;}
+.hero{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;padding:40px 20px;border-radius:var(--radius);text-align:center;margin-bottom:20px;box-shadow:var(--shadow);}
+.hero h1{margin:0;font-size:32px;}
+.hero p{margin-top:12px;font-size:18px;}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 @media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:640px){.grid{grid-template-columns:1fr;}}
-.card{background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:var(--shadow);}
+.card{background:var(--card);padding:20px;border-radius:var(--radius);box-shadow:var(--shadow);transition:0.3s;}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(12,23,63,0.15);}
 h2{margin-top:0;}
 .muted{color:var(--muted);}
-.btn{background:var(--accent);color:#fff;padding:8px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:700;}
+.btn{background:var(--accent);color:#fff;padding:8px 16px;border-radius:10px;border:none;cursor:pointer;font-weight:700;transition:0.3s;}
+.btn:hover{opacity:0.9;}
 .btn.ghost{background:transparent;border:1px solid rgba(0,0,0,0.1);color:var(--text);}
-.admin-toggle{position:fixed;bottom:20px;left:20px;right:20px;background:var(--card);padding:12px;border-radius:16px;box-shadow:0 18px 40px rgba(2,6,23,0.12);display:flex;justify-content:space-between;align-items:center;gap:12px;z-index:1200;transition:transform .3s;}
+.admin-toggle{position:fixed;bottom:20px;left:20px;right:20px;background:var(--card);padding:16px;border-radius:16px;box-shadow:0 18px 40px rgba(2,6,23,0.12);display:flex;justify-content:space-between;align-items:center;gap:12px;z-index:1200;transition:transform .3s;}
 .admin-hidden{transform:translateY(calc(100% - 70px));}
 .admin-actions{display:flex;gap:8px;align-items:center;}
 .input{padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);min-width:160px;background:transparent;color:var(--text);}
 .ann-list,.doc-list{display:flex;flex-direction:column;gap:10px;}
 .ann-item,.doc-item{padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent);}
-footer{text-align:center;padding:28px;color:var(--muted);margin-top:28px;}
+footer{text-align:center;padding:28px;color:var(--muted);margin-top:28px;background:#e9ecef;border-top:1px solid #d0d7df;}
 </style>
 </head>
 <body>
 
 <header>
   <div class="brand">Collège Jacques Prévert</div>
-  <div class="google-login" onclick="alert('Login Google simulé')">Se connecter avec Google</div>
+  <div class="google-login" onclick="alert('Connexion Google simulée !')">Se connecter avec Google</div>
 </header>
 
 <div class="container">
+  <section class="hero">
+    <h1>Bienvenue au Collège Jacques Prévert</h1>
+    <p>Site officiel modernisé avec panneau admin et accès visiteurs</p>
+  </section>
+
   <section class="grid">
     <div class="card">
       <h2>Informations générales</h2>
@@ -86,21 +97,21 @@ footer{text-align:center;padding:28px;color:var(--muted);margin-top:28px;}
 </div>
 
 <footer>
-  © Collège Jacques Prévert — Maquette fonctionnelle
+  © Collège Jacques Prévert — Site modernisé avec panneau admin
 </footer>
 
 <script>
-// === LocalStorage keys ===
+// LocalStorage keys
 const LS_KEYS={ANNS:'site_annonces',DOCS:'site_docs',AUTH:'site_admin_auth'};
 
-// === Admin password ===
+// Admin password
 const ADMIN_PW='2516';
 
-// === Helper functions ===
+// Helper functions
 function cryptoId(){return 'id_'+Math.random().toString(36).slice(2,10);}
 function escapeHtml(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 
-// === Demo data ===
+// Demo data
 if(!localStorage.getItem(LS_KEYS.ANNS)){localStorage.setItem(LS_KEYS.ANNS,JSON.stringify([
   {id:cryptoId(),title:'Rentrée scolaire',body:'La rentrée aura lieu le 2 septembre à 8h.',date:new Date().toLocaleString()},
   {id:cryptoId(),title:'Réunion parents',body:'Réunion parents/profs le 15 janvier à 18h.',date:new Date().toLocaleString()}
@@ -110,7 +121,7 @@ if(!localStorage.getItem(LS_KEYS.DOCS)){localStorage.setItem(LS_KEYS.DOCS,JSON.s
   {id:cryptoId(),name:'Menu cantine - Novembre',url:'#'}
 ]));}
 
-// === Render lists ===
+// Render lists
 function renderAnnoncesMain(){
   const cont=document.getElementById('annoncesMain');cont.innerHTML='';
   const anns=JSON.parse(localStorage.getItem(LS_KEYS.ANNS)||'[]');
@@ -132,22 +143,19 @@ function renderDocsMain(){
   });
 }
 
-// === Admin login ===
+// Admin login
 document.getElementById('adminLogin').addEventListener('click',()=>{
   const pass=document.getElementById('adminPass').value;
-  if(pass===ADMIN_PW){alert('Accès admin autorisé');document.getElementById('adminToggle').classList.remove('admin-hidden');}
-  else alert('Mot de passe incorrect');
+  if(pass===ADMIN_PW){
+    alert('Accès admin autorisé !');
+    document.getElementById('adminToggle').classList.remove('admin-hidden');
+  } else alert('Mot de passe incorrect');
 });
 
-// === Init ===
+// Initialize
 renderAnnoncesMain();
 renderDocsMain();
 </script>
+
 </body>
 </html>
-
-
-
-
-
-

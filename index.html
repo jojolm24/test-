@@ -3,277 +3,284 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arthur & Jojo - Site</title>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+<title>Arthur & Jojo - Site officiel</title>
 <style>
-    /* ====== Style général sombre et dégradé ====== */
-    body {
-        margin:0; padding:0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
-        color: #fff;
-        cursor: url('https://i.ibb.co/W6Hk9Yx/cursor.png'), auto;
-    }
-    h1,h2,h3,h4{color: #fff;}
-    a{color:#fff; text-decoration:none;}
-    a:hover{color:#f39c12;}
+/* ======================= */
+/* Styles généraux */
+/* ======================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #111; color: #fff; cursor: url('https://cdn-icons-png.flaticon.com/512/32/32394.png'), auto; }
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; }
+h1,h2,h3 { font-weight: bold; }
+.container { max-width: 1200px; margin: auto; padding: 2rem; }
 
-    /* ====== Header ====== */
-    header{
-        text-align:center; padding:2rem;
-        background: linear-gradient(90deg, #1c1c1c, #333, #1c1c1c);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.7);
-    }
-    header h1{font-size:2.5rem; background: linear-gradient(90deg,#fff,#888); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
+/* ======================= */
+/* Menu hamburger */
+/* ======================= */
+.menu-bar { position: fixed; top: 20px; right: 20px; z-index: 1000; cursor: pointer; }
+.menu-bar div { width: 30px; height: 4px; background: #fff; margin: 6px 0; transition: 0.4s; }
+.menu-content { display: none; position: fixed; top: 0; right: 0; width: 250px; height: 100%; background: #222; flex-direction: column; padding: 2rem; box-shadow: -2px 0 8px #000; z-index: 999; }
+.menu-content.show { display: flex; }
+.menu-content button { margin: 1rem 0; padding: 0.8rem; background: linear-gradient(135deg,#333,#555); border: none; border-radius: 10px; color: #fff; font-weight: bold; transition: 0.3s; }
+.menu-content button:hover { background: linear-gradient(135deg,#555,#777); transform: scale(1.05); }
 
-    /* ====== Boutons stylés ====== */
-    .btn{
-        background: linear-gradient(135deg,#444,#222);
-        border:none; padding:0.8rem 1.5rem;
-        color:#fff; font-weight:bold;
-        border-radius:25px; cursor:pointer;
-        transition: all 0.3s ease;
-        margin:0.3rem;
-    }
-    .btn:hover{
-        background: linear-gradient(135deg,#555,#111);
-        transform: scale(1.05);
-    }
+/* ======================= */
+/* Sections */
+/* ======================= */
+section { margin-bottom: 2rem; background: #222; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+h2 { background: linear-gradient(90deg,#fff,#888); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom: 1rem; }
 
-    /* ====== Panels ====== */
-    .panel{
-        max-width:900px; margin:2rem auto; padding:2rem;
-        background:#222; border-radius:15px;
-        box-shadow:0 4px 10px rgba(0,0,0,0.6);
-    }
+/* ======================= */
+/* Panel Admin */
+/* ======================= */
+#adminPanel { display: none; background: #111; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.7); margin-top: 2rem; }
+.admin-section { margin-bottom: 1.5rem; }
+.admin-section input, .admin-section textarea { width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; border-radius: 6px; border: 1px solid #555; background: #222; color: #fff; }
+.admin-section button { padding: 0.6rem; border-radius: 6px; border: none; background: linear-gradient(135deg,#444,#666); color: #fff; font-weight: bold; transition: 0.3s; }
+.admin-section button:hover { transform: scale(1.05); background: linear-gradient(135deg,#666,#888); }
 
-    /* ====== Tickets ====== */
-    .ticket{
-        background:#333; padding:1rem; margin:1rem 0; border-radius:10px;
-    }
+/* ======================= */
+/* Annonces et vidéos */
+/* ======================= */
+.annonce, .video { background: #333; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+.annonce p, .video p { margin-bottom: 0.5rem; }
 
-    /* ====== Vidéos ====== */
-    .video-card{
-        background:#222; padding:1rem; margin:1rem 0; border-radius:10px;
-    }
+/* ======================= */
+/* Tickets */
+/* ======================= */
+.ticket { background: #444; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+.ticket-msg { background: #555; padding: 0.5rem; border-radius: 6px; margin: 0.3rem 0; }
 
-    /* ====== Annonces ====== */
-    .announcement{
-        background:#444; padding:1rem; margin:1rem 0; border-radius:10px;
-    }
+/* ======================= */
+/* Inputs / Forms */
+/* ======================= */
+input, textarea { outline: none; }
+textarea { resize: vertical; }
 
-    footer{
-        text-align:center; padding:2rem; margin-top:2rem;
-        background:#111; border-top:2px solid #333;
-    }
+/* ======================= */
+/* Mode sombre / clair bouton */
+.mode-btn { position: fixed; bottom: 20px; left: 20px; padding: 0.5rem 1rem; background: linear-gradient(135deg,#444,#666); border: none; border-radius: 8px; color: #fff; font-weight: bold; z-index: 1000; }
+
+/* ======================= */
+/* Footer */
+footer { text-align: center; margin-top: 3rem; color: #888; font-size: 0.9rem; }
+
+/* ======================= */
+/* Emoji animation */
+@keyframes bounce { 0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);} }
+.emoji { display:inline-block; animation:bounce 2s infinite; }
 </style>
 </head>
 <body>
 
-<header>
-    <h1>Arthur & Jojo</h1>
-    <button class="btn" id="loginUser">Se connecter (Utilisateur)</button>
-    <button class="btn" id="loginAdmin">Accès Administratif</button>
-    <button class="btn" id="openTicketBtn">Ouvrir un Ticket</button>
-</header>
-
-<div class="panel" id="adminPanel" style="display:none;">
-    <h2>Admin Panel</h2>
-    <input type="text" id="videoURL" placeholder="URL YouTube">
-    <button class="btn" onclick="addVideo()">Ajouter Vidéo</button>
-    <input type="text" id="announcementText" placeholder="Texte Annonce">
-    <button class="btn" onclick="addAnnouncement()">Ajouter Annonce</button>
-    <h3>Tickets :</h3>
-    <div id="ticketList"></div>
-    <h3>Vidéos :</h3>
-    <div id="videoList"></div>
-    <h3>Annonces :</h3>
-    <div id="announcementList"></div>
+<div class="menu-bar" onclick="toggleMenu()">
+  <div></div><div></div><div></div>
+</div>
+<div class="menu-content" id="menuContent">
+  <button onclick="openLogin('user')">👤 Se connecter (Utilisateur)</button>
+  <button onclick="openLogin('admin')">🔑 Accès Administratif</button>
 </div>
 
-<div class="panel" id="userPanel" style="display:none;">
-    <h2>Vos Tickets</h2>
-    <div id="myTickets"></div>
+<div class="container">
+  <h1 class="emoji">Arthur & Jojo - Site officiel</h1>
+
+  <!-- Section annonces -->
+  <section id="annoncesSection">
+    <h2>📢 Annonces</h2>
+    <div id="annoncesContainer"></div>
+  </section>
+
+  <!-- Section vidéos -->
+  <section id="videosSection">
+    <h2>🎥 Vidéos</h2>
+    <div id="videosContainer"></div>
+  </section>
+
+  <!-- Section tickets -->
+  <section id="ticketsSection">
+    <h2>🎫 Tickets</h2>
+    <button onclick="openTicket()" style="padding:0.5rem 1rem; background:linear-gradient(135deg,#555,#777); border:none; border-radius:6px;">🆕 Ouvrir un ticket</button>
+    <div id="ticketsContainer"></div>
+  </section>
+
+  <!-- Panel Admin -->
+  <div id="adminPanel">
+    <h2>🔧 Panel Administrateur</h2>
+
+    <div class="admin-section">
+      <h3>📢 Ajouter annonce</h3>
+      <textarea id="annonceInput" placeholder="Texte de l'annonce..."></textarea>
+      <button onclick="addAnnonce()">Ajouter annonce</button>
+    </div>
+
+    <div class="admin-section">
+      <h3>🎥 Ajouter vidéo</h3>
+      <input id="videoInput" placeholder="URL de la vidéo (YouTube)...">
+      <button onclick="addVideo()">Ajouter vidéo</button>
+    </div>
+  </div>
 </div>
+
+<button class="mode-btn" onclick="toggleMode()">🌗 Mode sombre/clair</button>
 
 <footer>
-    Codé par Jojo fait avec le ❤️
+  Codé par Jojo fait avec ❤
 </footer>
 
+<!-- Login Modal -->
+<div id="loginModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);justify-content:center;align-items:center;z-index:1000;">
+  <div style="background:#111;padding:2rem;border-radius:10px;width:300px;">
+    <h2 id="loginTitle" style="text-align:center;">Connexion</h2>
+    <input type="text" id="loginName" placeholder="Nom d'utilisateur" style="margin-bottom:0.5rem;">
+    <input type="password" id="loginPass" placeholder="Mot de passe" style="margin-bottom:0.5rem;">
+    <button onclick="login()">Se connecter</button>
+    <button onclick="closeLogin()" style="margin-top:0.5rem;">Annuler</button>
+    <p id="loginError" style="color:red;text-align:center;display:none;">Erreur de connexion</p>
+  </div>
+</div>
+
 <script>
-    // ====== Firebase Config ======
-    const firebaseConfig = {
-        apiKey: "TON_API_KEY",
-        authDomain: "TON_PROJET.firebaseapp.com",
-        databaseURL: "https://TON_PROJET.firebaseio.com",
-        projectId: "TON_PROJET",
-        storageBucket: "TON_PROJET.appspot.com",
-        messagingSenderId: "XXXX",
-        appId: "XXXX"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.database();
+// =======================
+// Variables principales
+// =======================
+let menuOpen = false;
+let currentUser = null;
+let users = JSON.parse(localStorage.getItem('users')) || [];
+let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+let annonces = JSON.parse(localStorage.getItem('annonces')) || [];
+let videos = JSON.parse(localStorage.getItem('videos')) || [];
+let adminCode = '2516';
+let darkMode = true;
 
-    let currentUser = null;
-    let isAdmin = false;
+// =======================
+// Menu
+// =======================
+function toggleMenu() {
+  menuOpen = !menuOpen;
+  document.getElementById('menuContent').classList.toggle('show', menuOpen);
+}
 
-    // ====== Connexion Google ======
-    document.getElementById('loginUser').onclick = () => {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider).then(result=>{
-            currentUser = result.user;
-            alert("Connecté en tant que : "+currentUser.displayName);
-            document.getElementById('userPanel').style.display = "block";
-            loadMyTickets();
-        });
-    }
+// =======================
+// Connexion
+// =======================
+let loginType = '';
+function openLogin(type) {
+  loginType = type;
+  document.getElementById('loginModal').style.display = 'flex';
+  document.getElementById('loginName').value = '';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginError').style.display = 'none';
+}
+function closeLogin() { document.getElementById('loginModal').style.display = 'none'; }
+function login() {
+  let name = document.getElementById('loginName').value.trim();
+  let pass = document.getElementById('loginPass').value.trim();
+  if(loginType==='admin') {
+    if(pass===adminCode){ openAdmin(); currentUser={name:'admin',id:'admin'}; closeLogin(); return; }
+    else { document.getElementById('loginError').style.display='block'; return; }
+  } else {
+    if(!name || !pass){ document.getElementById('loginError').style.display='block'; return; }
+    let user = users.find(u=>u.name===name && u.pass===pass);
+    if(!user){ user={name:name,pass:pass,id:Date.now()}; users.push(user); localStorage.setItem('users',JSON.stringify(users)); }
+    currentUser = user;
+    closeLogin();
+    renderTickets();
+  }
+}
 
-    // ====== Connexion Admin ======
-    document.getElementById('loginAdmin').onclick = () => {
-        const code = prompt("Entrez le code admin :");
-        if(code==='2516'){
-            isAdmin = true;
-            document.getElementById('adminPanel').style.display = "block";
-        }else alert("Code incorrect !");
-    }
+// =======================
+// Admin Panel
+// =======================
+function openAdmin() { document.getElementById('adminPanel').style.display='block'; renderAnnonces(); renderVideos(); renderTickets(); }
 
-    // ====== Tickets ======
-    document.getElementById('openTicketBtn').onclick = () => {
-        if(!currentUser){
-            alert("Connectez-vous d'abord !");
-            return;
-        }
-        const ticketRef = db.ref('tickets').push();
-        ticketRef.set({
-            userId: currentUser.uid,
-            userName: currentUser.displayName,
-            messages:[{from:"user",text:"Nouveau ticket ouvert"}]
-        });
-        alert("Ticket créé !");
-        loadMyTickets();
-        if(isAdmin) loadTicketsAdmin();
-    }
+// =======================
+// Annonces
+// =======================
+function addAnnonce() {
+  let text = document.getElementById('annonceInput').value.trim();
+  if(!text) return;
+  annonces.push({text,id:Date.now()});
+  localStorage.setItem('annonces',JSON.stringify(annonces));
+  document.getElementById('annonceInput').value='';
+  renderAnnonces();
+}
+function renderAnnonces() {
+  let container = document.getElementById('annoncesContainer');
+  container.innerHTML = '';
+  annonces.forEach(a=>{
+    let div=document.createElement('div'); div.className='annonce';
+    div.innerHTML=`<p>${a.text}</p>` + (currentUser && currentUser.name==='admin'?`<button onclick="deleteAnnonce(${a.id})">Supprimer</button>`:'');
+    container.appendChild(div);
+  });
+}
+function deleteAnnonce(id){ annonces = annonces.filter(a=>a.id!==id); localStorage.setItem('annonces',JSON.stringify(annonces)); renderAnnonces(); }
 
-    function loadMyTickets(){
-        if(!currentUser) return;
-        db.ref('tickets').orderByChild('userId').equalTo(currentUser.uid).on('value', snap=>{
-            const container = document.getElementById('myTickets');
-            container.innerHTML="";
-            snap.forEach(child=>{
-                const t = child.val();
-                const div = document.createElement('div');
-                div.className='ticket';
-                div.innerHTML=`<strong>Ticket ID: ${child.key}</strong><br>
-                ${t.messages.map(m=>`<p><em>${m.from}</em>: ${m.text}</p>`).join('')}
-                <input type="text" id="msg_${child.key}" placeholder="Répondre">
-                <button onclick="sendTicketMessage('${child.key}')">Envoyer</button>`;
-                container.appendChild(div);
-            });
-        });
-    }
+// =======================
+// Vidéos
+// =======================
+function addVideo() {
+  let url = document.getElementById('videoInput').value.trim();
+  if(!url) return;
+  videos.push({url,id:Date.now()});
+  localStorage.setItem('videos',JSON.stringify(videos));
+  document.getElementById('videoInput').value='';
+  renderVideos();
+}
+function renderVideos() {
+  let container=document.getElementById('videosContainer'); container.innerHTML='';
+  videos.forEach(v=>{
+    let div=document.createElement('div'); div.className='video';
+    div.innerHTML=`<iframe width="300" height="170" src="${v.url.replace("watch?v=","embed/")}" frameborder="0" allowfullscreen></iframe>`+
+    (currentUser && currentUser.name==='admin'?`<button onclick="deleteVideo(${v.id})">Supprimer</button>`:'');
+    container.appendChild(div);
+  });
+}
+function deleteVideo(id){ videos = videos.filter(v=>v.id!==id); localStorage.setItem('videos',JSON.stringify(videos)); renderVideos(); }
 
-    function sendTicketMessage(ticketId){
-        const msgInput = document.getElementById('msg_'+ticketId);
-        const text = msgInput.value.trim();
-        if(!text) return;
-        db.ref('tickets/'+ticketId+'/messages').push({
-            from: currentUser.displayName,
-            text:text
-        });
-        msgInput.value='';
-        loadMyTickets();
-        if(isAdmin) loadTicketsAdmin();
-    }
+// =======================
+// Tickets
+// =======================
+function openTicket() {
+  if(!currentUser) { alert("Connectez-vous pour ouvrir un ticket"); return; }
+  let t = {id:Date.now(),userId:currentUser.id,msgs:[]};
+  tickets.push(t); localStorage.setItem('tickets',JSON.stringify(tickets)); renderTickets();
+}
+function renderTickets() {
+  let container=document.getElementById('ticketsContainer'); container.innerHTML='';
+  let filteredTickets = currentUser && currentUser.name==='admin' ? tickets : tickets.filter(t=>t.userId===currentUser.id);
+  filteredTickets.forEach(t=>{
+    let div=document.createElement('div'); div.className='ticket';
+    div.innerHTML=`<h4>Ticket #${t.id}</h4>
+    <div id="ticketMsgs${t.id}"></div>
+    <input id="ticketInput${t.id}" placeholder="Écrire un message..." style="width:100%;margin-top:0.5rem;">
+    <button onclick="sendTicketMsg(${t.id})">Envoyer</button>`;
+    container.appendChild(div);
+    let msgsDiv=document.getElementById(`ticketMsgs${t.id}`);
+    msgsDiv.innerHTML=t.msgs.map(m=>`<div class="ticket-msg"><strong>${m.user}:</strong> ${m.text}</div>`).join('');
+  });
+}
+function sendTicketMsg(ticketId) {
+  let input=document.getElementById(`ticketInput${ticketId}`);
+  let text=input.value.trim(); if(!text) return;
+  let ticket=tickets.find(t=>t.id===ticketId);
+  ticket.msgs.push({user:currentUser.name,text:text});
+  localStorage.setItem('tickets',JSON.stringify(tickets));
+  input.value=''; renderTickets();
+}
 
-    // ====== Admin Tickets ======
-    function loadTicketsAdmin(){
-        db.ref('tickets').on('value', snap=>{
-            const container = document.getElementById('ticketList');
-            container.innerHTML="";
-            snap.forEach(child=>{
-                const t = child.val();
-                const div = document.createElement('div');
-                div.className='ticket';
-                div.innerHTML=`<strong>${t.userName} (${child.key})</strong><br>
-                ${t.messages.map(m=>`<p><em>${m.from}</em>: ${m.text}</p>`).join('')}
-                <input type="text" id="adm_${child.key}" placeholder="Répondre">
-                <button onclick="sendAdminMessage('${child.key}')">Envoyer</button>
-                <button onclick="deleteTicket('${child.key}')">Supprimer</button>`;
-                container.appendChild(div);
-            });
-        });
-    }
+// =======================
+// Mode sombre / clair
+// =======================
+function toggleMode() {
+  darkMode=!darkMode;
+  document.body.style.background = darkMode?'#111':'#eee';
+  document.body.style.color = darkMode?'#fff':'#111';
+}
 
-    function sendAdminMessage(ticketId){
-        const msgInput = document.getElementById('adm_'+ticketId);
-        const text = msgInput.value.trim();
-        if(!text) return;
-        db.ref('tickets/'+ticketId+'/messages').push({
-            from:"Admin",
-            text:text
-        });
-        msgInput.value='';
-        loadTicketsAdmin();
-    }
-
-    function deleteTicket(ticketId){
-        db.ref('tickets/'+ticketId).remove();
-    }
-
-    // ====== Vidéos ======
-    function addVideo(){
-        const url = document.getElementById('videoURL').value.trim();
-        if(!url) return;
-        db.ref('videos').push({url:url});
-        document.getElementById('videoURL').value='';
-        loadVideos();
-    }
-    function loadVideos(){
-        db.ref('videos').on('value', snap=>{
-            const container = document.getElementById('videoList');
-            container.innerHTML="";
-            snap.forEach(child=>{
-                const v = child.val();
-                const div = document.createElement('div');
-                div.className='video-card';
-                div.innerHTML=`<a href="${v.url}" target="_blank">${v.url}</a>
-                <button onclick="deleteVideo('${child.key}')">Supprimer</button>`;
-                container.appendChild(div);
-            });
-        });
-    }
-    function deleteVideo(id){ db.ref('videos/'+id).remove(); }
-
-    // ====== Annonces ======
-    function addAnnouncement(){
-        const txt = document.getElementById('announcementText').value.trim();
-        if(!txt) return;
-        db.ref('announcements').push({text:txt});
-        document.getElementById('announcementText').value='';
-        loadAnnouncements();
-    }
-    function loadAnnouncements(){
-        db.ref('announcements').on('value', snap=>{
-            const container = document.getElementById('announcementList');
-            container.innerHTML="";
-            snap.forEach(child=>{
-                const a = child.val();
-                const div = document.createElement('div');
-                div.className='announcement';
-                div.innerHTML=`${a.text} <button onclick="deleteAnnouncement('${child.key}')">Supprimer</button>`;
-                container.appendChild(div);
-            });
-        });
-    }
-    function deleteAnnouncement(id){ db.ref('announcements/'+id).remove(); }
-
-    // ====== Charger au démarrage ======
-    loadVideos();
-    loadAnnouncements();
+renderAnnonces();
+renderVideos();
+renderTickets();
 </script>
-
 </body>
 </html>

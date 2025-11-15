@@ -1,192 +1,526 @@
-<!doctype html>  
-<html lang="fr">  
-<head>  
-  <meta charset="utf-8">  
-  <meta name="viewport" content="width=device-width,initial-scale=1">  
-  <title>Collège Jacques Prévert – Bergerac</title>  
-  <style>  
-    :root {  
-      --accent: #2b6cb0;  
-      --muted: #6b7280;  
-      --bg: #f7fafc;  
-      --card: #ffffff;  
-    }  
-    * { box-sizing: border-box; }  
-    body { font-family: Arial, sans-serif; margin: 0; background: var(--bg); color: #111; }  
-    header { background: var(--accent); color: white; padding: 20px; }  
-    .container { max-width: 1000px; margin: 0 auto; padding: 20px; }  
-    nav a { color: white; margin-right: 15px; text-decoration: none; }  
-    .hero { margin-top: 20px; }  
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }  
-    .card { background: var(--card); padding: 16px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }  
-    .btn { display: inline-block; padding: 8px 12px; background: var(--accent); color: white; text-decoration: none; border-radius: 6px; }  
-    .muted { color: var(--muted); font-size: 0.9em; }  
-  
-    /* Footer admin panel */  
-    .admin-panel { position: fixed; left: 20px; right: 20px; bottom: 20px; background: #fff; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); padding: 12px; transition: transform 0.3s; transform: translateY(80%); }  
-    .admin-panel.open { transform: translateY(0); }  
-    .admin-header { display: flex; justify-content: space-between; align-items: center; }  
-    .admin-body { margin-top: 10px; display: none; }  
-    .admin-body.open { display: block; }  
-    input, textarea { width: 100%; padding: 8px; margin-top: 6px; border: 1px solid #ccc; border-radius: 4px; }  
-  </style>  
-</head>  
-<body>  
-  <header>  
-    <div class="container">  
-      <h1>Collège Jacques Prévert – Bergerac</h1>  
-      <nav>  
-        <a href="#infos">Infos</a>  
-        <a href="#formations">Formations</a>  
-        <a href="#inclusion">Inclusion (ULIS)</a>  
-        <a href="#contact">Contact</a>  
-      </nav>  
-    </div>  
-  </header>  
-  
-  <main class="container">  
-    <section id="infos" class="card">  
-      <h2>Informations Générales</h2>  
-      <p><strong>Adresse :</strong> 18 rue Armand Got, 24100 Bergerac</p>  
-      <p><strong>Téléphone :</strong> 05 53 63 52 80 :contentReference[oaicite:0]{index=0}</p>  
-      <p><strong>Email :</strong> ce.0240996c@ac-bordeaux.fr :contentReference[oaicite:1]{index=1}</p>  
-      <p><strong>UAI :</strong> 0240996C :contentReference[oaicite:2]{index=2}</p>  
-      <p class="muted">Collège public – Académie de Bordeaux :contentReference[oaicite:3]{index=3}</p>  
-    </section>  
-  
-    <section id="formations" class="card">  
-      <h2>Formations & Langues</h2>  
-      <p>Le collège propose différentes classes dont :</p>  
-      <ul>  
-        <li>6ᵉ, 5ᵉ, 4ᵉ, 3ᵉ</li>  
-        <li>Unité ULIS (inclusion scolaire) :contentReference[oaicite:4]{index=4}</li>  
-      </ul>  
-      <p><strong>Langues vivantes :</strong> anglais, espagnol, italien :contentReference[oaicite:5]{index=5}</p>  
-    </section>  
-  
-    <section id="inclusion" class="card">  
-      <h2>Inclusion & Dispositifs Spéciaux</h2>  
-      <p>Le collège dispose d’une **ULIS** pour accompagner les élèves en situation de handicap. :contentReference[oaicite:6]{index=6}</p>  
-    </section>  
-  
-    <section id="contact" class="card">  
-      <h2>Contact & Inscriptions</h2>  
-      <p>Pour toute question ou inscription : </p>  
-      <p><strong>Email :</strong> ce.0240996c@ac-bordeaux.fr :contentReference[oaicite:7]{index=7}</p>  
-      <p><strong>Téléphone :</strong> 05 53 63 52 80 :contentReference[oaicite:8]{index=8}</p>  
-      <a href="https://blogpeda.ac-bordeaux.fr/collegejacquesprevert24/" class="btn" target="_blank">Visiter le site officiel</a>  
-    </section>  
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Collège Jacques Prévert — Site démo</title>
+  <style>
+    /* ---------------------- Base / Variables ---------------------- */
+    :root{
+      --bg: #f6f9fc;
+      --card: #ffffff;
+      --text: #0f1724;
+      --muted: #6b7280;
+      --accent: #1e4db7;        /* bleu collège */
+      --accent-2: #0ea5a4;
+      --glass: rgba(255,255,255,0.7);
+      --radius: 12px;
+      --shadow: 0 8px 24px rgba(12,23,63,0.08);
+      --success: #16a34a;
+      --danger: #ef4444;
+    }
+    /* Dark theme variables (will be applied by JS toggler) */
+    :root[data-theme="dark"]{
+      --bg:#071024;
+      --card:#07172a;
+      --text:#e6eef6;
+      --muted:#9aa8bb;
+      --glass: rgba(255,255,255,0.03);
+      --shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
 
-    <section id="stats" class="card">  
-      <h2>Effectifs & Informations Chiffrées</h2>  
-      <p>Total d'élèves : ~493 (selon les données de l’académie) :contentReference[oaicite:9]{index=9}</p>  
-      <p>Restauration : demi-pension = 413 élèves externes selon le rapport formation. :contentReference[oaicite:10]{index=10}</p>  
-    </section>  
-  </main>  
-  
-  <!-- Panneau Admin au bas -->  
-  <div id="adminPanel" class="admin-panel">  
-    <div class="admin-header">  
-      <div><strong>Panneau Administratif Collège</strong></div>  
-      <button id="toggleAdmin">Ouvrir</button>  
-    </div>  
-    <div id="adminBody" class="admin-body">  
-      <h3>Gérer les Annonces</h3>  
-      <input type="text" id="annTitre" placeholder="Titre annonce">  
-      <textarea id="annContenu" placeholder="Contenu annonce"></textarea>  
-      <button id="addAnnonce">Ajouter annonce</button>  
-      <div id="annList" style="margin-top:12px;"></div>  
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased}
+    a{color:inherit}
+    .container{max-width:1100px;margin:0 auto;padding:20px}
 
-      <h3 style="margin-top:20px">Gérer les Documents</h3>  
-      <input type="text" id="docNom" placeholder="Nom du document">  
-      <input type="text" id="docLien" placeholder="Lien (URL)">  
-      <button id="addDoc">Ajouter document</button>  
-      <div id="docList" style="margin-top:12px;"></div>  
-    </div>  
-  </div>  
-  
-  <script>  
-    // Toggle panneau admin  
-    const panel = document.getElementById('adminPanel');  
-    const body = document.getElementById('adminBody');  
-    document.getElementById('toggleAdmin').onclick = () => {  
-      panel.classList.toggle('open');  
-      body.classList.toggle('open');  
-      document.getElementById('toggleAdmin').textContent = panel.classList.contains('open') ? 'Fermer' : 'Ouvrir';  
-    };  
+    /* ---------------------- Top / Header ---------------------- */
+    header{display:flex;align-items:center;gap:18px;padding:20px 0}
+    .brand{display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
+    .logo{
+      width:52px;height:52px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:white; font-weight:700; box-shadow:var(--shadow)
+    }
+    nav{margin-left:auto;display:flex;gap:12px;align-items:center}
+    nav a{padding:8px 12px;border-radius:10px;text-decoration:none;font-weight:600;color:var(--muted)}
+    nav a:hover{background:var(--glass); color:var(--text)}
 
-    // Stockage des annonces/doc dans localStorage (démo)  
-    function save(key, value) { localStorage.setItem(key, JSON.stringify(value)); }  
-    function load(key) { return JSON.parse(localStorage.getItem(key) || '[]'); }  
+    /* ---------------------- Hero ---------------------- */
+    .hero{display:flex;gap:20px;align-items:center;margin-top:6px}
+    .hero .left{flex:1}
+    .hero h1{margin:0;font-size:26px}
+    .muted{color:var(--muted);font-size:14px}
 
-    // Annonces  
-    const addA = document.getElementById('addAnnonce');  
-    const annList = document.getElementById('annList');  
-    addA.onclick = () => {  
-      const t = document.getElementById('annTitre').value;  
-      const c = document.getElementById('annContenu').value;  
-      if (t && c) {  
-        const arr = load('annonces');  
-        arr.push({ titre: t, contenu: c });  
-        save('annonces', arr);  
-        renderAnnonces();  
-        document.getElementById('annTitre').value = '';  
-        document.getElementById('annContenu').value = '';  
-      }  
-    };  
-    function renderAnnonces() {  
-      const arr = load('annonces');  
-      annList.innerHTML = '';  
-      arr.forEach((a, i) => {  
-        const div = document.createElement('div');  
-        div.classList.add('card');  
-        div.style.marginBottom = '8px';  
-        div.innerHTML = `<strong>${a.titre}</strong><p>${a.contenu}</p><button onclick="deleteAnnonce(${i})">Supprimer</button>`;  
-        annList.appendChild(div);  
-      });  
-    }  
-    function deleteAnnonce(i) {  
-      const arr = load('annonces');  
-      arr.splice(i, 1); save('annonces', arr); renderAnnonces();  
-    }  
+    /* ---------------------- Grid ---------------------- */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+    @media (max-width:960px){ .grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:640px){ .grid{grid-template-columns:1fr} }
 
-    // Documents  
-    const addD = document.getElementById('addDoc');  
-    const docList = document.getElementById('docList');  
-    addD.onclick = () => {  
-      const n = document.getElementById('docNom').value;  
-      const l = document.getElementById('docLien').value;  
-      if (n && l) {  
-        const arr = load('docs');  
-        arr.push({ nom: n, lien: l });  
-        save('docs', arr);  
-        renderDocs();  
-        document.getElementById('docNom').value = '';  
-        document.getElementById('docLien').value = '';  
-      }  
-    };  
-    function renderDocs() {  
-      const arr = load('docs');  
-      docList.innerHTML = '';  
-      arr.forEach((d, i) => {  
-        const div = document.createElement('div');  
-        div.classList.add('card');  
-        div.style.marginBottom = '8px';  
-        div.innerHTML = `<strong>${d.nom}</strong> — <a href="${d.lien}" target="_blank">Voir</a><button onclick="deleteDoc(${i})">Supprimer</button>`;  
-        docList.appendChild(div);  
-      });  
-    }  
-    function deleteDoc(i) {  
-      const arr = load('docs');  
-      arr.splice(i, 1); save('docs', arr); renderDocs();  
-    }  
+    .card{background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:var(--shadow)}
+    h2{margin-top:0}
 
-    // Init  
-    renderAnnonces();  
-    renderDocs();  
-  </script>  
-</body>  
-</html>  
+    /* ---------------------- Announcements list ---------------------- */
+    .ann-list{display:flex;flex-direction:column;gap:10px}
+    .ann-item{padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent)}
+    .ann-item .meta{font-size:13px;color:var(--muted)}
+
+    /* ---------------------- Footer admin (coulissant) ---------------------- */
+    .admin-toggle{
+      position:fixed;left:20px;right:20px;bottom:20px;border-radius:16px;padding:10px;background:var(--card);box-shadow:0 18px 40px rgba(2,6,23,0.12);
+      display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:1200;transition:transform .28s ease, height .25s;
+    }
+    .admin-panel{display:flex;gap:12px;align-items:center;width:100%}
+    .admin-actions{display:flex;gap:8px;align-items:center}
+    .btn{background:var(--accent);color:#fff;padding:8px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+    .btn.ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);color:var(--text);font-weight:600}
+    .input{padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);min-width:160px;background:transparent;color:var(--text)}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* collapsed style when hidden */
+    .admin-hidden{transform:translateY(calc(100% - 70px));}
+
+    /* ---------------------- Fixed admin bar ---------------------- */
+    .admin-bar{
+      position:fixed;left:0;right:0;top:0;height:52px;background:linear-gradient(90deg,var(--accent),var(--accent-2));display:flex;align-items:center;padding:0 20px;color:#fff;z-index:1300;
+    }
+    .admin-bar .mini{margin-left:auto;display:flex;gap:8px}
+    .admin-bar.hidden{display:none}
+
+    /* ---------------------- Admin page overlay ---------------------- */
+    .admin-page{
+      position:fixed;inset:0;background:linear-gradient(180deg,rgba(2,6,23,0.4),rgba(2,6,23,0.6));display:none;align-items:center;justify-content:center;z-index:1400;
+    }
+    .admin-page.open{display:flex}
+    .admin-shell{width:920px;max-width:96%;max-height:90%;overflow:auto;padding:18px;border-radius:14px;background:var(--card)}
+
+    /* ---------------------- Form / lists ---------------------- */
+    form{display:flex;flex-direction:column;gap:8px}
+    table{width:100%;border-collapse:collapse}
+    td,th{padding:8px;border-bottom:1px dashed rgba(0,0,0,0.06);text-align:left}
+    .row{display:flex;gap:8px}
+    .flex{display:flex;gap:8px;align-items:center}
+
+    /* ---------------------- Small helpers ---------------------- */
+    .right{margin-left:auto}
+    .tag{display:inline-block;padding:6px 8px;border-radius:999px;background:rgba(30,77,183,0.12);color:var(--accent);font-weight:700;font-size:12px}
+    .danger{background:transparent;color:var(--danger);border:1px solid rgba(239,68,68,0.12);padding:6px 10px;border-radius:8px}
+    .success{background:transparent;color:var(--success);border:1px solid rgba(22,163,74,0.08);padding:6px 10px;border-radius:8px}
+    footer{padding:28px;text-align:center;color:var(--muted);margin-top:28px}
+  </style>
+</head>
+<body>
+
+  <!-- Admin fixed top bar (option B) -->
+  <div id="adminBar" class="admin-bar hidden" aria-hidden="true">
+    <div style="display:flex;gap:12px;align-items:center">
+      <strong>Mode Admin</strong>
+      <span class="small">— accès rapide</span>
+    </div>
+    <div class="mini">
+      <button id="openAdminPageTop" class="btn ghost">Ouvrir panneau</button>
+      <button id="logoutTop" class="btn" style="background:#ff5c5c">Déconnexion</button>
+    </div>
+  </div>
+
+  <!-- Page content -->
+  <div class="container">
+    <header>
+      <div class="brand" id="brandLogo" title="Cliquer 5 fois pour accès secret">
+        <div class="logo" id="logoText">JP</div>
+        <div>
+          <div style="font-weight:800">Collège Jacques Prévert</div>
+          <div class="muted">Bergerac — Collège public</div>
+        </div>
+      </div>
+
+      <nav aria-label="Navigation principale">
+        <a href="#infos">Infos</a>
+        <a href="#formations">Formations</a>
+        <a href="#ulis">ULIS</a>
+        <a href="#contact">Contact</a>
+        <button id="themeToggle" class="btn ghost" title="Changer thème">Thème</button>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="left">
+        <h1>Bienvenue au Collège Jacques Prévert</h1>
+        <p class="muted">Site démo — design moderne, responsive, panneau admin multiface.</p>
+        <div style="margin-top:12px">
+          <button id="visitSite" class="btn">Informations & contacts</button>
+        </div>
+      </div>
+      <div style="min-width:220px;text-align:right">
+        <div class="small">Adresse</div>
+        <div style="font-weight:700">18 rue Armand Got, 24100 Bergerac</div>
+        <div class="small" style="margin-top:8px">Tel : 05 53 63 52 80</div>
+      </div>
+    </section>
+
+    <div class="grid" style="margin-top:20px">
+      <div class="card">
+        <h2 id="infos">Informations générales</h2>
+        <p class="muted">Collège public — Académie de Bordeaux</p>
+        <p><strong>Email :</strong> ce.0240996c@ac-bordeaux.fr</p>
+        <p><strong>UAI :</strong> 0240996C</p>
+      </div>
+
+      <div class="card">
+        <h2 id="formations">Formations & Langues</h2>
+        <ul>
+          <li>Classes : 6e / 5e / 4e / 3e</li>
+          <li>Langues : Anglais, Espagnol, Italien</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2 id="ulis">Inclusion — ULIS</h2>
+        <p class="muted">Dispositif ULIS présent pour l'accompagnement des élèves en situation de handicap.</p>
+      </div>
+    </div>
+
+    <section class="card" style="margin-top:18px">
+      <h2>Annonces</h2>
+      <div id="annoncesMain" class="ann-list">
+        <!-- annonces injectées par JS -->
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:18px">
+      <h2>Documents officiels</h2>
+      <div id="docsMain" style="display:flex;flex-direction:column;gap:8px"></div>
+    </section>
+
+    <section style="margin-top:18px" class="card">
+      <h2 id="contact">Contact</h2>
+      <p class="muted">Pour toute question / inscription :</p>
+      <p><strong>Tel :</strong> 05 53 63 52 80 — <strong>Email :</strong> ce.0240996c@ac-bordeaux.fr</p>
+      <a href="https://blogpeda.ac-bordeaux.fr/collegejacquesprevert24/" target="_blank" class="btn">Visiter le site officiel</a>
+    </section>
+
+  </div>
+
+  <!-- Admin coulissant bas (option A) -->
+  <div id="adminToggle" class="admin-toggle admin-hidden" role="region" aria-label="Panneau administratif">
+    <div class="admin-panel">
+      <div>
+        <div style="font-weight:800">Panneau Administratif</div>
+        <div class="small">Accès rapide — démo locale</div>
+      </div>
+
+      <div class="admin-actions right">
+        <input id="quickPass" type="password" class="input" placeholder="Mot de passe admin (démo)">
+        <button id="quickLogin" class="btn">Se connecter</button>
+        <button id="openAdminPage" class="btn ghost">Page admin</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page admin (option C) -->
+  <div id="adminPage" class="admin-page" aria-hidden="true">
+    <div class="admin-shell card" role="dialog" aria-modal="true" aria-label="Espace administrateur">
+      <div style="display:flex;align-items:center;gap:12px">
+        <h2 style="margin:0">Espace Administrateur</h2>
+        <div class="small" style="margin-left:auto">Accès local — mots de passe démo</div>
+      </div>
+
+      <hr style="margin:12px 0">
+
+      <!-- Auth zone -->
+      <div id="adminAuthZone">
+        <p class="small">Identifiez-vous (mot de passe démo : <strong>admin123</strong>)</p>
+        <div class="row" style="margin-top:8px">
+          <input id="authPass" type="password" class="input" placeholder="Mot de passe">
+          <button id="authBtn" class="btn">Connexion</button>
+        </div>
+        <div id="authMsg" class="small" style="margin-top:8px"></div>
+      </div>
+
+      <!-- Admin controls (apparaissent après auth) -->
+      <div id="adminControls" style="display:none; margin-top:12px">
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:280px">
+            <h3>Gérer annonces</h3>
+            <input id="annTitle" class="input" placeholder="Titre">
+            <textarea id="annBody" class="input" placeholder="Contenu" rows="4"></textarea>
+            <div style="display:flex;gap:8px;margin-top:6px">
+              <button id="addAnn" class="btn">Ajouter</button>
+              <button id="clearAnns" class="btn ghost">Tout supprimer</button>
+            </div>
+            <div id="annListAdmin" style="margin-top:10px"></div>
+          </div>
+
+          <div style="flex:1;min-width:280px">
+            <h3>Gérer documents</h3>
+            <input id="docName" class="input" placeholder="Nom document">
+            <input id="docUrl" class="input" placeholder="URL (lien PDF / page)">
+            <div style="display:flex;gap:8px;margin-top:6px">
+              <button id="addDocBtn" class="btn">Ajouter</button>
+              <button id="clearDocs" class="btn ghost">Tout supprimer</button>
+            </div>
+            <div id="docListAdmin" style="margin-top:10px"></div>
+          </div>
+        </div>
+
+        <hr style="margin:14px 0">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button id="logout" class="btn" style="background:#ff5c5c">Déconnexion</button>
+          <button id="showAdminBar" class="btn ghost">Afficher barre admin</button>
+          <button id="themeSave" class="btn">Enregistrer thème</button>
+          <div class="small" style="margin-left:auto">Données stockées en localStorage (démo)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Tiny footer -->
+  <footer>
+    © Collège Jacques Prévert — maquette démo • <span class="muted">Panneau admin en bas / barre / page / accès secret</span>
+  </footer>
+
+<script>
+/* ---------------------- Utilities ---------------------- */
+const LS_KEYS = { ANNS: 'site_annonces_v1', DOCS: 'site_docs_v1', THEME: 'site_theme_v1', AUTH: 'site_admin_auth_v1' };
+function save(key, val){ localStorage.setItem(key, JSON.stringify(val)) }
+function load(key){ try{ return JSON.parse(localStorage.getItem(key) || 'null') }catch(e){return null} }
+function nowStr(){ return new Date().toLocaleString() }
+
+/* ---------------------- Demo default data ---------------------- */
+if(!load(LS_KEYS.ANNS)){
+  save(LS_KEYS.ANNS, [
+    {id:cryptoRandomId(), title:'Rentrée scolaire', body:'La rentrée aura lieu le 2 septembre à 8h.', date:nowStr()},
+    {id:cryptoRandomId(), title:'Réunion parents', body:'Réunion parents/profs le 15 janvier à 18h au gymnase.', date:nowStr()}
+  ]);
+}
+if(!load(LS_KEYS.DOCS)){
+  save(LS_KEYS.DOCS, [
+    {id:cryptoRandomId(), name:'Règlement intérieur (PDF)', url:'#'},
+    {id:cryptoRandomId(), name:'Menu cantine - Novembre', url:'#'}
+  ]);
+}
+
+/* ---------------------- Rendering main lists ---------------------- */
+function renderAnnoncesMain(){
+  const cont = document.getElementById('annoncesMain'); cont.innerHTML='';
+  const anns = load(LS_KEYS.ANNS) || [];
+  if(!anns.length){ cont.innerHTML = '<div class="ann-item small muted">Aucune annonce</div>'; return; }
+  anns.slice().reverse().forEach(a=>{
+    const el = document.createElement('div'); el.className='ann-item card';
+    el.innerHTML = `<div style="display:flex;gap:12px;align-items:flex-start">
+      <div style="flex:1">
+        <div style="display:flex;gap:12px;align-items:center">
+          <strong>${escapeHtml(a.title)}</strong><span class="meta small">${escapeHtml(a.date)}</span>
+        </div>
+        <div class="muted" style="margin-top:6px">${escapeHtml(a.body)}</div>
+      </div>
+    </div>`;
+    cont.appendChild(el);
+  });
+}
+
+function renderDocsMain(){
+  const cont = document.getElementById('docsMain'); cont.innerHTML='';
+  const docs = load(LS_KEYS.DOCS) || [];
+  if(!docs.length){ cont.innerHTML = '<div class="small muted">Aucun document</div>'; return; }
+  docs.slice().reverse().forEach(d=>{
+    const row = document.createElement('div'); row.style.display='flex'; row.style.justifyContent='space-between'; row.style.alignItems='center'; row.style.padding='8px 12px'; row.style.borderRadius='8px'; row.style.background='linear-gradient(180deg, rgba(0,0,0,0.02), transparent)'; row.style.marginBottom='8px';
+    row.innerHTML = `<div><strong>${escapeHtml(d.name)}</strong><div class="muted small">${escapeHtml(d.url)}</div></div><div><a href="${d.url}" target="_blank" class="btn ghost">Voir</a></div>`;
+    cont.appendChild(row);
+  });
+}
+
+/* ---------------------- Admin page logic (auth + CRUD) ---------------------- */
+const ADMIN_PW = 'admin123'; // demo password (change when déploy)
+
+function cryptoRandomId(){ return 'id_' + Math.random().toString(36).slice(2,10) }
+
+function escapeHtml(s=''){ return String(s).replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]) }) }
+
+function renderAdminLists(){
+  // Announcements
+  const anns = load(LS_KEYS.ANNS) || [];
+  const annList = document.getElementById('annListAdmin'); annList.innerHTML='';
+  if(!anns.length) annList.innerHTML = '<div class="small muted">Aucune annonce</div>';
+  anns.slice().reverse().forEach((a,i)=>{
+    const id = a.id;
+    const div = document.createElement('div'); div.className='card'; div.style.marginBottom='8px';
+    div.innerHTML = `<div style="display:flex;align-items:center;gap:12px">
+      <div style="flex:1"><strong>${escapeHtml(a.title)}</strong><div class="small muted">${escapeHtml(a.date)}</div><div style="margin-top:6px">${escapeHtml(a.body)}</div></div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <button class="btn" onclick="editAnn('${id}')">Éditer</button>
+        <button class="danger" onclick="deleteAnn('${id}')">Suppr</button>
+      </div>
+    </div>`;
+    annList.appendChild(div);
+  });
+
+  // Docs
+  const docs = load(LS_KEYS.DOCS) || [];
+  const docList = document.getElementById('docListAdmin'); docList.innerHTML='';
+  if(!docs.length) docList.innerHTML = '<div class="small muted">Aucun document</div>';
+  docs.slice().reverse().forEach(d=>{
+    const div = document.createElement('div'); div.className='card'; div.style.marginBottom='8px';
+    div.innerHTML = `<div style="display:flex;align-items:center;gap:12px">
+      <div style="flex:1"><strong>${escapeHtml(d.name)}</strong><div class="small muted">${escapeHtml(d.url)}</div></div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <a class="btn ghost" href="${d.url}" target="_blank">Ouvrir</a>
+        <button class="danger" onclick="deleteDoc('${d.id}')">Suppr</button>
+      </div>
+    </div>`;
+    docList.appendChild(div);
+  });
+}
+
+/* CRUD functions (admin-only) */
+window.deleteAnn = function(id){
+  if(!confirm('Supprimer cette annonce ?')) return;
+  const arr = load(LS_KEYS.ANNS) || []; save(LS_KEYS.ANNS, arr.filter(a=>a.id!==id)); renderAdminLists(); renderAnnoncesMain();
+}
+window.deleteDoc = function(id){
+  if(!confirm('Supprimer ce document ?')) return;
+  const arr = load(LS_KEYS.DOCS) || []; save(LS_KEYS.DOCS, arr.filter(d=>d.id!==id)); renderAdminLists(); renderDocsMain();
+}
+window.editAnn = function(id){
+  const arr = load(LS_KEYS.ANNS) || []; const a = arr.find(x=>x.id===id); if(!a) return alert('Annonce introuvable');
+  const t = prompt('Titre', a.title); if(t===null) return;
+  const b = prompt('Contenu', a.body); if(b===null) return;
+  a.title = t; a.body = b; a.date = nowStr();
+  save(LS_KEYS.ANNS, arr); renderAdminLists(); renderAnnoncesMain();
+}
+
+/* ---------------------- Event listeners (auth + buttons) ---------------------- */
+document.getElementById('authBtn').addEventListener('click', ()=>{
+  const pass = document.getElementById('authPass').value;
+  const msg = document.getElementById('authMsg');
+  if(pass === ADMIN_PW){
+    // mark auth in session
+    sessionStorage.setItem(LS_KEYS.AUTH, '1');
+    msg.textContent = 'Connecté';
+    showAdminControls();
+  } else {
+    msg.textContent = 'Mot de passe incorrect';
+  }
+});
+
+document.getElementById('logout').addEventListener('click', ()=>{
+  sessionStorage.removeItem(LS_KEYS.AUTH);
+  hideAdminControls();
+});
+document.getElementById('logoutTop').addEventListener('click', ()=>{
+  sessionStorage.removeItem(LS_KEYS.AUTH); hideAdminControls();
+});
+
+document.getElementById('quickLogin').addEventListener('click', ()=>{
+  const pass = document.getElementById('quickPass').value;
+  if(pass === ADMIN_PW){ sessionStorage.setItem(LS_KEYS.AUTH,'1'); showAdminControls(); alert('Admin : connecté (démo)') }
+  else alert('Mot de passe incorrect');
+});
+
+document.getElementById('addAnn').addEventListener('click', ()=>{
+  const t = document.getElementById('annTitle').value.trim();
+  const b = document.getElementById('annBody').value.trim();
+  if(!t||!b) return alert('Titre + contenu requis');
+  const arr = load(LS_KEYS.ANNS) || []; arr.push({id:cryptoRandomId(), title:t, body:b, date:nowStr()}); save(LS_KEYS.ANNS, arr);
+  document.getElementById('annTitle').value=''; document.getElementById('annBody').value=''; renderAdminLists(); renderAnnoncesMain();
+});
+
+document.getElementById('clearAnns').addEventListener('click', ()=>{
+  if(!confirm('Supprimer toutes les annonces ?')) return;
+  save(LS_KEYS.ANNS, []); renderAdminLists(); renderAnnoncesMain();
+});
+
+document.getElementById('addDocBtn').addEventListener('click', ()=>{
+  const n = document.getElementById('docName').value.trim();
+  const u = document.getElementById('docUrl').value.trim();
+  if(!n||!u) return alert('Nom + URL requis');
+  const arr = load(LS_KEYS.DOCS) || []; arr.push({id:cryptoRandomId(), name:n, url:u}); save(LS_KEYS.DOCS, arr);
+  document.getElementById('docName').value=''; document.getElementById('docUrl').value=''; renderAdminLists(); renderDocsMain();
+});
+
+document.getElementById('clearDocs').addEventListener('click', ()=>{
+  if(!confirm('Supprimer tous les documents ?')) return;
+  save(LS_KEYS.DOCS, []); renderAdminLists(); renderDocsMain();
+});
+
+/* admin page open/close */
+document.getElementById('openAdminPage').addEventListener('click', ()=> openAdminPage());
+document.getElementById('openAdminPageTop').addEventListener('click', ()=> openAdminPage());
+document.getElementById('visitSite').addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+/* show/hide admin page overlay */
+function openAdminPage(){ document.getElementById('adminPage').classList.add('open'); const aut = sessionStorage.getItem(LS_KEYS.AUTH); if(aut) showAdminControls(); else hideAdminControls(); }
+document.getElementById('adminPage').addEventListener('click', (e)=>{ if(e.target.id==='adminPage') document.getElementById('adminPage').classList.remove('open') })
+
+/* admin bar toggler (option B) */
+document.getElementById('showAdminBar').addEventListener('click', ()=>{
+  document.getElementById('adminBar').classList.toggle('hidden');
+});
+
+/* logged-in helpers */
+function showAdminControls(){
+  document.getElementById('adminControls').style.display='block';
+  document.getElementById('adminAuthZone').style.display='none';
+  document.getElementById('adminBar').classList.remove('hidden');
+  document.getElementById('adminToggle').classList.remove('admin-hidden');
+  renderAdminLists();
+}
+function hideAdminControls(){
+  document.getElementById('adminControls').style.display='none';
+  document.getElementById('adminAuthZone').style.display='block';
+  document.getElementById('adminBar').classList.add('hidden');
+}
+
+/* quick rendering on load */
+renderAnnoncesMain(); renderDocsMain();
+
+/* secret access (option D) — 5 clicks on logo to open admin page */
+let logoClicks = 0;
+const logo = document.getElementById('brandLogo');
+logo.addEventListener('click', ()=>{
+  logoClicks++;
+  if(logoClicks>=5){
+    logoClicks = 0;
+    openAdminPage();
+    // focus password input to encourage connect
+    setTimeout(()=> document.getElementById('authPass').focus(), 120);
+  }
+  setTimeout(()=> logoClicks = 0, 900); // reset after 900ms
+});
+
+/* small keyboard shortcut: Ctrl+M opens admin page */
+document.addEventListener('keydown', (e)=>{ if(e.ctrlKey && e.key.toLowerCase()==='m'){ openAdminPage() } });
+
+/* Save theme preference */
+function applySavedTheme(){ const t = load(LS_KEYS.THEME) || 'system'; if(t==='dark') document.documentElement.setAttribute('data-theme','dark'); else if(t==='light') document.documentElement.removeAttribute('data-theme'); /* system leaves default */ }
+applySavedTheme();
+
+/* theme toggler with cycle: system -> dark -> light -> system */
+function toggleTheme(){
+  const cur = load(LS_KEYS.THEME) || 'system';
+  const next = cur==='system' ? 'dark' : cur==='dark' ? 'light' : 'system';
+  save(LS_KEYS.THEME, next);
+  if(next==='dark') document.documentElement.setAttribute('data-theme','dark'); else document.documentElement.removeAttribute('data-theme');
+  alert('Thème: ' + next);
+}
+
+/* theme save button in admin (saves current preference) */
+document.getElementById('themeSave').addEventListener('click', ()=>{
+  const current = (document.documentElement.getAttribute('data-theme')==='dark') ? 'dark' : 'light';
+  save(LS_KEYS.THEME, current);
+  alert('Thème enregistré: ' + current);
+});
+
+/* small helper to render on load if already authed in session */
+if(sessionStorage.getItem(LS_KEYS.AUTH)) showAdminControls();
+
+/* Convenience: expose some functions for console/development */
+window._dev = { save, load, LS_KEYS, renderAnnoncesMain, renderDocsMain, renderAdminLists };
+
+</script>
+</body>
+</html>
 
 
 

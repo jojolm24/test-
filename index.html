@@ -9,11 +9,9 @@
 /* Styles généraux */
 /* ======================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #111; color: #fff; cursor: url('https://cdn-icons-png.flaticon.com/512/32/32394.png'), auto; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #111; color: #fff; cursor: url('https://cdn-icons-png.flaticon.com/512/32/32394.png'), auto; transition:0.3s; }
 a { text-decoration: none; color: inherit; }
-button { cursor: pointer; }
-h1,h2,h3 { font-weight: bold; }
-.container { max-width: 1200px; margin: auto; padding: 2rem; }
+button { cursor: pointer; transition:0.3s; border:none; border-radius:8px; font-weight:bold; }
 
 /* ======================= */
 /* Menu hamburger */
@@ -22,45 +20,40 @@ h1,h2,h3 { font-weight: bold; }
 .menu-bar div { width: 30px; height: 4px; background: #fff; margin: 6px 0; transition: 0.4s; }
 .menu-content { display: none; position: fixed; top: 0; right: 0; width: 250px; height: 100%; background: #222; flex-direction: column; padding: 2rem; box-shadow: -2px 0 8px #000; z-index: 999; }
 .menu-content.show { display: flex; }
-.menu-content button { margin: 1rem 0; padding: 0.8rem; background: linear-gradient(135deg,#333,#555); border: none; border-radius: 10px; color: #fff; font-weight: bold; transition: 0.3s; }
+.menu-content button { margin: 1rem 0; padding: 0.8rem; background: linear-gradient(135deg,#333,#555); color: #fff; }
 .menu-content button:hover { background: linear-gradient(135deg,#555,#777); transform: scale(1.05); }
 
 /* ======================= */
 /* Sections */
-/* ======================= */
 section { margin-bottom: 2rem; background: #222; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 h2 { background: linear-gradient(90deg,#fff,#888); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom: 1rem; }
 
 /* ======================= */
 /* Panel Admin */
-/* ======================= */
 #adminPanel { display: none; background: #111; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.7); margin-top: 2rem; }
 .admin-section { margin-bottom: 1.5rem; }
 .admin-section input, .admin-section textarea { width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; border-radius: 6px; border: 1px solid #555; background: #222; color: #fff; }
-.admin-section button { padding: 0.6rem; border-radius: 6px; border: none; background: linear-gradient(135deg,#444,#666); color: #fff; font-weight: bold; transition: 0.3s; }
+.admin-section button { padding: 0.6rem; border-radius: 6px; background: linear-gradient(135deg,#444,#666); color: #fff; }
 .admin-section button:hover { transform: scale(1.05); background: linear-gradient(135deg,#666,#888); }
 
 /* ======================= */
 /* Annonces et vidéos */
-/* ======================= */
 .annonce, .video { background: #333; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
 .annonce p, .video p { margin-bottom: 0.5rem; }
 
 /* ======================= */
 /* Tickets */
-/* ======================= */
 .ticket { background: #444; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
 .ticket-msg { background: #555; padding: 0.5rem; border-radius: 6px; margin: 0.3rem 0; }
 
 /* ======================= */
 /* Inputs / Forms */
-/* ======================= */
 input, textarea { outline: none; }
 textarea { resize: vertical; }
 
 /* ======================= */
-/* Mode sombre / clair bouton */
-.mode-btn { position: fixed; bottom: 20px; left: 20px; padding: 0.5rem 1rem; background: linear-gradient(135deg,#444,#666); border: none; border-radius: 8px; color: #fff; font-weight: bold; z-index: 1000; }
+/* Mode sombre / clair */
+.mode-btn { position: fixed; bottom: 20px; left: 20px; padding: 0.5rem 1rem; background: linear-gradient(135deg,#444,#666); color: #fff; z-index: 1000; }
 
 /* ======================= */
 /* Footer */
@@ -70,6 +63,10 @@ footer { text-align: center; margin-top: 3rem; color: #888; font-size: 0.9rem; }
 /* Emoji animation */
 @keyframes bounce { 0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);} }
 .emoji { display:inline-block; animation:bounce 2s infinite; }
+
+/* ======================= */
+/* Profil bouton */
+#profileBtn { background: linear-gradient(135deg,#555,#777); padding:0.5rem 1rem; margin-left:1rem; }
 </style>
 </head>
 <body>
@@ -80,43 +77,42 @@ footer { text-align: center; margin-top: 3rem; color: #888; font-size: 0.9rem; }
 <div class="menu-content" id="menuContent">
   <button onclick="openLogin('user')">👤 Se connecter (Utilisateur)</button>
   <button onclick="openLogin('admin')">🔑 Accès Administratif</button>
+  <button id="profileBtn" style="display:none;" onclick="editProfile()">⚙️ Modifier Profil</button>
 </div>
 
 <div class="container">
   <h1 class="emoji">Arthur & Jojo - Site officiel</h1>
 
-  <!-- Section annonces -->
+  <!-- Annonces -->
   <section id="annoncesSection">
     <h2>📢 Annonces</h2>
     <div id="annoncesContainer"></div>
   </section>
 
-  <!-- Section vidéos -->
+  <!-- Vidéos -->
   <section id="videosSection">
     <h2>🎥 Vidéos</h2>
     <div id="videosContainer"></div>
   </section>
 
-  <!-- Section tickets -->
+  <!-- Tickets -->
   <section id="ticketsSection">
     <h2>🎫 Tickets</h2>
-    <button onclick="openTicket()" style="padding:0.5rem 1rem; background:linear-gradient(135deg,#555,#777); border:none; border-radius:6px;">🆕 Ouvrir un ticket</button>
+    <button onclick="openTicket()">🆕 Ouvrir un ticket</button>
     <div id="ticketsContainer"></div>
   </section>
 
-  <!-- Panel Admin -->
+  <!-- Admin Panel -->
   <div id="adminPanel">
     <h2>🔧 Panel Administrateur</h2>
-
     <div class="admin-section">
       <h3>📢 Ajouter annonce</h3>
       <textarea id="annonceInput" placeholder="Texte de l'annonce..."></textarea>
       <button onclick="addAnnonce()">Ajouter annonce</button>
     </div>
-
     <div class="admin-section">
       <h3>🎥 Ajouter vidéo</h3>
-      <input id="videoInput" placeholder="URL de la vidéo (YouTube)...">
+      <input id="videoInput" placeholder="URL de la vidéo (YouTube)">
       <button onclick="addVideo()">Ajouter vidéo</button>
     </div>
   </div>
@@ -132,8 +128,8 @@ footer { text-align: center; margin-top: 3rem; color: #888; font-size: 0.9rem; }
 <div id="loginModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);justify-content:center;align-items:center;z-index:1000;">
   <div style="background:#111;padding:2rem;border-radius:10px;width:300px;">
     <h2 id="loginTitle" style="text-align:center;">Connexion</h2>
-    <input type="text" id="loginName" placeholder="Nom d'utilisateur" style="margin-bottom:0.5rem;">
-    <input type="password" id="loginPass" placeholder="Mot de passe" style="margin-bottom:0.5rem;">
+    <input type="text" id="loginName" placeholder="Nom d'utilisateur">
+    <input type="password" id="loginPass" placeholder="Mot de passe">
     <button onclick="login()">Se connecter</button>
     <button onclick="closeLogin()" style="margin-top:0.5rem;">Annuler</button>
     <p id="loginError" style="color:red;text-align:center;display:none;">Erreur de connexion</p>
@@ -141,93 +137,81 @@ footer { text-align: center; margin-top: 3rem; color: #888; font-size: 0.9rem; }
 </div>
 
 <script>
-// =======================
-// Variables principales
-// =======================
-let menuOpen = false;
-let currentUser = null;
-let users = JSON.parse(localStorage.getItem('users')) || [];
-let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
-let annonces = JSON.parse(localStorage.getItem('annonces')) || [];
-let videos = JSON.parse(localStorage.getItem('videos')) || [];
-let adminCode = '2516';
-let darkMode = true;
+let menuOpen=false;
+let currentUser=null;
+let users=JSON.parse(localStorage.getItem('users'))||[];
+let tickets=JSON.parse(localStorage.getItem('tickets'))||[];
+let annonces=JSON.parse(localStorage.getItem('annonces'))||[];
+let videos=JSON.parse(localStorage.getItem('videos'))||[];
+let adminCode='2516';
+let darkMode=true;
 
-// =======================
-// Menu
-// =======================
-function toggleMenu() {
-  menuOpen = !menuOpen;
-  document.getElementById('menuContent').classList.toggle('show', menuOpen);
+function toggleMenu(){
+  menuOpen=!menuOpen;
+  document.getElementById('menuContent').classList.toggle('show',menuOpen);
 }
 
-// =======================
-// Connexion
-// =======================
-let loginType = '';
-function openLogin(type) {
-  loginType = type;
-  document.getElementById('loginModal').style.display = 'flex';
-  document.getElementById('loginName').value = '';
-  document.getElementById('loginPass').value = '';
-  document.getElementById('loginError').style.display = 'none';
+let loginType='';
+function openLogin(type){
+  loginType=type;
+  document.getElementById('loginModal').style.display='flex';
+  document.getElementById('loginName').value='';
+  document.getElementById('loginPass').value='';
+  document.getElementById('loginError').style.display='none';
 }
-function closeLogin() { document.getElementById('loginModal').style.display = 'none'; }
-function login() {
-  let name = document.getElementById('loginName').value.trim();
-  let pass = document.getElementById('loginPass').value.trim();
-  if(loginType==='admin') {
-    if(pass===adminCode){ openAdmin(); currentUser={name:'admin',id:'admin'}; closeLogin(); return; }
-    else { document.getElementById('loginError').style.display='block'; return; }
+function closeLogin(){ document.getElementById('loginModal').style.display='none'; }
+
+function login(){
+  let name=document.getElementById('loginName').value.trim();
+  let pass=document.getElementById('loginPass').value.trim();
+  if(loginType==='admin'){
+    if(pass===adminCode){ currentUser={name:'admin',id:'admin'}; openAdmin(); closeLogin(); showProfileBtn(); return; }
+    else{ document.getElementById('loginError').style.display='block'; return; }
   } else {
-    if(!name || !pass){ document.getElementById('loginError').style.display='block'; return; }
-    let user = users.find(u=>u.name===name && u.pass===pass);
+    if(!name||!pass){ document.getElementById('loginError').style.display='block'; return; }
+    let user=users.find(u=>u.name===name && u.pass===pass);
     if(!user){ user={name:name,pass:pass,id:Date.now()}; users.push(user); localStorage.setItem('users',JSON.stringify(users)); }
-    currentUser = user;
+    currentUser=user;
     closeLogin();
+    showProfileBtn();
     renderTickets();
+    renderAnnonces();
+    renderVideos();
   }
 }
 
-// =======================
-// Admin Panel
-// =======================
-function openAdmin() { document.getElementById('adminPanel').style.display='block'; renderAnnonces(); renderVideos(); renderTickets(); }
+// ================= Admin Panel
+function openAdmin(){ document.getElementById('adminPanel').style.display='block'; renderAnnonces(); renderVideos(); renderTickets(); }
 
-// =======================
-// Annonces
-// =======================
-function addAnnonce() {
-  let text = document.getElementById('annonceInput').value.trim();
+// ================= Annonces
+function addAnnonce(){
+  let text=document.getElementById('annonceInput').value.trim();
   if(!text) return;
   annonces.push({text,id:Date.now()});
   localStorage.setItem('annonces',JSON.stringify(annonces));
   document.getElementById('annonceInput').value='';
   renderAnnonces();
 }
-function renderAnnonces() {
-  let container = document.getElementById('annoncesContainer');
-  container.innerHTML = '';
+function renderAnnonces(){
+  let container=document.getElementById('annoncesContainer'); container.innerHTML='';
   annonces.forEach(a=>{
     let div=document.createElement('div'); div.className='annonce';
-    div.innerHTML=`<p>${a.text}</p>` + (currentUser && currentUser.name==='admin'?`<button onclick="deleteAnnonce(${a.id})">Supprimer</button>`:'');
+    div.innerHTML=`<p>${a.text}</p>`+(currentUser && currentUser.name==='admin'?`<button onclick="deleteAnnonce(${a.id})">Supprimer</button>`:'');
     container.appendChild(div);
   });
 }
-function deleteAnnonce(id){ annonces = annonces.filter(a=>a.id!==id); localStorage.setItem('annonces',JSON.stringify(annonces)); renderAnnonces(); }
+function deleteAnnonce(id){ annonces=annonces.filter(a=>a.id!==id); localStorage.setItem('annonces',JSON.stringify(annonces)); renderAnnonces(); }
 
-// =======================
-// Vidéos
-// =======================
-function addVideo() {
-  let url = document.getElementById('videoInput').value.trim();
+// ================= Vidéos
+function addVideo(){
+  let url=document.getElementById('videoInput').value.trim();
   if(!url) return;
   videos.push({url,id:Date.now()});
   localStorage.setItem('videos',JSON.stringify(videos));
   document.getElementById('videoInput').value='';
   renderVideos();
 }
-function renderVideos() {
+function renderVideos(){
   let container=document.getElementById('videosContainer'); container.innerHTML='';
   videos.forEach(v=>{
     let div=document.createElement('div'); div.className='video';
@@ -236,19 +220,17 @@ function renderVideos() {
     container.appendChild(div);
   });
 }
-function deleteVideo(id){ videos = videos.filter(v=>v.id!==id); localStorage.setItem('videos',JSON.stringify(videos)); renderVideos(); }
+function deleteVideo(id){ videos=videos.filter(v=>v.id!==id); localStorage.setItem('videos',JSON.stringify(videos)); renderVideos(); }
 
-// =======================
-// Tickets
-// =======================
-function openTicket() {
-  if(!currentUser) { alert("Connectez-vous pour ouvrir un ticket"); return; }
-  let t = {id:Date.now(),userId:currentUser.id,msgs:[]};
+// ================= Tickets
+function openTicket(){
+  if(!currentUser){ alert("Connectez-vous pour ouvrir un ticket"); return; }
+  let t={id:Date.now(),userId:currentUser.id,msgs:[]};
   tickets.push(t); localStorage.setItem('tickets',JSON.stringify(tickets)); renderTickets();
 }
-function renderTickets() {
+function renderTickets(){
   let container=document.getElementById('ticketsContainer'); container.innerHTML='';
-  let filteredTickets = currentUser && currentUser.name==='admin' ? tickets : tickets.filter(t=>t.userId===currentUser.id);
+  let filteredTickets=currentUser && currentUser.name==='admin'?tickets:tickets.filter(t=>t.userId===currentUser.id);
   filteredTickets.forEach(t=>{
     let div=document.createElement('div'); div.className='ticket';
     div.innerHTML=`<h4>Ticket #${t.id}</h4>
@@ -260,7 +242,7 @@ function renderTickets() {
     msgsDiv.innerHTML=t.msgs.map(m=>`<div class="ticket-msg"><strong>${m.user}:</strong> ${m.text}</div>`).join('');
   });
 }
-function sendTicketMsg(ticketId) {
+function sendTicketMsg(ticketId){
   let input=document.getElementById(`ticketInput${ticketId}`);
   let text=input.value.trim(); if(!text) return;
   let ticket=tickets.find(t=>t.id===ticketId);
@@ -269,13 +251,22 @@ function sendTicketMsg(ticketId) {
   input.value=''; renderTickets();
 }
 
-// =======================
-// Mode sombre / clair
-// =======================
-function toggleMode() {
+// ================= Mode sombre / clair
+function toggleMode(){
   darkMode=!darkMode;
-  document.body.style.background = darkMode?'#111':'#eee';
-  document.body.style.color = darkMode?'#fff':'#111';
+  document.body.style.background=darkMode?'#111':'#eee';
+  document.body.style.color=darkMode?'#fff':'#111';
+}
+
+// ================= Modifier profil
+function showProfileBtn(){ document.getElementById('profileBtn').style.display='inline-block'; }
+function editProfile(){
+  let newName=prompt("Nouveau nom:",currentUser.name);
+  let newPass=prompt("Nouveau mot de passe:");
+  if(newName){ currentUser.name=newName; }
+  if(newPass){ currentUser.pass=newPass; }
+  if(currentUser.id!=='admin'){ users=users.map(u=>u.id===currentUser.id?currentUser:u); localStorage.setItem('users',JSON.stringify(users)); }
+  alert("Profil modifié !");
 }
 
 renderAnnonces();
@@ -284,3 +275,4 @@ renderTickets();
 </script>
 </body>
 </html>
+

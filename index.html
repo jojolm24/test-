@@ -3,209 +3,277 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arthur & Jojo</title>
-
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
+<title>Arthur & Jojo - Site</title>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 <style>
-  body { margin:0; font-family:sans-serif; background:#111; color:#fff; }
-  header { display:flex; justify-content:space-between; align-items:center; padding:1rem; background:#222; }
-  .menu-btn { padding:0.5rem 1rem; cursor:pointer; background:linear-gradient(90deg,#ff5f6d,#ffc371); border:none; border-radius:5px; color:#000; font-weight:bold; }
-  .dropdown { display:none; flex-direction:column; position:absolute; right:10px; top:50px; background:#333; border-radius:5px; }
-  .dropdown.show { display:flex; }
-  .dropdown button { background:#555; color:#fff; border:none; padding:0.5rem; cursor:pointer; border-radius:5px; margin:2px 0; }
-  .dropdown button:hover { background:#666; }
-  .container { padding:1rem; }
-  .ticket-btn { padding:0.8rem 1.5rem; margin:1rem 0; border:none; border-radius:8px; cursor:pointer; background:linear-gradient(90deg,#6a11cb,#2575fc); color:#fff; font-weight:bold; }
-  .admin-panel { background:#222; padding:1rem; border-radius:10px; margin-top:1rem; display:none; }
-  .admin-panel h3 { margin-top:0; }
-  input, textarea { width:100%; margin:0.5rem 0; padding:0.5rem; border-radius:5px; border:none; }
-  button { transition:0.2s; }
-  button:hover { transform: scale(1.05); }
-  .ticket { background:#333; padding:0.5rem; border-radius:5px; margin-bottom:0.5rem; }
-  footer { text-align:center; margin-top:2rem; color:#aaa; }
+    /* ====== Style général sombre et dégradé ====== */
+    body {
+        margin:0; padding:0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
+        color: #fff;
+        cursor: url('https://i.ibb.co/W6Hk9Yx/cursor.png'), auto;
+    }
+    h1,h2,h3,h4{color: #fff;}
+    a{color:#fff; text-decoration:none;}
+    a:hover{color:#f39c12;}
+
+    /* ====== Header ====== */
+    header{
+        text-align:center; padding:2rem;
+        background: linear-gradient(90deg, #1c1c1c, #333, #1c1c1c);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+    }
+    header h1{font-size:2.5rem; background: linear-gradient(90deg,#fff,#888); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
+
+    /* ====== Boutons stylés ====== */
+    .btn{
+        background: linear-gradient(135deg,#444,#222);
+        border:none; padding:0.8rem 1.5rem;
+        color:#fff; font-weight:bold;
+        border-radius:25px; cursor:pointer;
+        transition: all 0.3s ease;
+        margin:0.3rem;
+    }
+    .btn:hover{
+        background: linear-gradient(135deg,#555,#111);
+        transform: scale(1.05);
+    }
+
+    /* ====== Panels ====== */
+    .panel{
+        max-width:900px; margin:2rem auto; padding:2rem;
+        background:#222; border-radius:15px;
+        box-shadow:0 4px 10px rgba(0,0,0,0.6);
+    }
+
+    /* ====== Tickets ====== */
+    .ticket{
+        background:#333; padding:1rem; margin:1rem 0; border-radius:10px;
+    }
+
+    /* ====== Vidéos ====== */
+    .video-card{
+        background:#222; padding:1rem; margin:1rem 0; border-radius:10px;
+    }
+
+    /* ====== Annonces ====== */
+    .announcement{
+        background:#444; padding:1rem; margin:1rem 0; border-radius:10px;
+    }
+
+    footer{
+        text-align:center; padding:2rem; margin-top:2rem;
+        background:#111; border-top:2px solid #333;
+    }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">Arthur & Jojo ❤️</div>
-  <div style="position:relative;">
-    <button class="menu-btn" id="mainMenuBtn">☰ Se connecter</button>
-    <div class="dropdown" id="loginDropdown">
-      <button id="userLoginBtn">👤 Utilisateur</button>
-      <button id="adminLoginBtn">🛡️ Admin</button>
-    </div>
-  </div>
+    <h1>Arthur & Jojo</h1>
+    <button class="btn" id="loginUser">Se connecter (Utilisateur)</button>
+    <button class="btn" id="loginAdmin">Accès Administratif</button>
+    <button class="btn" id="openTicketBtn">Ouvrir un Ticket</button>
 </header>
 
-<div class="container">
-  <h2>Tickets</h2>
-  <button class="ticket-btn" id="openTicketBtn">➕ Ouvrir un ticket</button>
-  <div id="ticketsContainer"></div>
+<div class="panel" id="adminPanel" style="display:none;">
+    <h2>Admin Panel</h2>
+    <input type="text" id="videoURL" placeholder="URL YouTube">
+    <button class="btn" onclick="addVideo()">Ajouter Vidéo</button>
+    <input type="text" id="announcementText" placeholder="Texte Annonce">
+    <button class="btn" onclick="addAnnouncement()">Ajouter Annonce</button>
+    <h3>Tickets :</h3>
+    <div id="ticketList"></div>
+    <h3>Vidéos :</h3>
+    <div id="videoList"></div>
+    <h3>Annonces :</h3>
+    <div id="announcementList"></div>
+</div>
 
-  <div class="admin-panel" id="adminPanel">
-    <h3>Admin Panel</h3>
-    
-    <h4>Ajouter une vidéo :</h4>
-    <input type="text" id="videoTitle" placeholder="Titre">
-    <input type="text" id="videoLink" placeholder="Lien YouTube">
-    <button id="addVideoBtn">Ajouter vidéo</button>
-
-    <h4>Ajouter une annonce :</h4>
-    <textarea id="announcementText" placeholder="Texte de l'annonce"></textarea>
-    <button id="addAnnouncementBtn">Ajouter annonce</button>
-
-    <h4>Tickets en cours :</h4>
-    <div id="adminTicketsContainer"></div>
-  </div>
+<div class="panel" id="userPanel" style="display:none;">
+    <h2>Vos Tickets</h2>
+    <div id="myTickets"></div>
 </div>
 
 <footer>
-  Codé par Jojo fait avec le ❤️
+    Codé par Jojo fait avec le ❤️
 </footer>
 
 <script>
-  // ---- Firebase Config ----
-  const firebaseConfig = {
-    apiKey: "VOTRE_API_KEY",
-    authDomain: "VOTRE_PROJET.firebaseapp.com",
-    databaseURL: "https://VOTRE_PROJET.firebaseio.com",
-    projectId: "VOTRE_PROJET",
-    storageBucket: "VOTRE_PROJET.appspot.com",
-    messagingSenderId: "XXXX",
-    appId: "XXXX"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.database();
+    // ====== Firebase Config ======
+    const firebaseConfig = {
+        apiKey: "TON_API_KEY",
+        authDomain: "TON_PROJET.firebaseapp.com",
+        databaseURL: "https://TON_PROJET.firebaseio.com",
+        projectId: "TON_PROJET",
+        storageBucket: "TON_PROJET.appspot.com",
+        messagingSenderId: "XXXX",
+        appId: "XXXX"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
 
-  // ---- Menu Dropdown ----
-  const menuBtn = document.getElementById('mainMenuBtn');
-  const dropdown = document.getElementById('loginDropdown');
-  const userBtn = document.getElementById('userLoginBtn');
-  const adminBtn = document.getElementById('adminLoginBtn');
-  const openTicketBtn = document.getElementById('openTicketBtn');
-  const adminPanel = document.getElementById('adminPanel');
-  const ticketsContainer = document.getElementById('ticketsContainer');
-  const adminTicketsContainer = document.getElementById('adminTicketsContainer');
+    let currentUser = null;
+    let isAdmin = false;
 
-  menuBtn.addEventListener('click', () => dropdown.classList.toggle('show'));
-  window.addEventListener('click', e => { if(!e.target.matches('#mainMenuBtn')) dropdown.classList.remove('show'); });
-
-  // ---- Google Auth ----
-  userBtn.addEventListener('click', async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    try {
-      const result = await auth.signInWithPopup(provider);
-      alert("Connecté en tant que " + result.user.displayName);
-      loadTickets();
-    } catch(err){ alert(err.message); }
-  });
-
-  // ---- Admin Login ----
-  adminBtn.addEventListener('click', () => {
-    const code = prompt("Entrez le code admin :");
-    if(code === "2516"){
-      alert("Accès admin activé !");
-      adminPanel.style.display = "block";
-      loadAdminTickets();
-    } else alert("Code incorrect");
-  });
-
-  // ---- Tickets ----
-  openTicketBtn.addEventListener('click', async () => {
-    const user = auth.currentUser;
-    if(!user){ alert("Connectez-vous d'abord !"); return; }
-    const ticketRef = db.ref('tickets').push();
-    const ticketData = { userId: user.uid, messages: [] };
-    await ticketRef.set(ticketData);
-    alert("Ticket créé, discussion ouverte !");
-    loadTickets(); 
-  });
-
-  function loadTickets(){
-    const user = auth.currentUser;
-    if(!user) return;
-    db.ref('tickets').once('value', snapshot => {
-      ticketsContainer.innerHTML = '';
-      snapshot.forEach(ticketSnap => {
-        const ticket = ticketSnap.val();
-        if(ticket.userId === user.uid){
-          const div = document.createElement('div');
-          div.className = 'ticket';
-          div.innerHTML = `Ticket ID: ${ticketSnap.key}<br>`;
-          ticket.messages.forEach(msg => { div.innerHTML += `${msg}<br>`; });
-          const input = document.createElement('input');
-          input.placeholder = "Envoyer un message";
-          input.addEventListener('keypress', async e => {
-            if(e.key === "Enter" && input.value){
-              ticket.messages.push(input.value);
-              await db.ref('tickets/'+ticketSnap.key+'/messages').set(ticket.messages);
-              input.value = '';
-              loadTickets();
-              loadAdminTickets();
-            }
-          });
-          div.appendChild(input);
-          ticketsContainer.appendChild(div);
-        }
-      });
-    });
-  }
-
-  // ---- Admin Tickets ----
-  function loadAdminTickets(){
-    db.ref('tickets').once('value', snapshot => {
-      adminTicketsContainer.innerHTML = '';
-      snapshot.forEach(ticketSnap => {
-        const ticket = ticketSnap.val();
-        const div = document.createElement('div');
-        div.className = 'ticket';
-        div.innerHTML = `Ticket ID: ${ticketSnap.key} (User: ${ticket.userId})<br>`;
-        ticket.messages.forEach(msg => { div.innerHTML += `${msg}<br>`; });
-        const input = document.createElement('input');
-        input.placeholder = "Répondre";
-        input.addEventListener('keypress', async e => {
-          if(e.key === "Enter" && input.value){
-            ticket.messages.push("Staff: "+input.value);
-            await db.ref('tickets/'+ticketSnap.key+'/messages').set(ticket.messages);
-            input.value = '';
-            loadTickets();
-            loadAdminTickets();
-          }
+    // ====== Connexion Google ======
+    document.getElementById('loginUser').onclick = () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider).then(result=>{
+            currentUser = result.user;
+            alert("Connecté en tant que : "+currentUser.displayName);
+            document.getElementById('userPanel').style.display = "block";
+            loadMyTickets();
         });
-        div.appendChild(input);
-        adminTicketsContainer.appendChild(div);
-      });
-    });
-  }
-
-  // ---- Admin: Ajouter vidéo ----
-  document.getElementById('addVideoBtn').addEventListener('click', () => {
-    const title = document.getElementById('videoTitle').value;
-    const link = document.getElementById('videoLink').value;
-    if(title && link){
-      db.ref('videos').push({ title, link });
-      alert("Vidéo ajoutée !");
     }
-  });
 
-  // ---- Admin: Ajouter annonce ----
-  document.getElementById('addAnnouncementBtn').addEventListener('click', () => {
-    const text = document.getElementById('announcementText').value;
-    if(text){
-      db.ref('announcements').push({ text });
-      alert("Annonce ajoutée !");
+    // ====== Connexion Admin ======
+    document.getElementById('loginAdmin').onclick = () => {
+        const code = prompt("Entrez le code admin :");
+        if(code==='2516'){
+            isAdmin = true;
+            document.getElementById('adminPanel').style.display = "block";
+        }else alert("Code incorrect !");
     }
-  });
 
-  auth.onAuthStateChanged(user => { if(user) loadTickets(); });
+    // ====== Tickets ======
+    document.getElementById('openTicketBtn').onclick = () => {
+        if(!currentUser){
+            alert("Connectez-vous d'abord !");
+            return;
+        }
+        const ticketRef = db.ref('tickets').push();
+        ticketRef.set({
+            userId: currentUser.uid,
+            userName: currentUser.displayName,
+            messages:[{from:"user",text:"Nouveau ticket ouvert"}]
+        });
+        alert("Ticket créé !");
+        loadMyTickets();
+        if(isAdmin) loadTicketsAdmin();
+    }
+
+    function loadMyTickets(){
+        if(!currentUser) return;
+        db.ref('tickets').orderByChild('userId').equalTo(currentUser.uid).on('value', snap=>{
+            const container = document.getElementById('myTickets');
+            container.innerHTML="";
+            snap.forEach(child=>{
+                const t = child.val();
+                const div = document.createElement('div');
+                div.className='ticket';
+                div.innerHTML=`<strong>Ticket ID: ${child.key}</strong><br>
+                ${t.messages.map(m=>`<p><em>${m.from}</em>: ${m.text}</p>`).join('')}
+                <input type="text" id="msg_${child.key}" placeholder="Répondre">
+                <button onclick="sendTicketMessage('${child.key}')">Envoyer</button>`;
+                container.appendChild(div);
+            });
+        });
+    }
+
+    function sendTicketMessage(ticketId){
+        const msgInput = document.getElementById('msg_'+ticketId);
+        const text = msgInput.value.trim();
+        if(!text) return;
+        db.ref('tickets/'+ticketId+'/messages').push({
+            from: currentUser.displayName,
+            text:text
+        });
+        msgInput.value='';
+        loadMyTickets();
+        if(isAdmin) loadTicketsAdmin();
+    }
+
+    // ====== Admin Tickets ======
+    function loadTicketsAdmin(){
+        db.ref('tickets').on('value', snap=>{
+            const container = document.getElementById('ticketList');
+            container.innerHTML="";
+            snap.forEach(child=>{
+                const t = child.val();
+                const div = document.createElement('div');
+                div.className='ticket';
+                div.innerHTML=`<strong>${t.userName} (${child.key})</strong><br>
+                ${t.messages.map(m=>`<p><em>${m.from}</em>: ${m.text}</p>`).join('')}
+                <input type="text" id="adm_${child.key}" placeholder="Répondre">
+                <button onclick="sendAdminMessage('${child.key}')">Envoyer</button>
+                <button onclick="deleteTicket('${child.key}')">Supprimer</button>`;
+                container.appendChild(div);
+            });
+        });
+    }
+
+    function sendAdminMessage(ticketId){
+        const msgInput = document.getElementById('adm_'+ticketId);
+        const text = msgInput.value.trim();
+        if(!text) return;
+        db.ref('tickets/'+ticketId+'/messages').push({
+            from:"Admin",
+            text:text
+        });
+        msgInput.value='';
+        loadTicketsAdmin();
+    }
+
+    function deleteTicket(ticketId){
+        db.ref('tickets/'+ticketId).remove();
+    }
+
+    // ====== Vidéos ======
+    function addVideo(){
+        const url = document.getElementById('videoURL').value.trim();
+        if(!url) return;
+        db.ref('videos').push({url:url});
+        document.getElementById('videoURL').value='';
+        loadVideos();
+    }
+    function loadVideos(){
+        db.ref('videos').on('value', snap=>{
+            const container = document.getElementById('videoList');
+            container.innerHTML="";
+            snap.forEach(child=>{
+                const v = child.val();
+                const div = document.createElement('div');
+                div.className='video-card';
+                div.innerHTML=`<a href="${v.url}" target="_blank">${v.url}</a>
+                <button onclick="deleteVideo('${child.key}')">Supprimer</button>`;
+                container.appendChild(div);
+            });
+        });
+    }
+    function deleteVideo(id){ db.ref('videos/'+id).remove(); }
+
+    // ====== Annonces ======
+    function addAnnouncement(){
+        const txt = document.getElementById('announcementText').value.trim();
+        if(!txt) return;
+        db.ref('announcements').push({text:txt});
+        document.getElementById('announcementText').value='';
+        loadAnnouncements();
+    }
+    function loadAnnouncements(){
+        db.ref('announcements').on('value', snap=>{
+            const container = document.getElementById('announcementList');
+            container.innerHTML="";
+            snap.forEach(child=>{
+                const a = child.val();
+                const div = document.createElement('div');
+                div.className='announcement';
+                div.innerHTML=`${a.text} <button onclick="deleteAnnouncement('${child.key}')">Supprimer</button>`;
+                container.appendChild(div);
+            });
+        });
+    }
+    function deleteAnnouncement(id){ db.ref('announcements/'+id).remove(); }
+
+    // ====== Charger au démarrage ======
+    loadVideos();
+    loadAnnouncements();
 </script>
 
 </body>
 </html>
-

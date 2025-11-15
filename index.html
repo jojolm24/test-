@@ -5,172 +5,178 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arthur & Jojo - YouTube</title>
 <style>
-  body {margin:0; font-family:'Segoe UI', sans-serif; background:#121212; color:#fff; transition:0.5s;}
-  header {background:#1a1a1a; padding:2rem; text-align:center;}
-  header h1 {font-size:3rem; color:#ff6347;}
-  nav {display:flex; justify-content:center; gap:1rem; margin-top:1rem;}
-  nav a {padding:.5rem 1rem; background:#222; border-radius:20px; transition:.3s; cursor:pointer;}
-  nav a:hover {background:#444;}
-  .container {max-width:1200px; margin:auto; padding:2rem;}
-  section {margin-bottom:2rem; background:#1f1f1f; border-radius:15px; padding:1.5rem;}
-  .card {background:#2a2a2a; padding:1rem; border-radius:10px; margin-bottom:1rem;}
-  button {padding:.5rem 1rem; border:none; border-radius:20px; cursor:pointer; transition:.3s; background:#444; color:#fff;}
-  button:hover {background:#666;}
-  
-  /* Admin Modal */
-  .modal {position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.95); display:none; justify-content:center; align-items:center; z-index:1000;}
-  .modal-content {background:#222; padding:2rem; border-radius:15px; width:90%; max-width:600px; position:relative;}
-  .close {position:absolute; top:10px; right:20px; cursor:pointer; font-size:1.5rem;}
-  
-  /* Ticket chat */
-  .ticket-chat {max-height:300px; overflow-y:auto; background:#111; padding:1rem; border-radius:10px; margin-top:1rem;}
-  .ticket-msg {margin-bottom:0.5rem;}
-  .ticket-msg.user {color:#0f0;}
-  .ticket-msg.staff {color:#0ff;}
-  
-  /* Modes */
-  body.horror {background:#000; color:#f00;}
-  body.horror .card {background:#330000;}
-  .shake {animation:shake 0.5s infinite;}
-  @keyframes shake {
-    0%{transform:translate(1px,1px);}
-    10%{transform:translate(-1px,-2px);}
-    20%{transform:translate(-3px,0);}
-    30%{transform:translate(3px,2px);}
-    40%{transform:translate(1px,-1px);}
-    50%{transform:translate(-1px,2px);}
-    60%{transform:translate(-3px,1px);}
-    70%{transform:translate(3px,1px);}
-    80%{transform:translate(-1px,-1px);}
-    90%{transform:translate(1px,2px);}
-    100%{transform:translate(1px,-2px);}
-  }
+body {margin:0; font-family:'Segoe UI', sans-serif; background:#121212; color:#fff; transition:0.5s;}
+header {background:#1a1a1a; padding:2rem; text-align:center;}
+header h1 {font-size:3rem; color:#ff6347;}
+nav {display:flex; justify-content:center; gap:1rem; margin-top:1rem;}
+nav a {padding:.5rem 1rem; background:#222; border-radius:20px; transition:.3s; cursor:pointer;}
+nav a:hover {background:#444;}
+.container {max-width:1200px; margin:auto; padding:2rem;}
+section {margin-bottom:2rem; background:#1f1f1f; border-radius:15px; padding:1.5rem;}
+.card {background:#2a2a2a; padding:1rem; border-radius:10px; margin-bottom:1rem;}
+button {padding:.5rem 1rem; border:none; border-radius:20px; cursor:pointer; transition:.3s; background:#444; color:#fff;}
+button:hover {background:#666;}
+
+/* Admin Modal */
+.modal {position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.95); display:none; justify-content:center; align-items:center; z-index:1000;}
+.modal-content {background:#222; padding:2rem; border-radius:15px; width:95%; max-width:900px; position:relative;}
+.close {position:absolute; top:10px; right:20px; cursor:pointer; font-size:1.5rem;}
+.tab {display:flex; gap:1rem; margin-bottom:1rem;}
+.tab button {flex:1;}
+.tab button.active {background:#ff6347; color:#fff;}
+.tab-content {display:none;}
+.tab-content.active {display:block;}
+
+/* Ticket chat */
+.ticket-chat {max-height:300px; overflow-y:auto; background:#111; padding:1rem; border-radius:10px; margin-top:1rem;}
+.ticket-msg {margin-bottom:0.5rem;}
+.ticket-msg.user {color:#0f0;}
+.ticket-msg.staff {color:#0ff;}
+
+/* Modes */
+body.horror{background:#000;color:#f00;}
+body.horror .card{background:#330000;}
+.shake{animation:shake 0.5s infinite;}
+@keyframes shake{
+0%{transform:translate(1px,1px);}10%{transform:translate(-1px,-2px);}20%{transform:translate(-3px,0);}30%{transform:translate(3px,2px);}40%{transform:translate(1px,-1px);}50%{transform:translate(-1px,2px);}60%{transform:translate(-3px,1px);}70%{transform:translate(3px,1px);}80%{transform:translate(-1px,-1px);}90%{transform:translate(1px,2px);}100%{transform:translate(1px,-2px);}}
 </style>
 </head>
 <body>
 <header>
-  <h1>Arthur & Jojo</h1>
-  <nav>
-    <a onclick="scrollToSection('videos')">Vidéos</a>
-    <a onclick="scrollToSection('annonces')">Annonces</a>
-    <a onclick="scrollToSection('tickets')">Tickets</a>
-    <a onclick="toggleMode()">Mode Sombre/Horreur</a>
-    <a onclick="openAdmin()">Admin</a>
-  </nav>
+<h1>Arthur & Jojo</h1>
+<nav>
+<a onclick="scrollToSection('videos')">Vidéos</a>
+<a onclick="scrollToSection('annonces')">Annonces</a>
+<a onclick="scrollToSection('tickets')">Tickets</a>
+<a onclick="toggleMode()">Mode Sombre/Horreur</a>
+<a onclick="openAdmin()">Admin</a>
+</nav>
 </header>
 
 <div class="container">
-  <section id="videos">
-    <h2>Vidéos</h2>
-    <div id="videoList"></div>
-  </section>
-  <section id="annonces">
-    <h2>Annonces</h2>
-    <div id="annonceList"></div>
-  </section>
-  <section id="tickets">
-    <h2>Tickets Privés</h2>
-    <input id="usernameInput" placeholder="Votre pseudo">
-    <button onclick="openTicket()">Ouvrir Ticket</button>
-    <div id="ticketContainer"></div>
-  </section>
+<section id="videos"><h2>Vidéos</h2><div id="videoList"></div></section>
+<section id="annonces"><h2>Annonces</h2><div id="annonceList"></div></section>
+<section id="tickets">
+<h2>Tickets Privés</h2>
+<input id="usernameInput" placeholder="Votre pseudo">
+<button onclick="openTicket()">Ouvrir Ticket</button>
+<div id="ticketContainer"></div>
+</section>
 </div>
 
 <!-- Admin Modal -->
 <div class="modal" id="adminModal">
-  <div class="modal-content">
-    <span class="close" onclick="closeAdmin()">&times;</span>
-    <h2>🔒 Panel Admin</h2>
-    <input type="password" id="adminPassword" placeholder="Code: 1519">
-    <button onclick="checkAdmin()">Valider</button>
-    <div id="adminPanel" style="display:none; margin-top:1rem;">
-      <button onclick="addVideo()">Ajouter Vidéo</button>
-      <button onclick="addAnnonce()">Ajouter Annonce</button>
-    </div>
-  </div>
+<div class="modal-content">
+<span class="close" onclick="closeAdmin()">&times;</span>
+<h2>🔒 Panel Admin</h2>
+<input type="password" id="adminPassword" placeholder="Code: 1519">
+<button onclick="checkAdmin()">Valider</button>
+<div id="adminPanel" style="display:none; margin-top:1rem;">
+<div class="tab">
+<button class="tablinks active" onclick="openTab(event,'videosTab')">Vidéos</button>
+<button class="tablinks" onclick="openTab(event,'annoncesTab')">Annonces</button>
+<button class="tablinks" onclick="openTab(event,'ticketsTab')">Tickets</button>
+</div>
+<div id="videosTab" class="tab-content active"></div>
+<div id="annoncesTab" class="tab-content"></div>
+<div id="ticketsTab" class="tab-content"></div>
+</div>
+</div>
 </div>
 
 <script>
-let isAdmin = false;
-let videos = JSON.parse(localStorage.getItem('videos')) || [];
-let annonces = JSON.parse(localStorage.getItem('annonces')) || [];
-let tickets = JSON.parse(localStorage.getItem('tickets')) || {};
+let isAdmin=false;
+let videos=JSON.parse(localStorage.getItem('videos'))||[];
+let annonces=JSON.parse(localStorage.getItem('annonces'))||[];
+let tickets=JSON.parse(localStorage.getItem('tickets'))||{};
 
-function saveData(){
-  localStorage.setItem('videos', JSON.stringify(videos));
-  localStorage.setItem('annonces', JSON.stringify(annonces));
-  localStorage.setItem('tickets', JSON.stringify(tickets));
-}
+function saveData(){localStorage.setItem('videos',JSON.stringify(videos));localStorage.setItem('annonces',JSON.stringify(annonces));localStorage.setItem('tickets',JSON.stringify(tickets));}
 
-// Render
 function renderVideos(){
-  const container = document.getElementById('videoList');
-  container.innerHTML = videos.map((v,i)=>`
-    <div class="card">
-      <iframe src="${v}" frameborder="0" allowfullscreen width="100%" height="300"></iframe>
-      ${isAdmin?`<button onclick="deleteVideo(${i})">Supprimer</button>`:""}
-    </div>
-  `).join('');
-}
-function renderAnnonces(){
-  const container = document.getElementById('annonceList');
-  container.innerHTML = annonces.map((a,i)=>`
-    <div class="card">
-      <p>${a}</p>
-      ${isAdmin?`<button onclick="deleteAnnonce(${i})">Supprimer</button>`:""}
-    </div>
-  `).join('');
+const container=document.getElementById('videoList');
+container.innerHTML=videos.map((v,i)=>`<div class="card"><iframe src="${v}" frameborder="0" allowfullscreen width="100%" height="300"></iframe>${isAdmin?`<button onclick="deleteVideo(${i})">Supprimer</button>`:""}</div>`).join('');
+renderAdminVideos();
 }
 
-// Admin
+function renderAnnonces(){
+const container=document.getElementById('annonceList');
+container.innerHTML=annonces.map((a,i)=>`<div class="card"><p>${a}</p>${isAdmin?`<button onclick="deleteAnnonce(${i})">Supprimer</button>`:""}</div>`).join('');
+renderAdminAnnonces();
+}
+
+function renderAdminVideos(){
+const container=document.getElementById('videosTab');
+container.innerHTML=`<button onclick="addVideo()">Ajouter Vidéo</button>${videos.map((v,i)=>`<div class="card"><iframe src="${v}" frameborder="0" allowfullscreen width="100%" height="150"></iframe><button onclick="deleteVideo(${i})">Supprimer</button></div>`).join('')}`;
+}
+
+function renderAdminAnnonces(){
+const container=document.getElementById('annoncesTab');
+container.innerHTML=`<button onclick="addAnnonce()">Ajouter Annonce</button>${annonces.map((a,i)=>`<div class="card"><p>${a}</p><button onclick="deleteAnnonce(${i})">Supprimer</button></div>`).join('')}`;
+}
+
 function openAdmin(){document.getElementById('adminModal').style.display='flex';}
 function closeAdmin(){document.getElementById('adminModal').style.display='none';}
 function checkAdmin(){
-  const pass = document.getElementById('adminPassword').value;
-  if(pass==='1519'){isAdmin=true; document.getElementById('adminPanel').style.display='block'; renderVideos(); renderAnnonces(); alert("Admin activé");}
-  else alert("Code incorrect");
+const pass=document.getElementById('adminPassword').value;
+if(pass==='1519'){isAdmin=true; document.getElementById('adminPanel').style.display='block'; renderVideos(); renderAnnonces(); renderAdminTickets(); alert("Admin activé");}
+else alert("Code incorrect");
 }
+
 function addVideo(){let url=prompt("URL YouTube"); if(url){videos.push(url); saveData(); renderVideos();}}
 function deleteVideo(i){videos.splice(i,1); saveData(); renderVideos();}
 function addAnnonce(){let txt=prompt("Texte annonce"); if(txt){annonces.push(txt); saveData(); renderAnnonces();}}
 function deleteAnnonce(i){annonces.splice(i,1); saveData(); renderAnnonces();}
 
 // Tickets
+function generateID(){return 'TICKET-'+Math.floor(Math.random()*100000);}
 function openTicket(){
-  const user = document.getElementById('usernameInput').value.trim();
-  if(!user){alert("Entrez votre pseudo !"); return;}
-  if(!tickets[user]) tickets[user] = [];
-  renderTicket(user);
+const user=document.getElementById('usernameInput').value.trim();
+if(!user){alert("Entrez votre pseudo !");return;}
+if(!tickets[user]) tickets[user]={id:generateID(), messages:[]};
+renderTicket(user);
 }
 
 function renderTicket(user){
-  const container = document.getElementById('ticketContainer');
-  container.innerHTML = `
-    <div class="card">
-      <h3>Ticket Privé: ${user}</h3>
-      <div class="ticket-chat" id="chat-${user}">${tickets[user].map(m=>`<p class="ticket-msg ${m.sender}">${m.sender}: ${m.text}</p>`).join('')}</div>
-      <input id="msgInput-${user}" placeholder="Message...">
-      <button onclick="sendMessage('${user}')">Envoyer</button>
-    </div>
-  `;
+const container=document.getElementById('ticketContainer');
+container.innerHTML=`<div class="card"><h3>Ticket: ${tickets[user].id}</h3><div class="ticket-chat" id="chat-${user}">${tickets[user].messages.map(m=>`<p class="ticket-msg ${m.sender}">${m.sender}: ${m.text}</p>`).join('')}</div><input id="msgInput-${user}" placeholder="Message..."><button onclick="sendMessage('${user}')">Envoyer</button></div>`;
 }
 
 function sendMessage(user){
-  const input = document.getElementById(`msgInput-${user}`);
-  const text = input.value.trim();
-  if(!text) return;
-  tickets[user].push({sender:'user', text});
-  if(isAdmin) tickets[user].push({sender:'staff', text:"[Staff répondra ici]"});
-  saveData();
-  renderTicket(user);
+const input=document.getElementById(`msgInput-${user}`);
+const text=input.value.trim();
+if(!text) return;
+tickets[user].messages.push({sender:'user', text});
+saveData(); renderTicket(user);
+if(isAdmin) renderAdminTickets();
+}
+
+function renderAdminTickets(){
+const container=document.getElementById('ticketsTab');
+container.innerHTML=Object.keys(tickets).map(user=>`<div class="card"><h4>${user} - ${tickets[user].id}</h4><div class="ticket-chat">${tickets[user].messages.map(m=>`<p class="ticket-msg ${m.sender}">${m.sender}: ${m.text}</p>`).join('')}</div><input id="adminInput-${user}" placeholder="Répondre..."><button onclick="sendStaff('${user}')">Envoyer</button></div>`).join('');
+}
+
+function sendStaff(user){
+const input=document.getElementById(`adminInput-${user}`);
+const text=input.value.trim();
+if(!text) return;
+tickets[user].messages.push({sender:'staff', text});
+saveData(); renderAdminTickets(); if(document.getElementById(`chat-${user}`)) renderTicket(user);
 }
 
 // Modes sombre / horreur
 let dark=false;
 function toggleMode(){
-  dark=!dark;
-  document.body.classList.toggle('horror', dark);
-  if(dark) document.body.classList.add('shake'); else document.body.classList.remove('shake');
+dark=!dark;
+document.body.classList.toggle('horror', dark);
+if(dark) document.body.classList.add('shake'); else document.body.classList.remove('shake');
+}
+
+// Tabs admin
+function openTab(evt,tabName){
+document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+document.querySelectorAll('.tab button').forEach(b=>b.classList.remove('active'));
+document.getElementById(tabName).classList.add('active');
+evt.currentTarget.classList.add('active');
 }
 
 // Scroll nav

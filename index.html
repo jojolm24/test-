@@ -148,7 +148,7 @@ footer { text-align:center; margin-top:3rem; color:#888; font-size:0.9rem; }
 
 <script>
 let menuOpen=false;
-let currentUser=null;
+let currentUser=JSON.parse(localStorage.getItem('currentUser'))||null;
 let users=JSON.parse(localStorage.getItem('users'))||[];
 let tickets=JSON.parse(localStorage.getItem('tickets'))||[];
 let annonces=JSON.parse(localStorage.getItem('annonces'))||[];
@@ -172,13 +172,14 @@ function login(){
   let name=document.getElementById('loginName').value.trim();
   let pass=document.getElementById('loginPass').value.trim();
   if(loginType==='admin'){
-    if(pass===adminCode){ currentUser={name:'admin',id:'admin'}; openAdmin(); closeLogin(); showProfileBtn(); return; }
+    if(pass===adminCode){ currentUser={name:'admin',id:'admin'}; localStorage.setItem('currentUser',JSON.stringify(currentUser)); openAdmin(); closeLogin(); showProfileBtn(); return; }
     else{ document.getElementById('loginError').style.display='block'; return; }
   } else {
     if(!name||!pass){ document.getElementById('loginError').style.display='block'; return; }
     let user=users.find(u=>u.name===name && u.pass===pass);
     if(!user){ user={name:name,pass:pass,id:Date.now()}; users.push(user); localStorage.setItem('users',JSON.stringify(users)); }
     currentUser=user;
+    localStorage.setItem('currentUser',JSON.stringify(currentUser));
     closeLogin();
     showProfileBtn();
     renderTickets();
@@ -266,16 +267,22 @@ function toggleMode(){
 }
 
 // ================= Modifier profil
-function showProfileBtn(){ document.getElementById('profileBtn').style.display='inline-block'; }
+function showProfileBtn(){ if(currentUser && currentUser.name!=='admin') document.getElementById('profileBtn').style.display='inline-block'; }
 function editProfile(){
   let newName=prompt("Nouveau nom:",currentUser.name);
   let newPass=prompt("Nouveau mot de passe:");
   if(newName){ currentUser.name=newName; }
   if(newPass){ currentUser.pass=newPass; }
   if(currentUser.id!=='admin'){ users=users.map(u=>u.id===currentUser.id?currentUser:u); localStorage.setItem('users',JSON.stringify(users)); }
+  localStorage.setItem('currentUser',JSON.stringify(currentUser));
   alert("Profil modifié !");
 }
 
+// ================= Init affichage
+if(currentUser){
+  if(currentUser.name==='admin') openAdmin(); 
+  showProfileBtn();
+}
 renderAnnonces();
 renderVideos();
 renderTickets();

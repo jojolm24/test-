@@ -3,194 +3,194 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arthur & Jojo - Fan Site</title>
+<title>Arthur & Jojo - YouTube</title>
 <style>
-    /* RESET */
-    * {margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif;}
-    body {background:#111; color:#fff; transition: background 0.3s, color 0.3s;}
-    a {color:#1E90FF; text-decoration:none;}
+    /* ---------------- Global ---------------- */
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family:'Segoe UI', sans-serif; background:#111; color:white; transition: background 0.5s, color 0.5s;}
+    h1,h2,h3 {background: linear-gradient(90deg,#ff7f50,#ff6347,#ff4500); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
+    a {color:#00f; text-decoration:none;}
     a:hover {text-decoration:underline;}
-    h1,h2,h3 {margin-bottom:0.5rem;}
-    button {cursor:pointer; padding:0.5rem 1rem; margin:0.3rem; border:none; border-radius:5px; transition:0.3s;}
-    button:hover {opacity:0.8;}
-    /* Header */
-    header {padding:1rem; background:linear-gradient(90deg,#ff6a00,#ee0979); text-align:center;}
-    header h1 {font-size:2rem;}
-    nav {display:flex; justify-content:center; gap:1rem; background:#222; padding:0.5rem;}
-    nav a {padding:0.5rem 1rem; background:#333; border-radius:5px;}
-    /* Sections */
-    section {padding:2rem; border-bottom:1px solid #333;}
-    .container {max-width:1000px; margin:0 auto;}
-    /* Cards */
-    .card {background:#222; padding:1rem; margin:1rem 0; border-radius:10px;}
-    /* Admin/Staff */
-    .admin-panel, .staff-panel {display:none; background:#333; padding:2rem; border-radius:10px; margin:1rem 0;}
-    .show {display:block;}
-    /* Tickets */
-    .ticket {background:#444; padding:1rem; border-radius:8px; margin:0.5rem 0;}
-    .message {background:#555; padding:0.5rem; border-radius:5px; margin:0.3rem 0;}
-    /* Modes */
-    .mode-halloween {background:#2b0000;}
-    .mode-horror {background:#000; color:#f00;}
+
+    /* -------------- Header -------------- */
+    header {text-align:center; padding:2rem; background:#222; box-shadow:0 4px 10px rgba(0,0,0,0.7);}
+    header h1 {font-size:2.5rem;}
+    nav {display:flex; justify-content:center; flex-wrap:wrap; background:#333; padding:0.5rem;}
+    nav a {margin:0.5rem 1rem; padding:0.5rem 1rem; border-radius:20px; background:#444; transition:0.3s;}
+    nav a:hover {background:#666;}
+
+    /* ------------- Main -------------- */
+    .container {max-width:1200px; margin:2rem auto; padding:0 1rem;}
+    section {margin-bottom:2rem; padding:1.5rem; border-radius:15px; background:#222; box-shadow:0 4px 10px rgba(0,0,0,0.5);}
+
+    /* ------------ Videos / Annonces --------- */
+    .video-card, .annonce-card {background:#333; padding:1rem; margin-bottom:1rem; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.5);}
+    .video-card iframe {width:100%; height:300px; border-radius:10px;}
+    .admin-btn {padding:1rem 2rem; margin-top:1rem; border:none; border-radius:25px; cursor:pointer; background:#555; transition:0.3s;}
+    .admin-btn:hover {background:#777;}
+
+    /* ------------ Tickets ------------ */
+    #ticketSection {background:#111; padding:1rem;}
+    #ticketList {max-height:400px; overflow-y:auto; margin-top:1rem;}
+    .ticket {background:#333; padding:1rem; margin-bottom:0.5rem; border-radius:10px;}
+
+    /* ------------ Admin Modal ------------ */
+    .modal {position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:flex; justify-content:center; align-items:center; display:none;}
+    .modal-content {background:#222; padding:2rem; border-radius:15px; width:90%; max-width:500px; text-align:center;}
+    .close {position:absolute; top:10px; right:20px; cursor:pointer; font-size:1.5rem;}
+
+    /* ------------ Modes ------------ */
+    body.horror {background:#000; color:#f00;}
+    .shake {animation:shake 0.5s infinite;}
+    @keyframes shake {
+        0%{transform:translate(1px,1px) rotate(0deg);}
+        10%{transform:translate(-1px,-2px) rotate(-1deg);}
+        20%{transform:translate(-3px,0px) rotate(1deg);}
+        30%{transform:translate(3px,2px) rotate(0deg);}
+        40%{transform:translate(1px,-1px) rotate(1deg);}
+        50%{transform:translate(-1px,2px) rotate(-1deg);}
+        60%{transform:translate(-3px,1px) rotate(0deg);}
+        70%{transform:translate(3px,1px) rotate(-1deg);}
+        80%{transform:translate(-1px,-1px) rotate(1deg);}
+        90%{transform:translate(1px,2px) rotate(0deg);}
+        100%{transform:translate(1px,-2px) rotate(-1deg);}
+    }
+
 </style>
 </head>
 <body>
-
 <header>
-    <h1>Arthur & Jojo 🎬</h1>
-    <p><a href="https://www.youtube.com/channel/UCUk7-ajL9QIou0-klV9EeGQ" target="_blank">Voir la chaîne YouTube</a></p>
+    <h1>Arthur & Jojo</h1>
+    <nav>
+        <a href="#videos">Vidéos</a>
+        <a href="#annonces">Annonces</a>
+        <a href="#tickets">Tickets</a>
+        <a href="#" onclick="toggleMode()">Mode Sombre/Horreur</a>
+        <a href="#" onclick="openAdmin()">Admin</a>
+    </nav>
 </header>
 
-<nav>
-    <a href="#annonces">Annonces</a>
-    <a href="#videos">Vidéos</a>
-    <a href="#tickets">Tickets</a>
-    <a href="#secrets">Secrets</a>
-</nav>
-
 <div class="container">
-
-    <!-- Annonces -->
-    <section id="annonces">
-        <h2>📢 Annonces</h2>
-        <div id="annoncesList"></div>
-    </section>
-
-    <!-- Vidéos -->
     <section id="videos">
-        <h2>🎥 Vidéos</h2>
-        <div id="videosList"></div>
+        <h2>Vidéos</h2>
+        <div id="videoList"></div>
     </section>
 
-    <!-- Tickets -->
+    <section id="annonces">
+        <h2>Annonces</h2>
+        <div id="annonceList"></div>
+    </section>
+
     <section id="tickets">
-        <h2>🎫 Tickets</h2>
+        <h2>Tickets Privés</h2>
         <button onclick="createTicket()">Créer un ticket</button>
-        <div id="ticketsList"></div>
+        <div id="ticketList"></div>
     </section>
+</div>
 
-    <!-- Secrets -->
-    <section id="secrets">
-        <h2>🕵️‍♂️ Secrets</h2>
-        <p>Cliquez ou tapez des combinaisons pour découvrir des surprises...</p>
-    </section>
-
-    <!-- Admin Panel -->
-    <section>
-        <button onclick="openAdmin()">🔒 Admin</button>
-        <div id="adminPanel" class="admin-panel">
-            <h2>Panel Admin</h2>
-            <input type="password" id="adminPass" placeholder="Code d'accès">
-            <button onclick="loginAdmin()">Valider</button>
-
-            <div id="adminContent" style="display:none;">
-                <h3>Gestion Annonces</h3>
-                <input type="text" id="annonceInput" placeholder="Nouvelle annonce">
-                <button onclick="addAnnonce()">Ajouter</button>
-
-                <h3>Gestion Vidéos</h3>
-                <input type="text" id="videoInput" placeholder="Lien vidéo">
-                <button onclick="addVideo()">Ajouter</button>
-
-                <h3>Gestion Tickets</h3>
-                <div id="staffTickets"></div>
-
-                <h3>Mode</h3>
-                <button onclick="setMode('normal')">Normal</button>
-                <button onclick="setMode('dark')">Sombre</button>
-                <button onclick="setMode('halloween')">Halloween</button>
-                <button onclick="setMode('horror')">Horreur</button>
-            </div>
+<!-- Admin Modal -->
+<div class="modal" id="adminModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeAdmin()">&times;</span>
+        <h2>🔒 Panel Admin</h2>
+        <input type="password" id="adminPassword" placeholder="Code: 1519">
+        <button onclick="checkAdmin()">Valider</button>
+        <div id="adminPanel" style="display:none; margin-top:1rem;">
+            <button onclick="addVideo()">Ajouter Vidéo</button>
+            <button onclick="addAnnonce()">Ajouter Annonce</button>
         </div>
-    </section>
-
+    </div>
 </div>
 
 <script>
-/* --- Admin --- */
 let isAdmin = false;
-function openAdmin() { document.getElementById('adminPanel').classList.add('show'); }
-function loginAdmin(){
-    if(document.getElementById('adminPass').value === '1519'){
-        isAdmin = true;
-        document.getElementById('adminContent').style.display='block';
-        alert('✅ Admin activé');
-        loadAdminTickets();
-    } else { alert('❌ Code incorrect'); }
-}
-
-/* --- Annonces --- */
-let annonces = JSON.parse(localStorage.getItem('annonces')) || [];
-function addAnnonce(){
-    const val = document.getElementById('annonceInput').value;
-    if(val){ annonces.push(val); localStorage.setItem('annonces', JSON.stringify(annonces)); displayAnnonces(); document.getElementById('annonceInput').value=''; }
-}
-function displayAnnonces(){
-    document.getElementById('annoncesList').innerHTML = annonces.map((a,i)=>`<div class="card">${a} ${isAdmin?`<button onclick="deleteAnnonce(${i})">Supprimer</button>`:''}</div>`).join('');
-}
-function deleteAnnonce(i){ annonces.splice(i,1); localStorage.setItem('annonces', JSON.stringify(annonces)); displayAnnonces(); }
-displayAnnonces();
-
-/* --- Vidéos --- */
 let videos = JSON.parse(localStorage.getItem('videos')) || [];
-function addVideo(){ 
-    const val = document.getElementById('videoInput').value;
-    if(val){ videos.push(val); localStorage.setItem('videos', JSON.stringify(videos)); displayVideos(); document.getElementById('videoInput').value=''; }
-}
-function displayVideos(){
-    document.getElementById('videosList').innerHTML = videos.map((v,i)=>`<div class="card"><iframe width="300" height="170" src="${v.replace('watch?v=','embed/')}" frameborder="0" allowfullscreen></iframe> ${isAdmin?`<button onclick="deleteVideo(${i})">Supprimer</button>`:''}</div>`).join('');
-}
-function deleteVideo(i){ videos.splice(i,1); localStorage.setItem('videos', JSON.stringify(videos)); displayVideos(); }
-displayVideos();
-
-/* --- Tickets --- */
+let annonces = JSON.parse(localStorage.getItem('annonces')) || [];
 let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
-function createTicket(){
-    const id = 'ticket_'+Date.now();
-    tickets.push({id:id,messages:[]});
+
+function saveData() {
+    localStorage.setItem('videos', JSON.stringify(videos));
+    localStorage.setItem('annonces', JSON.stringify(annonces));
     localStorage.setItem('tickets', JSON.stringify(tickets));
-    displayTickets();
-    alert('Votre ticket est créé : '+id);
-}
-function displayTickets(){
-    document.getElementById('ticketsList').innerHTML = tickets.map(t=>`<div class="ticket">${t.id}</div>`).join('');
-}
-displayTickets();
-function loadAdminTickets(){
-    document.getElementById('staffTickets').innerHTML = tickets.map((t,i)=>`<div class="ticket">${t.id} <button onclick="deleteTicket(${i})">Clôturer</button></div>`).join('');
-}
-function deleteTicket(i){ tickets.splice(i,1); localStorage.setItem('tickets', JSON.stringify(tickets)); displayTickets(); loadAdminTickets(); }
-
-/* --- Modes --- */
-function setMode(mode){
-    document.body.className='';
-    if(mode==='dark'){ document.body.style.background='#111'; document.body.style.color='#fff'; }
-    else if(mode==='halloween'){ document.body.style.background='#2b0000'; document.body.style.color='#ff8'; shakeEffect(); }
-    else if(mode==='horror'){ document.body.style.background='#000'; document.body.style.color='#f00'; horrorEffect(); }
-    else { document.body.style.background='#111'; document.body.style.color='#fff'; }
-}
-function shakeEffect(){
-    let i=0;
-    const interval = setInterval(()=>{document.body.style.transform=`translate(${Math.random()*5}px,${Math.random()*5}px)`; i++; if(i>10){clearInterval(interval); document.body.style.transform='';}},50);
-}
-function horrorEffect(){
-    const imgs = ['https://i.imgur.com/U4dC9XS.jpg','https://i.imgur.com/Qr3m8Ac.jpg']; 
-    const body = document.body;
-    let j=0;
-    setInterval(()=>{body.style.backgroundImage=`url(${imgs[j%imgs.length]})`; j++;},3000);
 }
 
-/* --- Blagues aléatoires --- */
-setInterval(()=>{
-    if(Math.random()<0.1) alert('😂 Petite blague du jour !');
-},10000);
+function renderVideos() {
+    const container = document.getElementById('videoList');
+    container.innerHTML = videos.map((v,i)=>`
+        <div class="video-card">
+            <iframe src="${v}" frameborder="0" allowfullscreen></iframe>
+            ${isAdmin?`<button onclick="deleteVideo(${i})">Supprimer</button>`:""}
+        </div>
+    `).join('');
+}
 
-/* --- Secrets --- */
-document.addEventListener('keydown',(e)=>{
-    if(e.key==='ArrowUp' && e.ctrlKey){
-        alert('🎉 Secret activé !');
-    }
-});
+function renderAnnonces() {
+    const container = document.getElementById('annonceList');
+    container.innerHTML = annonces.map((a,i)=>`
+        <div class="annonce-card">
+            <p>${a}</p>
+            ${isAdmin?`<button onclick="deleteAnnonce(${i})">Supprimer</button>`:""}
+        </div>
+    `).join('');
+}
+
+function renderTickets() {
+    const container = document.getElementById('ticketList');
+    container.innerHTML = tickets.map((t,i)=>`
+        <div class="ticket">
+            <strong>Ticket #${i+1}</strong>
+            <div>${t.messages.map(m=>`<p>${m}</p>`).join('')}</div>
+        </div>
+    `).join('');
+}
+
+function addVideo() {
+    const url = prompt("Collez l'URL de la vidéo YouTube:");
+    if(url){videos.push(url); saveData(); renderVideos();}
+}
+
+function deleteVideo(i){videos.splice(i,1); saveData(); renderVideos();}
+function addAnnonce(){const txt = prompt("Texte de l'annonce:"); if(txt){annonces.push(txt); saveData(); renderAnnonces();}}
+function deleteAnnonce(i){annonces.splice(i,1); saveData(); renderAnnonces();}
+
+function createTicket(){
+    const user = prompt("Nom de l'utilisateur:");
+    if(!user) return;
+    const ticket = {user:user, messages:[]};
+    tickets.push(ticket);
+    saveData();
+    renderTickets();
+    alert("Ticket créé, vous êtes le seul à le voir !");
+}
+
+// Admin modal
+function openAdmin(){document.getElementById('adminModal').style.display='flex';}
+function closeAdmin(){document.getElementById('adminModal').style.display='none';}
+function checkAdmin(){
+    const pass = document.getElementById('adminPassword').value;
+    if(pass==='1519'){
+        isAdmin=true;
+        document.getElementById('adminPanel').style.display='block';
+        alert("Accès admin activé !");
+        renderVideos();
+        renderAnnonces();
+        renderTickets();
+    } else alert("Code incorrect !");
+}
+
+// Modes sombre / horreur
+let dark=false;
+function toggleMode(){
+    dark=!dark;
+    document.body.classList.toggle('horror', dark);
+    if(dark){document.body.classList.add('shake');} else {document.body.classList.remove('shake');}
+}
+
+// Initial render
+renderVideos();
+renderAnnonces();
+renderTickets();
 </script>
 </body>
 </html>
+

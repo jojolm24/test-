@@ -6,30 +6,52 @@
 <title>Arthur et Jojo - YouTube</title>
 <style>
     * {margin:0; padding:0; box-sizing:border-box;}
-    body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#111; color:#fff; line-height:1.6;}
-    header {background:#222; text-align:center; padding:2rem; border-bottom:2px solid #444;}
-    header h1 {font-size:2.8rem; background:linear-gradient(90deg,#ff0000,#ff9900,#ffff00); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
+    body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#111; color:#fff; line-height:1.6; transition:all 0.5s;}
+    
+    /* Header */
+    header {background:#222; text-align:center; padding:2rem; border-bottom:3px solid #ff0000; transition:all 0.5s;}
+    header h1 {font-size:3rem; background:linear-gradient(90deg,#ff0000,#ff9900,#ffff00); -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:bounce 2s infinite;}
     header p {font-size:1.2rem; margin-top:0.5rem; color:#ccc;}
-    .btn {display:inline-block; padding:1rem 2rem; margin-top:1rem; background:#ff0000; color:#fff; font-weight:bold; text-decoration:none; border-radius:30px; transition:0.3s;}
-    .btn:hover {background:#cc0000;}
+    @keyframes bounce {0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+    
+    /* Buttons */
+    .btn {display:inline-block; padding:1rem 2rem; margin-top:1rem; background:#ff0000; color:#fff; font-weight:bold; text-decoration:none; border-radius:30px; transition:0.3s; box-shadow:0 4px 10px rgba(255,0,0,0.5);}
+    .btn:hover {background:#cc0000; transform:translateY(-2px);}
+    
     nav {text-align:center; margin:1rem 0;}
-    nav .admin-btn {background:#444; color:#fff; border:none; padding:0.8rem 1.5rem; border-radius:25px; cursor:pointer; transition:0.3s; margin-bottom:1rem;}
-    nav .admin-btn:hover {background:#666;}
-    section {max-width:1000px; margin:2rem auto; padding:2rem; background:#1a1a1a; border-radius:15px; box-shadow:0 0 15px rgba(0,0,0,0.5);}
-    section h2 {font-size:2rem; margin-bottom:1rem; color:#ff9900;}
-    iframe {width:100%; height:500px; border:none; border-radius:15px;}
-    .announcement {background:#333; padding:1rem; border-radius:10px; margin-bottom:1rem;}
-    .announcement p {margin:0; color:#fff;}
-    footer {text-align:center; padding:2rem; background:#222; border-top:2px solid #444;}
+    nav .admin-btn {background:linear-gradient(135deg,#444,#666); color:#fff; border:none; padding:0.8rem 1.5rem; border-radius:25px; cursor:pointer; transition:0.3s; margin-bottom:1rem; box-shadow:0 4px 8px rgba(0,0,0,0.5);}
+    nav .admin-btn:hover {background:linear-gradient(135deg,#666,#888);}
+    nav .mode-btn {background:#222; color:#ff9900; border:2px solid #ff9900; padding:0.6rem 1.2rem; border-radius:20px; margin-left:0.5rem; cursor:pointer; transition:0.3s;}
+    nav .mode-btn:hover {background:#ff9900; color:#111;}
+    
+    section {max-width:1000px; margin:2rem auto; padding:2rem; background:#1a1a1a; border-radius:15px; box-shadow:0 0 20px rgba(0,0,0,0.5); transition:all 0.5s;}
+    section:hover {box-shadow:0 0 25px rgba(255,153,0,0.5);}
+    section h2 {font-size:2rem; margin-bottom:1rem; color:#ff9900; border-bottom:2px solid #ff9900; padding-bottom:0.5rem;}
+    
+    .announcement, .video-item {background:#333; padding:1rem 1.5rem; border-radius:10px; margin-bottom:1rem; position:relative; transition:0.3s; box-shadow:0 2px 6px rgba(0,0,0,0.5);}
+    .announcement:hover, .video-item:hover {background:#444;}
+    .announcement button, .video-item button {position:absolute; top:10px; right:10px; background:#ff4444; border:none; color:white; border-radius:50%; width:25px; height:25px; cursor:pointer; font-weight:bold; display:none; transition:0.3s;}
+    .announcement:hover button, .video-item:hover button {display:block;}
+    
+    iframe {width:100%; height:500px; border:none; border-radius:15px; margin-bottom:1rem;}
+    
+    footer {text-align:center; padding:2rem; background:#222; border-top:3px solid #ff0000; transition:all 0.5s;}
     footer p {color:#ccc;}
-    /* Modal admin */
-    .admin-modal {display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:2000;}
+    
+    /* Admin modal */
+    .admin-modal {display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); justify-content:center; align-items:center; z-index:2000;}
     .admin-modal.show {display:flex;}
-    .admin-content {background:#1a1a1a; padding:2rem; border-radius:15px; max-width:500px; width:90%; border:2px solid #444;}
-    .admin-content h3 {color:white; margin-bottom:1rem; text-align:center; font-size:1.5rem;}
+    .admin-content {background:#1a1a1a; padding:2rem; border-radius:15px; max-width:600px; width:90%; border:2px solid #ff9900; box-shadow:0 0 20px rgba(255,153,0,0.5);}
+    .admin-content h3 {color:white; margin-bottom:1rem; text-align:center; font-size:1.5rem; background:linear-gradient(90deg,#ff0000,#ff9900); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
     .admin-content input, .admin-content textarea {width:100%; padding:0.8rem; margin-bottom:1rem; background:#2a2a2a; border:2px solid #444; color:white; border-radius:8px; font-size:1rem;}
-    .admin-content button {width:100%; padding:0.8rem; background:#2a2a2a; border:2px solid #444; color:white; border-radius:25px; cursor:pointer; font-size:1rem; margin-top:0.5rem; transition:all 0.3s;}
-    .admin-content button:hover {background:#3a3a3a; transform:scale(1.05);}
+    .admin-content button {width:100%; padding:0.8rem; background:#ff9900; border:none; color:#111; border-radius:25px; cursor:pointer; font-size:1rem; margin-top:0.5rem; transition:all 0.3s; font-weight:bold;}
+    .admin-content button:hover {background:#ff7700; transform:scale(1.05);}
+    
+    /* Mode horreur */
+    body.horror {background:#000; color:#ff0000;}
+    body.horror header {border-bottom:3px solid #ff0000; background:#111;}
+    body.horror section {background:#111; border:1px solid #ff0000;}
+    body.horror footer {background:#111; border-top:3px solid #ff0000;}
 </style>
 </head>
 <body>
@@ -41,7 +63,8 @@
 </header>
 
 <nav>
-    <button class="admin-btn" onclick="openAdminModal()">🔒 Administration</button>
+    <button class="admin-btn" onclick="openAdminModal()">🔒 Admin</button>
+    <button class="mode-btn" onclick="toggleHorror()">🩸 Mode Horreur</button>
 </nav>
 
 <section id="announcements">
@@ -51,9 +74,11 @@
     </div>
 </section>
 
-<section id="video">
-    <h2>Vidéo mise en avant</h2>
-    <iframe src="https://www.youtube.com/embed/UCUk7-ajL9QIou0-klV9EeGQ" allowfullscreen></iframe>
+<section id="videos">
+    <h2>🎥 Vidéos récentes</h2>
+    <div id="videoList">
+        <div class="video-item"><iframe src="https://www.youtube.com/embed/UCUk7-ajL9QIou0-klV9EeGQ" allowfullscreen></iframe></div>
+    </div>
 </section>
 
 <section id="presentation">
@@ -61,16 +86,11 @@
     <p>Salut ! Nous sommes Arthur et Jojo, et nous partageons des vidéos fun, des challenges et plein d'aventures sur notre chaîne YouTube. Abonne-toi pour ne rien manquer !</p>
 </section>
 
-<section id="videos">
-    <h2>Nos vidéos récentes</h2>
-    <p>La galerie de vidéos sera bientôt ici !</p>
-</section>
-
 <footer>
     <p>© 2025 Arthur et Jojo - Tous droits réservés</p>
 </footer>
 
-<!-- Modal Admin -->
+<!-- Admin Modal -->
 <div id="adminModal" class="admin-modal">
     <div class="admin-content">
         <h3>🔑 Accès Administrateur</h3>
@@ -83,12 +103,22 @@
             <h3>✏️ Gestion Annonces</h3>
             <textarea id="newAnnouncement" placeholder="Nouvelle annonce..."></textarea>
             <button onclick="addAnnouncement()">➕ Ajouter annonce</button>
+
+            <h3>🎬 Gestion Vidéos</h3>
+            <input type="text" id="newVideo" placeholder="Lien embed YouTube (iframe src)">
+            <button onclick="addVideo()">➕ Ajouter vidéo</button>
         </div>
     </div>
 </div>
 
 <script>
 let isAdmin = false;
+
+// Blagues aléatoires
+const jokes = ["😹 Arthur a encore mangé tout le chocolat !", "👻 Jojo a peur de son ombre...", "💀 Attention, site hanté !"];
+function randomJoke() {
+    if(Math.random() < 0.3) alert(jokes[Math.floor(Math.random()*jokes.length)]);
+}
 
 // Admin modal
 function openAdminModal() {
@@ -106,12 +136,13 @@ function checkAdminCode() {
         document.getElementById('adminPanel').style.display = 'block';
         closeAdminModal();
         alert('✅ Accès administrateur activé !');
+        refreshDeleteButtons();
     } else {
         document.getElementById('errorMsg').style.display = 'block';
     }
 }
 
-// Gestion annonces
+// Annonces
 function addAnnouncement() {
     if(!isAdmin) return;
     const text = document.getElementById('newAnnouncement').value.trim();
@@ -119,11 +150,59 @@ function addAnnouncement() {
     const container = document.getElementById('announcementList');
     const div = document.createElement('div');
     div.className = 'announcement';
-    div.innerHTML = `<p>${text}</p>`;
+    div.innerHTML = `<p>${text}</p><button onclick="deleteAnnouncement(this)">×</button>`;
     container.prepend(div);
     document.getElementById('newAnnouncement').value = '';
+    randomJoke();
 }
-</script>
+function deleteAnnouncement(btn) {
+    if(!isAdmin) return;
+    if(confirm('🗑️ Supprimer cette annonce ?')) btn.parentElement.remove();
+}
 
+// Vidéos
+function addVideo() {
+    if(!isAdmin) return;
+    const src = document.getElementById('newVideo').value.trim();
+    if(!src) return alert('⚠️ Entrez un lien iframe YouTube valide.');
+    const container = document.getElementById('videoList');
+    const div = document.createElement('div');
+    div.className = 'video-item';
+    div.innerHTML = `<iframe src="${src}" allowfullscreen></iframe><button onclick="deleteVideo(this)">×</button>`;
+    container.prepend(div);
+    document.getElementById('newVideo').value = '';
+    randomJoke();
+}
+function deleteVideo(btn) {
+    if(!isAdmin) return;
+    if(confirm('🗑️ Supprimer cette vidéo ?')) btn.parentElement.remove();
+}
+
+// Bouton supprimer
+function refreshDeleteButtons() {
+    document.querySelectorAll('.announcement, .video-item').forEach(item => {
+        if(!item.querySelector('button')) {
+            const btn = document.createElement('button');
+            btn.textContent = '×';
+            btn.onclick = function() {
+                if(item.classList.contains('announcement')) deleteAnnouncement(btn);
+                else deleteVideo(btn);
+            };
+            item.appendChild(btn);
+        }
+    });
+}
+
+// Mode horreur
+let horrorMode = false;
+function toggleHorror() {
+    horrorMode = !horrorMode;
+    document.body.classList.toggle('horror', horrorMode);
+    alert(horrorMode ? "😱 Mode horreur activé !" : "😌 Mode horreur désactivé !");
+}
+
+</script>
 </body>
 </html>
+
+

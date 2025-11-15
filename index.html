@@ -3,271 +3,318 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arthur et Jojo</title>
+<title>Arthur & Jojo</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-body{background: linear-gradient(135deg,#0d0d0d,#1a1a1a);color:#fff;transition:0.5s;}
-header{display:flex;justify-content:space-between;align-items:center;padding:15px;background:#111;box-shadow:0 4px 10px rgba(0,0,0,0.5);}
-h1{color:#ffcc00;}
-nav{display:flex;gap:10px;}
-button{padding:10px 20px;border:none;border-radius:12px;font-weight:bold;cursor:pointer;transition:0.3s;box-shadow:0 2px 5px rgba(0,0,0,0.4);}
-.btn-gradient{background: linear-gradient(135deg,#ff4e50,#f9d423);color:#fff;}
-.btn-gradient:hover{opacity:0.9;transform:scale(1.05);}
-main{padding:20px;max-width:1200px;margin:auto;}
-section{margin-bottom:30px;padding:20px;background: linear-gradient(145deg,#1a1a1a,#222);border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.5);}
-input, select{padding:10px;border-radius:8px;border:none;margin-bottom:10px;width:100%;}
-.hidden{display:none;}
-.ticket,.message,.announcement,.video{background:#2a2a2a;padding:10px;margin:10px 0;border-radius:10px;box-shadow:0 3px 7px rgba(0,0,0,0.5);}
-.ticket-header{display:flex;justify-content:space-between;align-items:center;font-weight:bold;}
-.ticket-messages{max-height:180px;overflow-y:auto;margin-top:5px;padding-right:5px;}
-footer{text-align:center;margin-top:30px;color:#aaa;font-size:14px;}
-.emoji{display:inline-block;animation:bounce 1s infinite;}
-@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
-.panel{background:#222;padding:20px;border-radius:12px;box-shadow:0 0 15px rgba(0,0,0,0.5);}
-.ticket-input{display:flex;gap:5px;margin-top:10px;}
-.ticket-input input{flex:1;padding:8px;border-radius:8px;border:none;}
-.login-bar{position:fixed;top:15px;right:15px;background:#222;padding:15px;border-radius:12px;box-shadow:0 3px 8px rgba(0,0,0,0.5);}
-.login-bar button{display:block;margin:8px 0;width:100%;border-radius:10px;}
-button.delete-btn{background:#ff4e50;color:#fff;}
-button.delete-btn:hover{opacity:0.8;}
+    body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, #1a1a1a, #111);
+        color: #eee;
+        transition: background 0.5s;
+    }
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background: linear-gradient(90deg, #222, #333);
+        box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+    }
+    header h1 {
+        margin: 0;
+        font-size: 1.8rem;
+        color: #ff6;
+        text-shadow: 0 0 5px #ff6;
+    }
+    .menu-btn {
+        background: #444;
+        border: none;
+        color: #fff;
+        padding: 0.6rem 1.2rem;
+        cursor: pointer;
+        font-size: 1rem;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+    .menu-btn:hover {
+        background: #666;
+    }
+    .container {
+        padding: 2rem;
+    }
+    .hidden { display: none; }
+    input, textarea {
+        padding: 0.5rem;
+        margin: 0.5rem 0;
+        border-radius: 5px;
+        border: none;
+        width: 100%;
+        background: #222;
+        color: #fff;
+    }
+    button {
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        border: none;
+        background: linear-gradient(45deg, #ff6, #f90);
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 0.5rem;
+    }
+    button:hover {
+        background: linear-gradient(45deg, #f90, #ff6);
+    }
+    .panel {
+        background: #111;
+        padding: 1rem;
+        border-radius: 10px;
+        margin-top: 2rem;
+    }
+    .panel h2 { margin-top: 0; color: #ff6; }
+    .tickets, .annonces, .videos {
+        margin-top: 1rem;
+    }
+    .ticket, .annonce, .video {
+        padding: 0.5rem;
+        background: #222;
+        margin-bottom: 0.5rem;
+        border-radius: 5px;
+        position: relative;
+    }
+    .ticket button, .annonce button, .video button {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: #f33;
+        color: #fff;
+        padding: 0.2rem 0.5rem;
+    }
+    .emoji {
+        display: inline-block;
+        animation: bounce 1s infinite alternate;
+    }
+    @keyframes bounce {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-5px); }
+    }
+    footer {
+        text-align: center;
+        margin-top: 2rem;
+        padding: 1rem;
+        border-top: 1px solid #444;
+        color: #ff6;
+    }
 </style>
 </head>
 <body>
-
 <header>
-<h1>Arthur et Jojo</h1>
-<nav>
-<button class="btn-gradient" id="btnTickets">🎫 Ouvrir un ticket</button>
-<button class="btn-gradient" id="btnLoginMenu">🔑 Se connecter</button>
-</nav>
+    <h1>Arthur & Jojo</h1>
+    <div>
+        <button class="menu-btn" id="loginBtn">Se connecter</button>
+        <button class="menu-btn" id="ticketsBtn">Ouvrir un ticket</button>
+    </div>
 </header>
 
-<div class="login-bar hidden" id="loginBar">
-<button id="loginUserBtn">Utilisateur</button>
-<button id="loginAdminBtn">Administratif</button>
+<div class="container">
+
+    <!-- Connexion -->
+    <div id="loginPanel" class="panel hidden">
+        <h2>Connexion</h2>
+        <input type="text" id="username" placeholder="Nom d'utilisateur">
+        <input type="password" id="password" placeholder="Mot de passe ou code admin">
+        <button id="loginSubmit">Se connecter</button>
+        <p id="loginMsg" style="color:red;"></p>
+    </div>
+
+    <!-- Profil -->
+    <div id="profilePanel" class="panel hidden">
+        <h2>Profil : <span id="profileName"></span></h2>
+        <button id="editProfileBtn">Modifier le profil</button>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="panel hidden">
+        <h2>Panel Admin</h2>
+        <div class="annonces">
+            <h3>Annonces</h3>
+            <input type="text" id="newAnnonce" placeholder="Nouvelle annonce">
+            <button id="addAnnonceBtn">Ajouter annonce</button>
+            <div id="annoncesList"></div>
+        </div>
+        <div class="videos">
+            <h3>Vidéos</h3>
+            <input type="text" id="newVideo" placeholder="Lien vidéo">
+            <button id="addVideoBtn">Ajouter vidéo</button>
+            <div id="videosList"></div>
+        </div>
+        <div class="tickets">
+            <h3>Tickets</h3>
+            <div id="ticketsList"></div>
+        </div>
+    </div>
+
 </div>
 
-<main>
-<section id="userLoginSection" class="hidden panel">
-<h2>Connexion Utilisateur</h2>
-<input type="text" id="userName" placeholder="Nom">
-<input type="password" id="userPassword" placeholder="Mot de passe">
-<button id="userLogin">Se connecter</button>
-</section>
-
-<section id="adminLoginSection" class="hidden panel">
-<h2>Connexion Admin</h2>
-<input type="password" id="adminCode" placeholder="Code Admin">
-<button id="adminLogin">Se connecter</button>
-</section>
-
-<section id="userProfileSection" class="hidden panel">
-<h2>Profil Utilisateur</h2>
-<p>Nom: <span id="profileName"></span></p>
-<button id="modifyProfile" class="hidden">Modifier Profil</button>
-</section>
-
-<section id="adminPanelSection" class="hidden panel">
-<h2>Panel Admin</h2>
-<div id="adminControls">
-<h3>Annonces</h3>
-<div id="announcements"></div>
-<input type="text" id="newAnnouncement" placeholder="Nouvelle annonce">
-<button id="addAnnouncement">Ajouter</button>
-
-<h3>Vidéos</h3>
-<div id="videos"></div>
-<input type="text" id="newVideo" placeholder="Lien vidéo YouTube">
-<button id="addVideo">Ajouter</button>
-</div>
-</section>
-
-<section id="ticketsSection" class="panel">
-<h2>Tickets</h2>
-<div id="tickets"></div>
-</section>
-
-</main>
-
-<footer>Codé par Jojo fait avec le ❤</footer>
+<footer>
+    Codé par Jojo fait avec ❤ <span class="emoji">💻</span>
+</footer>
 
 <script>
-// ----------------- STORAGE -----------------
-let users=JSON.parse(localStorage.getItem('users'))||{};
-let currentUser=JSON.parse(localStorage.getItem('currentUser'))||null;
-let tickets=JSON.parse(localStorage.getItem('tickets'))||[];
-let announcements=JSON.parse(localStorage.getItem('announcements'))||[];
-let videos=JSON.parse(localStorage.getItem('videos'))||[];
-let isAdmin=false;
+// Stockage local
+let users = JSON.parse(localStorage.getItem("users") || "[]");
+let annonces = JSON.parse(localStorage.getItem("annonces") || "[]");
+let videos = JSON.parse(localStorage.getItem("videos") || "[]");
+let tickets = JSON.parse(localStorage.getItem("tickets") || "[]");
+let currentUser = JSON.parse(localStorage.getItem("currentUser") || "null");
 
-// ----------------- ELEMENTS -----------------
-const loginBar=document.getElementById('loginBar');
-const btnLoginMenu=document.getElementById('btnLoginMenu');
-const btnTickets=document.getElementById('btnTickets');
-const userLoginSection=document.getElementById('userLoginSection');
-const adminLoginSection=document.getElementById('adminLoginSection');
-const userProfileSection=document.getElementById('userProfileSection');
-const adminPanelSection=document.getElementById('adminPanelSection');
+const loginBtn = document.getElementById("loginBtn");
+const ticketsBtn = document.getElementById("ticketsBtn");
+const loginPanel = document.getElementById("loginPanel");
+const loginSubmit = document.getElementById("loginSubmit");
+const usernameInput = document.getElementById("username");
+const passwordInput = document.getElementById("password");
+const loginMsg = document.getElementById("loginMsg");
+const profilePanel = document.getElementById("profilePanel");
+const profileName = document.getElementById("profileName");
+const editProfileBtn = document.getElementById("editProfileBtn");
+const adminPanel = document.getElementById("adminPanel");
+const newAnnonceInput = document.getElementById("newAnnonce");
+const addAnnonceBtn = document.getElementById("addAnnonceBtn");
+const annoncesList = document.getElementById("annoncesList");
+const newVideoInput = document.getElementById("newVideo");
+const addVideoBtn = document.getElementById("addVideoBtn");
+const videosList = document.getElementById("videosList");
+const ticketsList = document.getElementById("ticketsList");
 
-const loginUserBtn=document.getElementById('loginUserBtn');
-const loginAdminBtn=document.getElementById('loginAdminBtn');
-const userLoginBtn=document.getElementById('userLogin');
-const adminLoginBtnElement=document.getElementById('adminLogin');
-const modifyProfileBtn=document.getElementById('modifyProfile');
-
-const announcementsDiv=document.getElementById('announcements');
-const addAnnouncementInput=document.getElementById('newAnnouncement');
-const addAnnouncementBtn=document.getElementById('addAnnouncement');
-const videosDiv=document.getElementById('videos');
-const addVideoInput=document.getElementById('newVideo');
-const addVideoBtn=document.getElementById('addVideo');
-const ticketsDiv=document.getElementById('tickets');
-
-// ----------------- LOGIN MENU -----------------
-btnLoginMenu.onclick=()=>{loginBar.classList.toggle('hidden');}
-loginUserBtn.onclick=()=>{userLoginSection.classList.remove('hidden'); adminLoginSection.classList.add('hidden');}
-loginAdminBtn.onclick=()=>{adminLoginSection.classList.remove('hidden'); userLoginSection.classList.add('hidden');}
-
-// ----------------- USER LOGIN -----------------
-userLoginBtn.onclick=()=>{
-const name=document.getElementById('userName').value.trim();
-const password=document.getElementById('userPassword').value.trim();
-if(!name||!password){alert('Remplissez tous les champs'); return;}
-if(!users[name]) users[name]={id:Date.now(),name,password};
-if(users[name].password!==password){alert('Mot de passe incorrect'); return;}
-currentUser=users[name];
-localStorage.setItem('currentUser',JSON.stringify(currentUser));
-userLoginSection.classList.add('hidden');
-updateUserProfile();
-renderTickets();
+// Fonction utilitaires
+function saveAll() {
+    localStorage.setItem("users", JSON.stringify(users));
+    localStorage.setItem("annonces", JSON.stringify(annonces));
+    localStorage.setItem("videos", JSON.stringify(videos));
+    localStorage.setItem("tickets", JSON.stringify(tickets));
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
 }
 
-// ----------------- ADMIN LOGIN -----------------
-adminLoginBtnElement.onclick=()=>{
-const code=document.getElementById('adminCode').value;
-if(code==='2516'){
-isAdmin=true;
-currentUser={name:'Admin'};
-localStorage.setItem('currentUser',JSON.stringify(currentUser));
-adminLoginSection.classList.add('hidden');
-adminPanelSection.classList.remove('hidden');
-updateUserProfile();
-renderTickets();
-}else alert('Code incorrect');
+function renderProfile() {
+    if(currentUser) {
+        profilePanel.classList.remove("hidden");
+        profileName.textContent = currentUser.name;
+        loginPanel.classList.add("hidden");
+        if(currentUser.isAdmin) {
+            adminPanel.classList.remove("hidden");
+        }
+    } else {
+        profilePanel.classList.add("hidden");
+        adminPanel.classList.add("hidden");
+    }
 }
 
-// ----------------- PROFILE -----------------
-modifyProfileBtn.onclick=()=>{
-const newName=prompt('Nouveau nom',currentUser.name);
-if(newName){
-users[newName]={...currentUser,name:newName};
-delete users[currentUser.name];
-currentUser.name=newName;
-localStorage.setItem('currentUser',JSON.stringify(currentUser));
-localStorage.setItem('users',JSON.stringify(users));
-updateUserProfile();
-renderTickets();
-}
-}
-function updateUserProfile(){
-if(currentUser){
-userProfileSection.classList.remove('hidden');
-document.getElementById('profileName').textContent=currentUser.name;
-modifyProfileBtn.classList.remove('hidden');
-}
+function renderAnnonces() {
+    annoncesList.innerHTML = "";
+    annonces.forEach((a, i)=>{
+        const div = document.createElement("div");
+        div.className = "annonce";
+        div.textContent = a;
+        const btn = document.createElement("button");
+        btn.textContent = "Supprimer";
+        btn.onclick = ()=>{ annonces.splice(i,1); saveAll(); renderAnnonces();}
+        div.appendChild(btn);
+        annoncesList.appendChild(div);
+    });
 }
 
-// ----------------- ANNOUNCEMENTS -----------------
-addAnnouncementBtn.onclick=()=>{
-const text=addAnnouncementInput.value.trim();
-if(!text) return;
-announcements.push({text,id:Date.now()});
-localStorage.setItem('announcements',JSON.stringify(announcements));
-addAnnouncementInput.value='';
-renderAnnouncements();
-}
-function renderAnnouncements(){
-announcementsDiv.innerHTML='';
-announcements.forEach(a=>{
-const div=document.createElement('div');
-div.className='announcement';
-div.innerHTML=`${a.text} ${isAdmin?`<button class="delete-btn" onclick="deleteAnnouncement(${a.id})">Sup</button>`:''}`;
-announcementsDiv.appendChild(div);
-});
-}
-window.deleteAnnouncement=(id)=>{announcements=announcements.filter(a=>a.id!==id);localStorage.setItem('announcements',JSON.stringify(announcements));renderAnnouncements();}
-
-// ----------------- VIDEOS -----------------
-addVideoBtn.onclick=()=>{
-const url=addVideoInput.value.trim();
-if(!url) return;
-videos.push({url,id:Date.now()});
-localStorage.setItem('videos',JSON.stringify(videos));
-addVideoInput.value='';
-renderVideos();
-}
-function renderVideos(){
-videosDiv.innerHTML='';
-videos.forEach(v=>{
-const div=document.createElement('div');
-div.className='video';
-div.innerHTML=`<iframe width="320" height="180" src="${v.url.replace("watch?v=","embed/")}" frameborder="0" allowfullscreen></iframe>${isAdmin?`<button class="delete-btn" onclick="deleteVideo(${v.id})">Sup</button>`:''}`;
-videosDiv.appendChild(div);
-});
-}
-window.deleteVideo=(id)=>{videos=videos.filter(v=>v.id!==id);localStorage.setItem('videos',JSON.stringify(videos));renderVideos();}
-
-// ----------------- TICKETS -----------------
-btnTickets.onclick=()=>{
-if(!currentUser){alert('Connectez-vous d’abord'); return;}
-const ticketId=Date.now();
-const ticket={id:ticketId,userId:currentUser.id||'admin',messages:[{author:currentUser.name,text:"Ticket créé 🎫"}]};
-tickets.push(ticket);
-localStorage.setItem('tickets',JSON.stringify(tickets));
-renderTickets();
+function renderVideos() {
+    videosList.innerHTML = "";
+    videos.forEach((v, i)=>{
+        const div = document.createElement("div");
+        div.className = "video";
+        div.textContent = v;
+        const btn = document.createElement("button");
+        btn.textContent = "Supprimer";
+        btn.onclick = ()=>{ videos.splice(i,1); saveAll(); renderVideos();}
+        div.appendChild(btn);
+        videosList.appendChild(div);
+    });
 }
 
-function renderTickets(){
-ticketsDiv.innerHTML='';
-tickets.forEach(t=>{
-if(!isAdmin && (!currentUser||currentUser.id!==t.userId)) return;
-const div=document.createElement('div');
-div.className='ticket';
-div.innerHTML=`<div class="ticket-header">Ticket #${t.id} ${isAdmin?`<button class="delete-btn" onclick="deleteTicket(${t.id})">Sup</button>`:''}</div>`;
-const messagesDiv=document.createElement('div');
-messagesDiv.className='ticket-messages';
-t.messages.forEach(m=>{
-const p=document.createElement('p');
-p.innerHTML=`${m.author}: ${m.text} <span class="emoji">🎉</span>`;
-messagesDiv.appendChild(p);
-});
-div.appendChild(messagesDiv);
-const inputDiv=document.createElement('div');
-inputDiv.className='ticket-input';
-const input=document.createElement('input');
-input.placeholder='Écrire un message...';
-const btn=document.createElement('button');
-btn.textContent='Envoyer';
-btn.onclick=()=>{
-if(!input.value.trim()) return;
-t.messages.push({author:currentUser.name,text:input.value.trim()});
-localStorage.setItem('tickets',JSON.stringify(tickets));
-renderTickets();
+function renderTickets() {
+    ticketsList.innerHTML = "";
+    tickets.forEach((t, i)=>{
+        const div = document.createElement("div");
+        div.className = "ticket";
+        div.textContent = t.user + " : " + t.messages.join(" | ");
+        const btn = document.createElement("button");
+        btn.textContent = "Supprimer";
+        btn.onclick = ()=>{ tickets.splice(i,1); saveAll(); renderTickets();}
+        div.appendChild(btn);
+        ticketsList.appendChild(div);
+    });
 }
-inputDiv.appendChild(input);
-inputDiv.appendChild(btn);
-div.appendChild(inputDiv);
-ticketsDiv.appendChild(div);
-});
-}
-window.deleteTicket=(id)=>{tickets=tickets.filter(t=>t.id!==id);localStorage.setItem('tickets',JSON.stringify(tickets));renderTickets();}
 
-// ----------------- INIT -----------------
-renderAnnouncements();
+// Connexion
+loginBtn.onclick = ()=>{ loginPanel.classList.toggle("hidden"); }
+loginSubmit.onclick = ()=>{
+    const name = usernameInput.value.trim();
+    const pass = passwordInput.value.trim();
+    if(pass === "2516") {
+        // Admin login
+        currentUser = {name:"Admin", isAdmin:true};
+    } else if(name && pass) {
+        // User login
+        let user = users.find(u=>u.name===name);
+        if(!user){
+            user={name:name,id:Math.random().toString(36).substr(2,9),isAdmin:false,tickets:[]};
+            users.push(user);
+        }
+        currentUser = user;
+    } else {
+        loginMsg.textContent = "Erreur de connexion";
+        return;
+    }
+    saveAll();
+    renderProfile();
+    renderAnnonces();
+    renderVideos();
+    renderTickets();
+};
+
+// Tickets
+ticketsBtn.onclick = ()=>{
+    if(!currentUser) return alert("Connectez-vous !");
+    const msg = prompt("Écrivez votre ticket :");
+    if(msg){
+        tickets.push({user: currentUser.name, messages:[msg]});
+        saveAll();
+        renderTickets();
+    }
+};
+
+// Ajouter annonce
+addAnnonceBtn.onclick = ()=>{
+    if(!currentUser?.isAdmin) return alert("Accès admin requis !");
+    if(newAnnonceInput.value){
+        annonces.push(newAnnonceInput.value);
+        newAnnonceInput.value="";
+        saveAll();
+        renderAnnonces();
+    }
+}
+
+// Ajouter vidéo
+addVideoBtn.onclick = ()=>{
+    if(!currentUser?.isAdmin) return alert("Accès admin requis !");
+    if(newVideoInput.value){
+        videos.push(newVideoInput.value);
+        newVideoInput.value="";
+        saveAll();
+        renderVideos();
+    }
+}
+
+renderProfile();
+renderAnnonces();
 renderVideos();
 renderTickets();
-updateUserProfile();
-
 </script>
 </body>
 </html>

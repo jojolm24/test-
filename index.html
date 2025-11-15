@@ -3,159 +3,133 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Collège Jacques Prévert</title>
+<title>Collège Jacques Prévert - Bergerac</title>
 <style>
-:root{
-  --bg:#f6f9fc; --card:#fff; --text:#0f1724; --muted:#6b7280;
-  --accent:#1e4db7; --accent-2:#0ea5a4; --radius:12px; --shadow:0 8px 24px rgba(12,23,63,0.08);
-  --success:#16a34a; --danger:#ef4444; --glass:rgba(255,255,255,0.7);
-}
-:root[data-theme="dark"]{
-  --bg:#071024; --card:#07172a; --text:#e6eef6; --muted:#9aa8bb; --glass:rgba(255,255,255,0.03);
-}
-body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--text);}
-a{color:inherit;text-decoration:none;}
-header{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;position:sticky;top:0;z-index:1000;}
-header .brand{font-weight:800;font-size:20px;}
-header .google-login{background:#fff;color:var(--accent);padding:6px 14px;border-radius:8px;font-weight:700;cursor:pointer;transition:0.3s;}
-header .google-login:hover{background:#e1e7f5;}
-.container{max-width:1100px;margin:20px auto;padding:0 20px;}
-.hero{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;padding:40px 20px;border-radius:var(--radius);text-align:center;margin-bottom:20px;box-shadow:var(--shadow);}
-.hero h1{margin:0;font-size:32px;}
-.hero p{margin-top:12px;font-size:18px;}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
-@media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:640px){.grid{grid-template-columns:1fr;}}
-.card{background:var(--card);padding:20px;border-radius:var(--radius);box-shadow:var(--shadow);transition:0.3s;}
-.card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(12,23,63,0.15);}
-h2{margin-top:0;}
-.muted{color:var(--muted);}
-.btn{background:var(--accent);color:#fff;padding:8px 16px;border-radius:10px;border:none;cursor:pointer;font-weight:700;transition:0.3s;}
-.btn:hover{opacity:0.9;}
-.btn.ghost{background:transparent;border:1px solid rgba(0,0,0,0.1);color:var(--text);}
-.admin-toggle{position:fixed;bottom:20px;left:20px;right:20px;background:var(--card);padding:16px;border-radius:16px;box-shadow:0 18px 40px rgba(2,6,23,0.12);display:flex;justify-content:space-between;align-items:center;gap:12px;z-index:1200;transition:transform .3s;}
-.admin-hidden{transform:translateY(calc(100% - 70px));}
-.admin-actions{display:flex;gap:8px;align-items:center;}
-.input{padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);min-width:160px;background:transparent;color:var(--text);}
-.ann-list,.doc-list{display:flex;flex-direction:column;gap:10px;}
-.ann-item,.doc-item{padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent);}
-footer{text-align:center;padding:28px;color:var(--muted);margin-top:28px;background:#e9ecef;border-top:1px solid #d0d7df;}
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height:1.6; color:#fff; background:#000; transition: background 0.5s; }
+    a { text-decoration:none; }
+    img { max-width:100%; display:block; }
+
+    /* Bannière */
+    .banner-image { width:100%; height:auto; max-height:300px; object-fit:cover; }
+
+    /* Discord banner */
+    .discord-banner {
+        background: linear-gradient(90deg, #1a1a1a, #2a2a2a, #1a1a1a);
+        color:white; padding:1rem; text-align:center; font-size:1.1rem;
+        animation: gradient 5s ease infinite; background-size: 200% 200%;
+        border-bottom:2px solid #333;
+    }
+    @keyframes gradient { 0% {background-position:0% 50%} 50% {background-position:100% 50%} 100% {background-position:0% 50%} }
+    .discord-banner a { color:white; text-decoration:underline; font-weight:bold; }
+
+    /* Header */
+    header { background:#1a1a1a; padding:2rem 0; text-align:center; box-shadow:0 4px 6px rgba(0,0,0,0.5); position:sticky; top:0; z-index:1000; }
+    h1 { font-size:2.5rem; margin-bottom:0.5rem; background:linear-gradient(90deg,#fff,#ccc,#888,#444,#000); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; text-decoration:underline #888; }
+    .subtitle { font-size:1.2rem; background:linear-gradient(90deg,#fff,#aaa,#666); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    
+    /* Navigation */
+    nav { background:#2a2a2a; padding:1rem 0; box-shadow:0 2px 4px rgba(0,0,0,0.5); }
+    nav ul { list-style:none; display:flex; justify-content:center; flex-wrap:wrap; max-width:1200px; margin:0 auto; padding:0 1rem; }
+    nav li { margin:0.5rem 1rem; }
+    nav a { color:white; padding:0.5rem 1rem; border-radius:20px; font-weight:500; transition:0.3s; display:block; }
+    nav a:hover { background:rgba(255,255,255,0.15); transform:translateY(-3px); }
+
+    /* Animations emojis */
+    @keyframes bounce { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-5px);} }
+    @keyframes rotate { 0%{transform:rotate(0deg);}100%{transform:rotate(360deg);} }
+    @keyframes pulse { 0%,100%{transform:scale(1);}50%{transform:scale(1.1);} }
+    .emoji-animated { display:inline-block; animation:bounce 2s ease-in-out infinite; }
+    .emoji-rotate { display:inline-block; animation:rotate 3s linear infinite; }
+    .emoji-pulse { display:inline-block; animation:pulse 1.5s ease-in-out infinite; }
+
+    /* Hero */
+    .hero { background:#1a1a1a; padding:4rem 2rem; text-align:center; border-bottom:2px solid #333; transition: background 0.5s; }
+    .hero h2 { font-size:2.5rem; margin-bottom:1rem; background:linear-gradient(90deg,#fff,#ccc,#888,#444,#000); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero p { font-size:1.3rem; max-width:800px; margin:0 auto; background:linear-gradient(90deg,#fff,#ddd,#aaa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+    /* Sections */
+    .container { max-width:1200px; margin:0 auto; padding:3rem 2rem; }
+    section { margin-bottom:4rem; padding:2rem; border-radius:15px; box-shadow:0 4px 6px rgba(0,0,0,0.5); transition: transform 0.3s, box-shadow 0.3s; }
+    section:nth-child(odd){background:#1a1a1a;}
+    section:nth-child(even){background:#0a0a0a;}
+    section:hover{transform:translateY(-5px); box-shadow:0 6px 12px rgba(255,255,255,0.1);}
+    h2 { font-size:2rem; margin-bottom:1.5rem; background:linear-gradient(90deg,#fff,#ccc,#888,#444,#000); -webkit-background-clip:text; -webkit-text-fill-color:transparent; border-bottom:3px solid #333; padding-bottom:0.5rem; font-weight:bold; }
+
+    /* Cards */
+    .matiere-card, .activite-card, .numero-card { background:#2a2a2a; padding:1.5rem; margin-bottom:1.5rem; border-radius:10px; box-shadow:0 2px 4px rgba(0,0,0,0.5); transition:0.3s; border:1px solid #333; }
+    .matiere-card:hover, .activite-card:hover, .numero-card:hover{transform:translateY(-5px); box-shadow:0 6px 12px rgba(255,255,255,0.15);}
+    .matiere-card h3, .activite-card h3, .numero-card h3 { margin-bottom:0.5rem; font-size:1.3rem; background:linear-gradient(90deg,#fff,#ccc,#888); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+    /* Pronote & Admin */
+    .pronote-box, .contact-info, .info-box { background:#2a2a2a; padding:2rem; border-radius:10px; color:#fff; border:1px solid #333; }
+    .pronote-btn { display:inline-block; background:#1a1a1a; color:white; padding:1rem 2rem; border-radius:25px; font-weight:bold; transition:0.3s; margin-top:1rem; border:2px solid #444; }
+    .pronote-btn:hover{transform:scale(1.05); background:#2a2a2a; border-color:#888;}
+
+    /* Footer */
+    footer{background:#1a1a1a; color:white; text-align:center; padding:2rem; margin-top:3rem; border-top:2px solid #333;}
+    footer p{margin:0.5rem 0; background:linear-gradient(90deg,#fff,#ccc,#888,#444,#000); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
+
+    /* Back to top */
+    .back-to-top { position:fixed; bottom:30px; right:30px; background:linear-gradient(135deg,#1a1a1a,#2a2a2a); color:white; width:50px; height:50px; border-radius:50%; display:none; align-items:center; justify-content:center; cursor:pointer; font-size:1.5rem; box-shadow:0 4px 8px rgba(0,0,0,0.5); transition:all 0.3s; z-index:999; border:2px solid #444; }
+    .back-to-top.show { display:flex; }
+    .back-to-top:hover { transform:scale(1.1); background:linear-gradient(135deg,#2a2a2a,#3a3a3a); }
+
+    /* Photo Grid */
+    .photo-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem; margin-top:2rem;}
+    .photo-item{position:relative; background:#2a2a2a; border-radius:10px; overflow:hidden; border:1px solid #444; transition:0.3s;}
+    .photo-item img{width:100%; height:200px; object-fit:cover; display:block; transition:transform 0.3s;}
+    .photo-item:hover img{transform:scale(1.05);}
+    .photo-caption{padding:0.8rem; color:#ccc; font-size:0.9rem; line-height:1.4; background:#1a1a1a;}
+    .photo-item .delete-btn{position:absolute; top:5px; right:5px; background:#ff4444; color:white; border:none; border-radius:50%; width:30px; height:30px; cursor:pointer; font-size:1.2rem; display:none;}
+    .photo-item:hover .delete-btn{display:block;}
+
+    /* Responsive */
+    @media(max-width:768px){h1{font-size:1.8rem;} .hero h2{font-size:1.8rem;} nav ul{flex-direction:column; align-items:center;} nav li{margin:0.3rem 0;} .photo-item img{height:150px;}}
 </style>
 </head>
 <body>
+<img src="https://blogpeda.ac-bordeaux.fr/collegejacquesprevert24/files/2021/04/cropped-Banni%C3%A8reSh.jpg" alt="Bannière Collège Jacques Prévert" class="banner-image">
+
+<div class="discord-banner">
+<span class="emoji-pulse">🎉</span> Rejoignez le Discord du collège : <a href="https://discord.gg/gGwUrxNsMS" target="_blank">Cliquez ici</a> <span class="emoji-pulse">🎮</span>
+</div>
 
 <header>
-  <div class="brand">Collège Jacques Prévert</div>
-  <div class="google-login" onclick="alert('Connexion Google simulée !')">Se connecter avec Google</div>
+<div class="header-content">
+<h1><span class="emoji-rotate">🎓</span> Collège Jacques Prévert</h1>
+<p class="subtitle"><span class="emoji-pulse">📍</span> Bergerac - Dordogne</p>
+</div>
 </header>
 
+<nav>
+<ul>
+<li><a href="#presentation"><span class="emoji-animated">📚</span> Présentation</a></li>
+<li><a href="#pronote"><span class="emoji-rotate">💻</span> Pronote</a></li>
+<li><a href="#matieres"><span class="emoji-pulse">📖</span> Matières</a></li>
+<li><a href="#activites"><span class="emoji-animated">🎨</span> Activités</a></li>
+<li><a href="#contact"><span class="emoji-pulse">✉️</span> Contact</a></li>
+<li><a href="#numeros-utiles"><span class="emoji-pulse">📞</span> Numéros</a></li>
+<li><a href="#parents"><span class="emoji-animated">👨‍👩‍👧‍👦</span> Parents</a></li>
+<li><a href="#acces"><span class="emoji-rotate">🗺️</span> Accès</a></li>
+<li><a href="#galerie"><span class="emoji-pulse">📸</span> Galerie</a></li>
+</ul>
+</nav>
+
+<div class="hero">
+<h2><span class="emoji-pulse">✨</span> Bienvenue au Collège Jacques Prévert <span class="emoji-pulse">✨</span></h2>
+<p>Établissement d'excellence au cœur de Bergerac, dédié à la réussite et à l'épanouissement de nos élèves.</p>
+</div>
+
 <div class="container">
-  <section class="hero">
-    <h1>Bienvenue au Collège Jacques Prévert</h1>
-    <p>Site officiel modernisé avec panneau admin et accès visiteurs</p>
-  </section>
-
-  <section class="grid">
-    <div class="card">
-      <h2>Informations générales</h2>
-      <p class="muted">Collège public — Académie de Bordeaux</p>
-      <p><strong>Adresse :</strong> 18 rue Armand Got, 24100 Bergerac</p>
-      <p><strong>Tel :</strong> 05 53 63 52 80</p>
-      <p><strong>Email :</strong> ce.0240996c@ac-bordeaux.fr</p>
-      <p><strong>UAI :</strong> 0240996C</p>
-    </div>
-    <div class="card">
-      <h2>Formations & Langues</h2>
-      <ul>
-        <li>Classes : 6e / 5e / 4e / 3e</li>
-        <li>Langues : Anglais, Espagnol, Italien</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2>Inclusion — ULIS</h2>
-      <p class="muted">Dispositif ULIS pour élèves en situation de handicap</p>
-    </div>
-  </section>
-
-  <section class="card" style="margin-top:20px;">
-    <h2>Annonces</h2>
-    <div id="annoncesMain" class="ann-list"></div>
-  </section>
-
-  <section class="card" style="margin-top:20px;">
-    <h2>Documents officiels</h2>
-    <div id="docsMain" class="doc-list"></div>
-  </section>
+<!-- Les sections suivent ici (presentation, pronote, matieres, activites...) -->
 </div>
 
-<div id="adminToggle" class="admin-toggle admin-hidden">
-  <div><strong>Panneau Admin</strong> — Accès rapide</div>
-  <div class="admin-actions">
-    <input id="adminPass" type="password" class="input" placeholder="Mot de passe admin">
-    <button id="adminLogin" class="btn">Se connecter</button>
-  </div>
-</div>
-
-<footer>
-  © Collège Jacques Prévert — Site modernisé avec panneau admin
-</footer>
+<div class="back-to-top" id="backToTop" onclick="scrollToTop()"><span class="emoji-animated">⬆️</span></div>
 
 <script>
-// LocalStorage keys
-const LS_KEYS={ANNS:'site_annonces',DOCS:'site_docs',AUTH:'site_admin_auth'};
-
-// Admin password
-const ADMIN_PW='2516';
-
-// Helper functions
-function cryptoId(){return 'id_'+Math.random().toString(36).slice(2,10);}
-function escapeHtml(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
-
-// Demo data
-if(!localStorage.getItem(LS_KEYS.ANNS)){localStorage.setItem(LS_KEYS.ANNS,JSON.stringify([
-  {id:cryptoId(),title:'Rentrée scolaire',body:'La rentrée aura lieu le 2 septembre à 8h.',date:new Date().toLocaleString()},
-  {id:cryptoId(),title:'Réunion parents',body:'Réunion parents/profs le 15 janvier à 18h.',date:new Date().toLocaleString()}
-]));}
-if(!localStorage.getItem(LS_KEYS.DOCS)){localStorage.setItem(LS_KEYS.DOCS,JSON.stringify([
-  {id:cryptoId(),name:'Règlement intérieur (PDF)',url:'#'},
-  {id:cryptoId(),name:'Menu cantine - Novembre',url:'#'}
-]));}
-
-// Render lists
-function renderAnnoncesMain(){
-  const cont=document.getElementById('annoncesMain');cont.innerHTML='';
-  const anns=JSON.parse(localStorage.getItem(LS_KEYS.ANNS)||'[]');
-  if(!anns.length){cont.innerHTML='<div class="ann-item muted">Aucune annonce</div>';return;}
-  anns.slice().reverse().forEach(a=>{
-    const el=document.createElement('div');el.className='ann-item';
-    el.innerHTML=`<strong>${escapeHtml(a.title)}</strong> <span class="muted">${escapeHtml(a.date)}</span><p>${escapeHtml(a.body)}</p>`;
-    cont.appendChild(el);
-  });
-}
-function renderDocsMain(){
-  const cont=document.getElementById('docsMain');cont.innerHTML='';
-  const docs=JSON.parse(localStorage.getItem(LS_KEYS.DOCS)||'[]');
-  if(!docs.length){cont.innerHTML='<div class="doc-item muted">Aucun document</div>';return;}
-  docs.slice().reverse().forEach(d=>{
-    const el=document.createElement('div');el.className='doc-item';
-    el.innerHTML=`<strong>${escapeHtml(d.name)}</strong> <a href="${d.url}" target="_blank" class="btn ghost">Voir</a>`;
-    cont.appendChild(el);
-  });
-}
-
-// Admin login
-document.getElementById('adminLogin').addEventListener('click',()=>{
-  const pass=document.getElementById('adminPass').value;
-  if(pass===ADMIN_PW){
-    alert('Accès admin autorisé !');
-    document.getElementById('adminToggle').classList.remove('admin-hidden');
-  } else alert('Mot de passe incorrect');
-});
-
-// Initialize
-renderAnnoncesMain();
-renderDocsMain();
+window.addEventListener('scroll',()=>{document.getElementById('backToTop').classList.toggle('show', window.scrollY>300);});
+function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}
 </script>
-
 </body>
 </html>

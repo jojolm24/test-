@@ -3,198 +3,194 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arthur et Jojo - Site Officiel</title>
+<title>Arthur & Jojo - Fan Site</title>
 <style>
-/* === RESET & BASE === */
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;}
-body{background:#111;color:#eee;line-height:1.5;transition: all 0.3s;}
-a{color:#1E90FF;text-decoration:none;}
-a:hover{color:#63B8FF;}
-
-/* === BANNIERE === */
-header{background:linear-gradient(135deg,#ff8c00,#ff0080);padding:2rem;text-align:center;position:relative;}
-header h1{font-size:2.5rem;background:linear-gradient(90deg,#fff,#ffd700,#ff69b4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-header p{margin-top:0.5rem;font-size:1.2rem;color:#fff;}
-
-/* === NAVIGATION === */
-nav{background:#222;display:flex;justify-content:center;flex-wrap:wrap;padding:1rem;box-shadow:0 4px 8px rgba(0,0,0,0.5);}
-nav a{margin:0.5rem 1rem;padding:0.5rem 1rem;border-radius:20px;transition:0.3s;}
-nav a:hover{background:rgba(255,255,255,0.1);transform:translateY(-2px);}
-
-/* === SECTIONS === */
-section{max-width:1200px;margin:2rem auto;padding:2rem;background:#1a1a1a;border-radius:15px;box-shadow:0 4px 8px rgba(0,0,0,0.5);transition:all 0.3s;}
-h2{font-size:2rem;margin-bottom:1rem;color:#fff;text-align:center;text-decoration:underline;text-decoration-color:#ff69b4;}
-
-/* === BUTTONS === */
-button, .btn{padding:0.8rem 1.5rem;border-radius:25px;border:none;cursor:pointer;font-weight:bold;transition:all 0.3s;display:inline-block;margin:0.5rem;}
-button:hover, .btn:hover{transform:scale(1.05);}
-.admin-btn{background:linear-gradient(135deg,#333,#555);color:#fff;position:relative;overflow:hidden;}
-.admin-btn::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;border-radius:50%;background:rgba(255,255,255,0.1);transform:translate(-50%,-50%);transition:width 0.6s,height 0.6s;}
-.admin-btn:hover::before{width:300px;height:300px;}
-
-/* === MODE HORREUR & HALLOWEEN === */
-body.horror{background:#000;color:#f00;}
-body.horror header{background:#440000;}
-body.halloween header{background:linear-gradient(135deg,#ff8000,#ff0000);}
-.shake{animation:shake 0.3s infinite;}
-@keyframes shake{0%,100%{transform:translate(0);}10%,30%,50%,70%,90%{transform:translate(-5px,5px);}20%,40%,60%,80%{transform:translate(5px,-5px);}}
-
-/* === PANEL ADMIN === */
-#adminPanel{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#222;padding:2rem;width:90%;max-width:800px;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,0.8);z-index:1000;}
-#adminPanel h3{color:#ff69b4;text-align:center;margin-bottom:1rem;}
-#adminPanel input, #adminPanel textarea{width:100%;padding:0.8rem;margin:0.5rem 0;background:#333;color:#fff;border:2px solid #555;border-radius:8px;}
-#adminPanel .admin-section{margin-top:1rem;border:1px solid #555;padding:1rem;border-radius:10px;background:#1a1a1a;}
-
-/* === ANNONCES === */
-.annonce{background:#333;padding:1rem;margin:1rem 0;border-radius:10px;position:relative;}
-.annonce button.delete{position:absolute;top:5px;right:5px;background:#f00;color:#fff;border:none;border-radius:50%;width:25px;height:25px;cursor:pointer;}
-
-/* === VIDEOS === */
-.video-card{margin:1rem 0;padding:1rem;background:#222;border-radius:10px;}
-.video-card iframe{width:100%;height:315px;border:none;border-radius:10px;}
-
-/* === TICKETS === */
-#tickets{margin-top:2rem;}
-.ticket{background:#333;padding:1rem;border-radius:10px;margin:0.5rem 0;position:relative;}
-.ticket .delete-ticket{position:absolute;top:5px;right:5px;background:#f00;color:#fff;border:none;border-radius:50%;width:25px;height:25px;cursor:pointer;}
-
-/* === BLAGUES === */
-#blague{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:#ff69b4;color:#000;padding:0.5rem 1rem;border-radius:10px;display:none;z-index:999;}
-
-/* === RESPONSIVE === */
-@media(max-width:768px){header h1{font-size:1.8rem;}nav{flex-direction:column;}}
+    /* RESET */
+    * {margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif;}
+    body {background:#111; color:#fff; transition: background 0.3s, color 0.3s;}
+    a {color:#1E90FF; text-decoration:none;}
+    a:hover {text-decoration:underline;}
+    h1,h2,h3 {margin-bottom:0.5rem;}
+    button {cursor:pointer; padding:0.5rem 1rem; margin:0.3rem; border:none; border-radius:5px; transition:0.3s;}
+    button:hover {opacity:0.8;}
+    /* Header */
+    header {padding:1rem; background:linear-gradient(90deg,#ff6a00,#ee0979); text-align:center;}
+    header h1 {font-size:2rem;}
+    nav {display:flex; justify-content:center; gap:1rem; background:#222; padding:0.5rem;}
+    nav a {padding:0.5rem 1rem; background:#333; border-radius:5px;}
+    /* Sections */
+    section {padding:2rem; border-bottom:1px solid #333;}
+    .container {max-width:1000px; margin:0 auto;}
+    /* Cards */
+    .card {background:#222; padding:1rem; margin:1rem 0; border-radius:10px;}
+    /* Admin/Staff */
+    .admin-panel, .staff-panel {display:none; background:#333; padding:2rem; border-radius:10px; margin:1rem 0;}
+    .show {display:block;}
+    /* Tickets */
+    .ticket {background:#444; padding:1rem; border-radius:8px; margin:0.5rem 0;}
+    .message {background:#555; padding:0.5rem; border-radius:5px; margin:0.3rem 0;}
+    /* Modes */
+    .mode-halloween {background:#2b0000;}
+    .mode-horror {background:#000; color:#f00;}
 </style>
 </head>
 <body>
 
 <header>
-<h1>Arthur et Jojo 🎬</h1>
-<p>Chaîne YouTube Officielle</p>
-<button class="admin-btn" onclick="openAdmin()">🔐 Admin</button>
+    <h1>Arthur & Jojo 🎬</h1>
+    <p><a href="https://www.youtube.com/channel/UCUk7-ajL9QIou0-klV9EeGQ" target="_blank">Voir la chaîne YouTube</a></p>
 </header>
 
 <nav>
-<a href="#videos">Vidéos</a>
-<a href="#annonces">Annonces</a>
-<a href="#tickets">Tickets</a>
-<a href="#secrets">Secrets</a>
-<a href="#" onclick="toggleHorror()">Mode Horreur</a>
-<a href="#" onclick="toggleHalloween()">Mode Halloween</a>
+    <a href="#annonces">Annonces</a>
+    <a href="#videos">Vidéos</a>
+    <a href="#tickets">Tickets</a>
+    <a href="#secrets">Secrets</a>
 </nav>
 
-<section id="videos">
-<h2>Vidéos</h2>
-<div id="videoList"></div>
-</section>
+<div class="container">
 
-<section id="annonces">
-<h2>Annonces</h2>
-<div id="annonceList"></div>
-</section>
+    <!-- Annonces -->
+    <section id="annonces">
+        <h2>📢 Annonces</h2>
+        <div id="annoncesList"></div>
+    </section>
 
-<section id="tickets">
-<h2>Tickets</h2>
-<button class="btn" onclick="createTicket()">🎫 Créer un ticket</button>
-<div id="ticketList"></div>
-</section>
+    <!-- Vidéos -->
+    <section id="videos">
+        <h2>🎥 Vidéos</h2>
+        <div id="videosList"></div>
+    </section>
 
-<section id="secrets">
-<h2>Secrets Interactifs</h2>
-<p>Cliquez ou appuyez sur certaines touches pour découvrir des surprises !</p>
-</section>
+    <!-- Tickets -->
+    <section id="tickets">
+        <h2>🎫 Tickets</h2>
+        <button onclick="createTicket()">Créer un ticket</button>
+        <div id="ticketsList"></div>
+    </section>
 
-<div id="blague"></div>
+    <!-- Secrets -->
+    <section id="secrets">
+        <h2>🕵️‍♂️ Secrets</h2>
+        <p>Cliquez ou tapez des combinaisons pour découvrir des surprises...</p>
+    </section>
 
-<div id="adminPanel">
-<h3>Panel Admin/Staff</h3>
-<div class="admin-section">
-<h4>Ajouter une annonce</h4>
-<input type="text" id="annonceInput" placeholder="Texte de l'annonce">
-<button class="btn" onclick="addAnnonce()">Ajouter</button>
-</div>
-<div class="admin-section">
-<h4>Ajouter une vidéo</h4>
-<input type="text" id="videoInput" placeholder="Lien YouTube embed (iframe)">
-<button class="btn" onclick="addVideo()">Ajouter</button>
-</div>
-<div class="admin-section">
-<h4>Tickets (Staff)</h4>
-<p>Liste des tickets :</p>
-<div id="staffTickets"></div>
-</div>
-<button class="btn" onclick="closeAdmin()">Fermer Panel</button>
+    <!-- Admin Panel -->
+    <section>
+        <button onclick="openAdmin()">🔒 Admin</button>
+        <div id="adminPanel" class="admin-panel">
+            <h2>Panel Admin</h2>
+            <input type="password" id="adminPass" placeholder="Code d'accès">
+            <button onclick="loginAdmin()">Valider</button>
+
+            <div id="adminContent" style="display:none;">
+                <h3>Gestion Annonces</h3>
+                <input type="text" id="annonceInput" placeholder="Nouvelle annonce">
+                <button onclick="addAnnonce()">Ajouter</button>
+
+                <h3>Gestion Vidéos</h3>
+                <input type="text" id="videoInput" placeholder="Lien vidéo">
+                <button onclick="addVideo()">Ajouter</button>
+
+                <h3>Gestion Tickets</h3>
+                <div id="staffTickets"></div>
+
+                <h3>Mode</h3>
+                <button onclick="setMode('normal')">Normal</button>
+                <button onclick="setMode('dark')">Sombre</button>
+                <button onclick="setMode('halloween')">Halloween</button>
+                <button onclick="setMode('horror')">Horreur</button>
+            </div>
+        </div>
+    </section>
+
 </div>
 
 <script>
-/* === ADMIN LOGIN === */
-const adminCode = '1519';
-function openAdmin(){
-  const code = prompt("Entrez le code admin:");
-  if(code===adminCode){document.getElementById('adminPanel').style.display='block';}
-  else alert("❌ Code incorrect !");}
-function closeAdmin(){document.getElementById('adminPanel').style.display='none';}
-
-/* === VIDEOS === */
-let videos = JSON.parse(localStorage.getItem('videos')) || [];
-function displayVideos(){
-  const list = document.getElementById('videoList');
-  list.innerHTML = videos.map(v=>`<div class="video-card">${v}</div>`).join('');
+/* --- Admin --- */
+let isAdmin = false;
+function openAdmin() { document.getElementById('adminPanel').classList.add('show'); }
+function loginAdmin(){
+    if(document.getElementById('adminPass').value === '1519'){
+        isAdmin = true;
+        document.getElementById('adminContent').style.display='block';
+        alert('✅ Admin activé');
+        loadAdminTickets();
+    } else { alert('❌ Code incorrect'); }
 }
-function addVideo(){
-  const input = document.getElementById('videoInput');
-  if(input.value){videos.push(input.value);localStorage.setItem('videos',JSON.stringify(videos));displayVideos();input.value='';}
-}
-displayVideos();
 
-/* === ANNONCES === */
+/* --- Annonces --- */
 let annonces = JSON.parse(localStorage.getItem('annonces')) || [];
-function displayAnnonces(){
-  const list = document.getElementById('annonceList');
-  list.innerHTML = annonces.map((a,i)=>`<div class="annonce">${a}${document.getElementById('adminPanel').style.display==='block'?`<button class="delete" onclick="deleteAnnonce(${i})">x</button>`:''}</div>`).join('');
-}
 function addAnnonce(){
-  const input=document.getElementById('annonceInput');
-  if(input.value){annonces.push(input.value);localStorage.setItem('annonces',JSON.stringify(annonces));displayAnnonces();input.value='';}
+    const val = document.getElementById('annonceInput').value;
+    if(val){ annonces.push(val); localStorage.setItem('annonces', JSON.stringify(annonces)); displayAnnonces(); document.getElementById('annonceInput').value=''; }
 }
-function deleteAnnonce(i){annonces.splice(i,1);localStorage.setItem('annonces',JSON.stringify(annonces));displayAnnonces();}
+function displayAnnonces(){
+    document.getElementById('annoncesList').innerHTML = annonces.map((a,i)=>`<div class="card">${a} ${isAdmin?`<button onclick="deleteAnnonce(${i})">Supprimer</button>`:''}</div>`).join('');
+}
+function deleteAnnonce(i){ annonces.splice(i,1); localStorage.setItem('annonces', JSON.stringify(annonces)); displayAnnonces(); }
 displayAnnonces();
 
-/* === TICKETS === */
-let tickets=JSON.parse(localStorage.getItem('tickets'))||[];
+/* --- Vidéos --- */
+let videos = JSON.parse(localStorage.getItem('videos')) || [];
+function addVideo(){ 
+    const val = document.getElementById('videoInput').value;
+    if(val){ videos.push(val); localStorage.setItem('videos', JSON.stringify(videos)); displayVideos(); document.getElementById('videoInput').value=''; }
+}
+function displayVideos(){
+    document.getElementById('videosList').innerHTML = videos.map((v,i)=>`<div class="card"><iframe width="300" height="170" src="${v.replace('watch?v=','embed/')}" frameborder="0" allowfullscreen></iframe> ${isAdmin?`<button onclick="deleteVideo(${i})">Supprimer</button>`:''}</div>`).join('');
+}
+function deleteVideo(i){ videos.splice(i,1); localStorage.setItem('videos', JSON.stringify(videos)); displayVideos(); }
+displayVideos();
+
+/* --- Tickets --- */
+let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
 function createTicket(){
-  const id=Date.now();
-  const content=prompt("Écrivez votre ticket:");
-  if(content){tickets.push({id:id,content:content});localStorage.setItem('tickets',JSON.stringify(tickets));displayTickets();}
+    const id = 'ticket_'+Date.now();
+    tickets.push({id:id,messages:[]});
+    localStorage.setItem('tickets', JSON.stringify(tickets));
+    displayTickets();
+    alert('Votre ticket est créé : '+id);
 }
 function displayTickets(){
-  const list=document.getElementById('ticketList');
-  list.innerHTML=tickets.map(t=>`<div class="ticket">${t.content}</div>`).join('');
-  const staffList=document.getElementById('staffTickets');
-  staffList.innerHTML=tickets.map((t,i)=>`<div class="ticket">${t.content} <button class="delete-ticket" onclick="deleteTicket(${i})">x</button></div>`).join('');
+    document.getElementById('ticketsList').innerHTML = tickets.map(t=>`<div class="ticket">${t.id}</div>`).join('');
 }
-function deleteTicket(i){tickets.splice(i,1);localStorage.setItem('tickets',JSON.stringify(tickets));displayTickets();}
 displayTickets();
-
-/* === MODES HORREUR & HALLOWEEN === */
-function toggleHorror(){document.body.classList.toggle('horror');flashBlague("Boo ! 👻");shakeScreen();}
-function toggleHalloween(){document.body.classList.toggle('halloween');flashBlague("🎃 Joyeux Halloween !");shakeScreen();}
-function shakeScreen(){document.body.classList.add('shake');setTimeout(()=>{document.body.classList.remove('shake');},1000);}
-
-/* === BLAGUES ALEATOIRES === */
-const blagues=["Pourquoi les poules ne portent pas de chaussures ? 🐔","Que fait un vampire à l'école ? Il suce… les cours ! 🧛‍♂️","Pourquoi le squelette ne se bat jamais ? 🦴"];
-function flashBlague(text){
-  const b=document.getElementById('blague');
-  b.innerText=text;b.style.display='block';
-  setTimeout(()=>{b.style.display='none';},3000);
+function loadAdminTickets(){
+    document.getElementById('staffTickets').innerHTML = tickets.map((t,i)=>`<div class="ticket">${t.id} <button onclick="deleteTicket(${i})">Clôturer</button></div>`).join('');
 }
-setInterval(()=>{const r=Math.floor(Math.random()*blagues.length);flashBlague(blagues[r]);},15000);
+function deleteTicket(i){ tickets.splice(i,1); localStorage.setItem('tickets', JSON.stringify(tickets)); displayTickets(); loadAdminTickets(); }
 
-/* === SECRETS INTERACTIFS === */
-document.addEventListener('keydown',e=>{
-  if(e.key==='h'&&e.ctrlKey){alert("Secret Ctrl+H activé ! 👀");}
+/* --- Modes --- */
+function setMode(mode){
+    document.body.className='';
+    if(mode==='dark'){ document.body.style.background='#111'; document.body.style.color='#fff'; }
+    else if(mode==='halloween'){ document.body.style.background='#2b0000'; document.body.style.color='#ff8'; shakeEffect(); }
+    else if(mode==='horror'){ document.body.style.background='#000'; document.body.style.color='#f00'; horrorEffect(); }
+    else { document.body.style.background='#111'; document.body.style.color='#fff'; }
+}
+function shakeEffect(){
+    let i=0;
+    const interval = setInterval(()=>{document.body.style.transform=`translate(${Math.random()*5}px,${Math.random()*5}px)`; i++; if(i>10){clearInterval(interval); document.body.style.transform='';}},50);
+}
+function horrorEffect(){
+    const imgs = ['https://i.imgur.com/U4dC9XS.jpg','https://i.imgur.com/Qr3m8Ac.jpg']; 
+    const body = document.body;
+    let j=0;
+    setInterval(()=>{body.style.backgroundImage=`url(${imgs[j%imgs.length]})`; j++;},3000);
+}
+
+/* --- Blagues aléatoires --- */
+setInterval(()=>{
+    if(Math.random()<0.1) alert('😂 Petite blague du jour !');
+},10000);
+
+/* --- Secrets --- */
+document.addEventListener('keydown',(e)=>{
+    if(e.key==='ArrowUp' && e.ctrlKey){
+        alert('🎉 Secret activé !');
+    }
 });
-document.getElementById('secrets').addEventListener('click',()=>{alert("Vous avez trouvé un secret ! 🕵️");});
 </script>
-
 </body>
 </html>

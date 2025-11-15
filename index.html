@@ -5,59 +5,54 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arthur et Jojo - YouTube</title>
 <style>
-    /* Reset et styles de base */
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: background 0.3s, color 0.3s; }
-    body.dark { background:#111; color:#eee; }
-    body.light { background:#f5f5f5; color:#111; }
+/* Reset et base */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: background 0.4s, color 0.4s; cursor: url('https://cdn-icons-png.flaticon.com/512/32/32339.png'), auto; }
+body.dark { background: linear-gradient(120deg,#1c1c1c,#111); color:#eee; }
+body.light { background: linear-gradient(120deg,#f5f5f5,#ddd); color:#111; }
 
-    /* Curseur personnalisé */
-    body { cursor: url('https://cdn-icons-png.flaticon.com/512/32/32339.png'), auto; }
+/* En-tête */
+header { padding:2rem; text-align:center; background: linear-gradient(90deg,#6a0dad,#4b0082); color:white; border-radius:0 0 20px 20px; box-shadow:0 4px 10px rgba(0,0,0,0.3);}
+header h1 { font-size:2.8rem; }
 
-    /* En-tête */
-    header { padding:2rem; text-align:center; background:linear-gradient(90deg,#ff7f50,#ff6347); color:white; }
-    header h1 { font-size:2.5rem; }
+/* Navigation */
+nav { display:flex; justify-content:center; gap:1rem; margin:2rem 0; }
+nav button { padding:.8rem 1.8rem; border:none; border-radius:12px; cursor:pointer; font-weight:bold; background:linear-gradient(90deg,#4b0082,#6a0dad); color:white; transition:0.3s; box-shadow:0 4px 6px rgba(0,0,0,0.3);}
+nav button:hover { transform: translateY(-2px); box-shadow:0 6px 10px rgba(0,0,0,0.5); }
 
-    /* Navigation */
-    nav { display:flex; justify-content:center; gap:1rem; margin-bottom:2rem; }
-    nav button { padding:.6rem 1.2rem; border:none; border-radius:8px; cursor:pointer; background:#ff6347; color:white; font-weight:bold; transition:0.3s; }
-    nav button:hover { background:#ff7f50; }
+/* Container général */
+.container { max-width:1200px; margin:0 auto; padding:2rem; }
 
-    /* Section principale */
-    .container { max-width:1200px; margin:0 auto; padding:2rem; }
+/* Bouton ouvrir ticket */
+.ticket-btn { padding:1rem 2rem; border:none; border-radius:15px; font-size:1rem; font-weight:bold; cursor:pointer; background:linear-gradient(135deg,#ff6347,#ff4500); color:white; transition:0.3s; box-shadow:0 4px 8px rgba(0,0,0,0.3);}
+.ticket-btn:hover { transform: translateY(-3px); box-shadow:0 6px 12px rgba(0,0,0,0.5); }
 
-    /* Boutons admin */
-    .admin-btn { background:#4b0082; color:white; padding:1rem 2rem; border:none; border-radius:10px; cursor:pointer; font-weight:bold; margin-bottom:1rem; transition:0.3s; }
-    .admin-btn:hover { background:#6a0dad; }
+/* Cartes annonces / vidéos */
+.item-card { border-radius:15px; padding:1.5rem; margin-bottom:1.5rem; background: linear-gradient(135deg, rgba(75,0,130,0.8), rgba(58,0,115,0.8)); color:white; box-shadow:0 6px 12px rgba(0,0,0,0.4); transition:0.3s;}
+.item-card:hover { transform: translateY(-3px); box-shadow:0 8px 16px rgba(0,0,0,0.5); }
 
-    /* Panel admin */
-    #adminPanel { display:none; padding:2rem; border:2px solid #4b0082; border-radius:15px; margin-bottom:2rem; background:rgba(75,0,130,0.1); }
-    #adminPanel h2 { margin-bottom:1rem; }
-    .admin-section { margin-bottom:2rem; }
-    .admin-section h3 { margin-bottom:.5rem; }
-    .admin-section input, .admin-section textarea { width:100%; padding:.5rem; margin-bottom:.5rem; border-radius:5px; border:1px solid #999; }
-    .admin-section button { padding:.5rem 1rem; border:none; border-radius:5px; cursor:pointer; background:#4b0082; color:white; font-weight:bold; transition:.3s; }
-    .admin-section button:hover { background:#6a0dad; }
+/* Tickets */
+.ticket { border-radius:12px; padding:1rem; background: linear-gradient(135deg,#111,#1c1c1c); margin-bottom:1rem; box-shadow:0 4px 8px rgba(0,0,0,0.3);}
+.ticket-messages { max-height:160px; overflow-y:auto; border-radius:8px; padding:.5rem; margin-bottom:.5rem; background:#222; color:#eee; }
 
-    /* Annonces et vidéos */
-    .item-card { border:1px solid #999; padding:1rem; border-radius:10px; margin-bottom:1rem; background:rgba(255,255,255,0.05); }
-    .item-card.dark { background:rgba(255,255,255,0.1); }
+/* Panel admin */
+#adminPanel { display:none; padding:2rem; border:2px solid #4b0082; border-radius:15px; margin-bottom:2rem; background:rgba(75,0,130,0.15); box-shadow:0 6px 12px rgba(0,0,0,0.4); }
+#adminPanel h2 { margin-bottom:1.5rem; }
 
-    /* Tickets */
-    #tickets { display:flex; flex-direction:column; gap:1rem; }
-    .ticket { border:1px solid #999; border-radius:10px; padding:1rem; background:rgba(255,255,255,0.05); }
-    .ticket.dark { background:rgba(255,255,255,0.1); }
-    .ticket-messages { max-height:150px; overflow-y:auto; border:1px solid #ccc; padding:.5rem; margin-bottom:.5rem; border-radius:5px; background:white; }
-    .ticket-messages.dark { background:#222; color:#eee; border-color:#555; }
+/* Inputs et boutons admin */
+.admin-section input, .admin-section textarea { width:100%; padding:.6rem; margin-bottom:.5rem; border-radius:8px; border:1px solid #999; background:#111; color:#eee; }
+.admin-section button { padding:.6rem 1.2rem; border:none; border-radius:10px; cursor:pointer; background:linear-gradient(90deg,#4b0082,#6a0dad); color:white; font-weight:bold; transition:0.3s; box-shadow:0 4px 8px rgba(0,0,0,0.3);}
+.admin-section button:hover { transform: translateY(-2px); box-shadow:0 6px 12px rgba(0,0,0,0.5); }
 
-    /* Mode sombre / clair */
-    #modeToggle { position:fixed; top:10px; right:10px; padding:.5rem 1rem; border:none; border-radius:8px; cursor:pointer; background:#ff6347; color:white; font-weight:bold; }
+/* Mode sombre / clair */
+#modeToggle { position:fixed; top:15px; right:15px; padding:.6rem 1.2rem; border:none; border-radius:12px; cursor:pointer; background:linear-gradient(90deg,#ff6347,#ff4500); color:white; font-weight:bold; box-shadow:0 4px 8px rgba(0,0,0,0.3); transition:0.3s;}
+#modeToggle:hover { transform: translateY(-2px); box-shadow:0 6px 12px rgba(0,0,0,0.5); }
 </style>
 </head>
 <body class="dark">
 
 <header>
-    <h1>Arthur et Jojo <span>🎬</span></h1>
+    <h1>Arthur et Jojo 🎬</h1>
 </header>
 
 <nav>
@@ -68,7 +63,7 @@
 <button id="modeToggle" onclick="toggleMode()">Mode Clair/Sombre</button>
 
 <div class="container" id="home">
-    <h2>Bienvenue sur le site officiel d'Arthur et Jojo ! 🎥</h2>
+    <h2>Bienvenue sur le site officiel d'Arthur et Jojo !</h2>
     <p>Regardez nos vidéos et restez à jour avec nos dernières annonces.</p>
 
     <h3>Vidéos récentes :</h3>
@@ -80,24 +75,21 @@
     <h3>Tickets :</h3>
     <div id="tickets"></div>
 
-    <button onclick="createTicket(prompt('Nom du ticket ?'))">Ouvrir un ticket</button>
+    <button class="ticket-btn" onclick="createTicket(prompt('Nom du ticket ?'))">Ouvrir un ticket 🎫</button>
 </div>
 
 <div class="container" id="adminPanel">
     <h2>💼 Panel Admin</h2>
-
     <div class="admin-section">
         <h3>Ajouter une annonce :</h3>
         <input type="text" id="annonceInput" placeholder="Texte de l'annonce">
         <button onclick="addAnnonce()">Ajouter</button>
     </div>
-
     <div class="admin-section">
         <h3>Ajouter une vidéo :</h3>
         <input type="text" id="videoInput" placeholder="Lien YouTube">
         <button onclick="addVideo()">Ajouter</button>
     </div>
-
     <div class="admin-section">
         <h3>Tickets :</h3>
         <div id="adminTickets"></div>
@@ -105,6 +97,7 @@
 </div>
 
 <script>
+// ---- JS inchangé ----
 let annonces = JSON.parse(localStorage.getItem('annonces')) || [];
 let videos = JSON.parse(localStorage.getItem('videos')) || [];
 let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
@@ -113,112 +106,50 @@ const home = document.getElementById('home');
 const adminPanel = document.getElementById('adminPanel');
 
 function showSection(section) {
-    if(section === 'home') {
-        home.style.display = 'block';
-        adminPanel.style.display = 'none';
-    } else {
-        home.style.display = 'none';
-        adminPanel.style.display = 'block';
-        renderAdminTickets();
-    }
+    if(section === 'home') { home.style.display='block'; adminPanel.style.display='none'; }
+    else { home.style.display='none'; adminPanel.style.display='block'; renderAdminTickets(); }
 }
 
-function toggleMode() {
-    document.body.classList.toggle('dark');
-    document.body.classList.toggle('light');
-}
+function toggleMode(){ document.body.classList.toggle('dark'); document.body.classList.toggle('light'); }
 
-// ---- Annonces ----
+// Annonces
 function renderAnnonces() {
     const container = document.getElementById('annonces');
     container.innerHTML = annonces.map((a,i)=>`<div class="item-card">${a} <button onclick="deleteAnnonce(${i})">Supprimer</button></div>`).join('');
 }
-function addAnnonce() {
-    const input = document.getElementById('annonceInput');
-    if(input.value.trim()==='') return;
-    annonces.push(input.value.trim());
-    input.value='';
-    localStorage.setItem('annonces',JSON.stringify(annonces));
-    renderAnnonces();
-}
-function deleteAnnonce(index){
-    annonces.splice(index,1);
-    localStorage.setItem('annonces',JSON.stringify(annonces));
-    renderAnnonces();
-}
+function addAnnonce() { const input=document.getElementById('annonceInput'); if(input.value.trim()==='') return; annonces.push(input.value.trim()); input.value=''; localStorage.setItem('annonces',JSON.stringify(annonces)); renderAnnonces(); }
+function deleteAnnonce(i){ annonces.splice(i,1); localStorage.setItem('annonces',JSON.stringify(annonces)); renderAnnonces(); }
 
-// ---- Vidéos ----
+// Vidéos
 function renderVideos() {
     const container = document.getElementById('videos');
     container.innerHTML = videos.map((v,i)=>`<div class="item-card"><iframe width="360" height="200" src="${v}" frameborder="0" allowfullscreen></iframe> <button onclick="deleteVideo(${i})">Supprimer</button></div>`).join('');
 }
-function addVideo() {
-    const input = document.getElementById('videoInput');
-    if(input.value.trim()==='') return;
-    videos.push(input.value.trim());
-    input.value='';
-    localStorage.setItem('videos',JSON.stringify(videos));
-    renderVideos();
-}
-function deleteVideo(index){
-    videos.splice(index,1);
-    localStorage.setItem('videos',JSON.stringify(videos));
-    renderVideos();
-}
+function addVideo() { const input=document.getElementById('videoInput'); if(input.value.trim()==='') return; videos.push(input.value.trim()); input.value=''; localStorage.setItem('videos',JSON.stringify(videos)); renderVideos(); }
+function deleteVideo(i){ videos.splice(i,1); localStorage.setItem('videos',JSON.stringify(videos)); renderVideos(); }
 
-// ---- Tickets ----
+// Tickets
 function renderTickets() {
-    const container = document.getElementById('tickets');
-    container.innerHTML = tickets.map((t,i)=>`<div class="ticket"><strong>${t.name}</strong>
+    const container=document.getElementById('tickets');
+    container.innerHTML=tickets.map((t,i)=>`<div class="ticket"><strong>${t.name}</strong>
         <div class="ticket-messages">${t.messages.map(m=>`<div>${m}</div>`).join('')}</div>
         <input type="text" id="ticketInput${i}" placeholder="Répondre..."><button onclick="sendMessage(${i})">Envoyer</button>
     </div>`).join('');
 }
-
 function renderAdminTickets() {
-    const container = document.getElementById('adminTickets');
-    container.innerHTML = tickets.map((t,i)=>`<div class="ticket dark"><strong>${t.name}</strong>
+    const container=document.getElementById('adminTickets');
+    container.innerHTML=tickets.map((t,i)=>`<div class="ticket dark"><strong>${t.name}</strong>
         <div class="ticket-messages dark">${t.messages.map(m=>`<div>${m}</div>`).join('')}</div>
         <input type="text" id="ticketAdminInput${i}" placeholder="Répondre..."><button onclick="sendAdminMessage(${i})">Envoyer</button>
         <button onclick="deleteTicket(${i})">Supprimer</button>
     </div>`).join('');
 }
 
-function createTicket(name){
-    if(!name) return;
-    tickets.push({name:name,messages:[]});
-    localStorage.setItem('tickets',JSON.stringify(tickets));
-    renderTickets();
-}
+function createTicket(name){ if(!name) return; tickets.push({name:name,messages:[]}); localStorage.setItem('tickets',JSON.stringify(tickets)); renderTickets(); }
+function sendMessage(i){ const input=document.getElementById('ticketInput'+i); if(!input.value.trim()) return; tickets[i].messages.push('Utilisateur : '+input.value); localStorage.setItem('tickets',JSON.stringify(tickets)); input.value=''; renderTickets(); renderAdminTickets(); }
+function sendAdminMessage(i){ const input=document.getElementById('ticketAdminInput'+i); if(!input.value.trim()) return; tickets[i].messages.push('Staff : '+input.value); localStorage.setItem('tickets',JSON.stringify(tickets)); input.value=''; renderTickets(); renderAdminTickets(); }
+function deleteTicket(i){ tickets.splice(i,1); localStorage.setItem('tickets',JSON.stringify(tickets)); renderTickets(); renderAdminTickets(); }
 
-function sendMessage(index){
-    const input = document.getElementById('ticketInput'+index);
-    if(!input.value.trim()) return;
-    tickets[index].messages.push('Utilisateur : '+input.value);
-    localStorage.setItem('tickets',JSON.stringify(tickets));
-    input.value='';
-    renderTickets();
-    renderAdminTickets();
-}
-
-function sendAdminMessage(index){
-    const input = document.getElementById('ticketAdminInput'+index);
-    if(!input.value.trim()) return;
-    tickets[index].messages.push('Staff : '+input.value);
-    localStorage.setItem('tickets',JSON.stringify(tickets));
-    input.value='';
-    renderTickets();
-    renderAdminTickets();
-}
-
-function deleteTicket(index){
-    tickets.splice(index,1);
-    localStorage.setItem('tickets',JSON.stringify(tickets));
-    renderTickets();
-    renderAdminTickets();
-}
-
-// Initial render
 renderAnnonces();
 renderVideos();
 renderTickets();

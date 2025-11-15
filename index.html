@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arthur et Jojo - YouTube</title>
+<title>Arthur et Jojo 🎬</title>
 <style>
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif;}
     body { background:#111; color:#eee; transition: background 0.5s, color 0.5s;}
     a { color:#4caf50; text-decoration:none; }
     a:hover { text-decoration:underline;}
-    header { text-align:center; padding:2rem; background:#222; position:sticky; top:0; z-index:1000;}
+    header { text-align:center; padding:2rem; background:#222; position:sticky; top:0; z-index:1000; cursor:pointer; }
     header h1 { font-size:2.5rem; }
     nav { background:#333; padding:1rem; text-align:center;}
     nav a { margin:0 1rem; font-weight:bold; padding:0.5rem 1rem; border-radius:10px; background:#444; transition:0.3s;}
@@ -18,7 +18,7 @@
     .btn { padding:0.5rem 1rem; background:#4caf50; border:none; border-radius:10px; cursor:pointer; color:#fff; margin:0.5rem; transition:0.3s;}
     .btn:hover { background:#45a049; }
     .admin-modal, .ticket-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:2000; }
-    .modal-content { background:#111; padding:2rem; border-radius:15px; width:90%; max-width:600px; color:#eee; position:relative;}
+    .modal-content { background:#111; padding:2rem; border-radius:15px; width:90%; max-width:600px; color:#eee; position:relative; max-height:90vh; overflow-y:auto;}
     .modal-content h2 { margin-bottom:1rem; }
     .close-btn { position:absolute; top:10px; right:10px; cursor:pointer; font-size:1.5rem; }
     input, textarea { width:100%; padding:0.5rem; margin:0.5rem 0; border-radius:10px; border:none; background:#333; color:#eee;}
@@ -28,11 +28,14 @@
     .dark-mode { background:#000; color:#fff; }
     .horror-mode { background:#110000; color:#ff4444; animation: shake 0.1s infinite; }
     @keyframes shake { 0% {transform:translate(1px,1px);} 25%{transform:translate(-1px,-1px);} 50%{transform:translate(1px,-1px);} 75%{transform:translate(-1px,1px);} 100%{transform:translate(0,0);} }
+    .blague-popup { position:fixed; bottom:20px; right:20px; background:#222; padding:1rem; border-radius:10px; color:#4caf50; box-shadow:0 0 10px #000; z-index:3000; display:none;}
+    .secret-effect { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,0,0,0.7); z-index:4000; display:none; animation: flash 0.5s; }
+    @keyframes flash { 0% {opacity:0;} 50% {opacity:1;} 100% {opacity:0;} }
 </style>
 </head>
 <body>
 
-<header>
+<header id="header">
     <h1>Arthur et Jojo 🎬</h1>
 </header>
 
@@ -96,10 +99,14 @@
     </div>
 </div>
 
+<div class="blague-popup" id="blaguePopup"></div>
+<div class="secret-effect" id="secretEffect"></div>
+
 <script>
 let videos = JSON.parse(localStorage.getItem('videos')) || [];
 let annonces = JSON.parse(localStorage.getItem('annonces')) || [];
 let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+let userTickets = JSON.parse(localStorage.getItem('userTickets')) || {};
 
 function renderVideos() {
     const container = document.getElementById('videoList');
@@ -121,7 +128,10 @@ function renderAnnonces() {
 function renderTickets() {
     const container = document.getElementById('ticketList');
     const adminContainer = document.getElementById('adminTickets');
-    container.innerHTML = tickets.map(t=>`<div class="ticket-card"><strong>${t.name}</strong>: ${t.msg}</div>`).join('');
+    const user = prompt("Entrez votre pseudo pour vos tickets :","Visiteur");
+    if(!userTickets[user]) userTickets[user]=[];
+    localStorage.setItem('userTickets',JSON.stringify(userTickets));
+    container.innerHTML = userTickets[user].map((t,i)=>`<div class="ticket-card"><strong>${t.name}</strong>: ${t.msg}</div>`).join('');
     adminContainer.innerHTML = tickets.map((t,i)=>`<div class="ticket-card"><strong>${t.name}</strong>: ${t.msg} <button class="delete-btn" onclick="deleteTicket(${i})">×</button></div>`).join('');
 }
 
@@ -148,12 +158,57 @@ function closeTicket(){ document.getElementById('ticketModal').style.display='no
 function addTicket(){ 
     const name = document.getElementById('ticketName').value;
     const msg = document.getElementById('ticketMsg').value;
-    if(name && msg){ tickets.push({name,msg}); localStorage.setItem('tickets',JSON.stringify(tickets)); renderTickets(); closeTicket();}
+    if(name && msg){ 
+        tickets.push({name,msg}); 
+        const user = name;
+        if(!userTickets[user]) userTickets[user]=[];
+        userTickets[user].push({name,msg});
+        localStorage.setItem('tickets',JSON.stringify(tickets));
+        localStorage.setItem('userTickets',JSON.stringify(userTickets));
+        renderTickets(); 
+        closeTicket();
+    }
 }
 function deleteTicket(i){ tickets.splice(i,1); localStorage.setItem('tickets',JSON.stringify(tickets)); renderTickets();}
 
 function toggleDark(){ document.body.classList.toggle('dark-mode');}
 function toggleHorror(){ document.body.classList.toggle('horror-mode');}
+
+// Blagues aléatoires
+const blagues = ["👻 Boo! Surprise!", "😹 Tu as vu ce chat bizarre ?", "🕷️ Une araignée virtuelle est là !"];
+setInterval(()=>{ 
+    const popup = document.getElementById('blaguePopup');
+    popup.innerText = blagues[Math.floor(Math.random()*blagues.length)];
+    popup.style.display = 'block';
+    setTimeout(()=>popup.style.display='none',4000);
+},15000);
+
+// Secrets interactifs
+let secretCounter=0;
+document.getElementById('header').addEventListener('click',()=>{
+    secretCounter++;
+    if(secretCounter===5){ 
+        triggerSecret();
+        secretCounter=0;
+    }
+});
+
+let keySequence = [];
+const secretCode = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+document.addEventListener('keydown', (e)=>{
+    keySequence.push(e.key);
+    if(keySequence.slice(-secretCode.length).join(",")===secretCode.join(",")){
+        triggerSecret();
+        keySequence=[];
+    }
+});
+
+function triggerSecret(){
+    const effect = document.getElementById('secretEffect');
+    effect.style.display='block';
+    setTimeout(()=>effect.style.display='none',1000);
+    alert("🎉 Secret activé !");
+}
 
 // Initial render
 renderVideos(); renderAnnonces(); renderTickets();
@@ -161,5 +216,7 @@ renderVideos(); renderAnnonces(); renderTickets();
 
 </body>
 </html>
+
+
 
 

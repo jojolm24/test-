@@ -3,157 +3,239 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arthur et Jojo - YouTube</title>
+<title>Arthur & Jojo - YouTube</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
-/* Reset et base */
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: background 0.4s, color 0.4s; cursor: url('https://cdn-icons-png.flaticon.com/512/32/32339.png'), auto; }
-body.dark { background: linear-gradient(120deg,#1c1c1c,#111); color:#eee; }
-body.light { background: linear-gradient(120deg,#f5f5f5,#ddd); color:#111; }
+/* ========== GLOBAL ========== */
+body {
+    margin:0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+    color: #fff;
+    transition: background 0.3s;
+}
+h1,h2,h3 { margin:0.5rem 0; }
+a { color:#fff; text-decoration:none; }
+a:hover { text-decoration:underline; }
 
-/* En-tête */
-header { padding:2rem; text-align:center; background: linear-gradient(90deg,#6a0dad,#4b0082); color:white; border-radius:0 0 20px 20px; box-shadow:0 4px 10px rgba(0,0,0,0.3);}
-header h1 { font-size:2.8rem; }
+/* ========== HEADER ========== */
+header {
+    background: linear-gradient(90deg,#222,#111);
+    padding: 1rem 2rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 4px 6px rgba(0,0,0,0.5);
+}
+header h1 { font-size:2rem; color:#ffdd00; }
+header nav button {
+    background: linear-gradient(90deg,#444,#666);
+    border:none;
+    padding:0.6rem 1rem;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-left:10px;
+    transition: all 0.3s;
+}
+header nav button:hover { background: linear-gradient(90deg,#666,#888); transform: scale(1.05); }
 
-/* Navigation */
-nav { display:flex; justify-content:center; gap:1rem; margin:2rem 0; }
-nav button { padding:.8rem 1.8rem; border:none; border-radius:12px; cursor:pointer; font-weight:bold; background:linear-gradient(90deg,#4b0082,#6a0dad); color:white; transition:0.3s; box-shadow:0 4px 6px rgba(0,0,0,0.3);}
-nav button:hover { transform: translateY(-2px); box-shadow:0 6px 10px rgba(0,0,0,0.5); }
+/* ========== MAIN CONTENT ========== */
+main { padding:2rem; max-width:1200px; margin:0 auto; }
+section { margin-bottom:3rem; padding:1.5rem; background:#1a1a1a; border-radius:12px; box-shadow:0 4px 6px rgba(0,0,0,0.5); }
 
-/* Container général */
-.container { max-width:1200px; margin:0 auto; padding:2rem; }
+/* ========== YOUTUBE VIDEO ========== */
+.video-container { position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:12px; margin-bottom:1rem; }
+.video-container iframe { position:absolute; top:0; left:0; width:100%; height:100%; border-radius:12px; }
 
-/* Bouton ouvrir ticket */
-.ticket-btn { padding:1rem 2rem; border:none; border-radius:15px; font-size:1rem; font-weight:bold; cursor:pointer; background:linear-gradient(135deg,#ff6347,#ff4500); color:white; transition:0.3s; box-shadow:0 4px 8px rgba(0,0,0,0.3);}
-.ticket-btn:hover { transform: translateY(-3px); box-shadow:0 6px 12px rgba(0,0,0,0.5); }
+/* ========== TICKETS ========== */
+#ticketSection { display:flex; flex-direction:column; gap:1rem; }
+.ticket {
+    background: #222;
+    padding:1rem;
+    border-radius:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 2px 4px rgba(0,0,0,0.5);
+}
+.ticket button { background:#ff5555; border:none; padding:0.4rem 0.8rem; border-radius:8px; cursor:pointer; transition:0.3s; }
+.ticket button:hover { background:#ff2222; }
 
-/* Cartes annonces / vidéos */
-.item-card { border-radius:15px; padding:1.5rem; margin-bottom:1.5rem; background: linear-gradient(135deg, rgba(75,0,130,0.8), rgba(58,0,115,0.8)); color:white; box-shadow:0 6px 12px rgba(0,0,0,0.4); transition:0.3s;}
-.item-card:hover { transform: translateY(-3px); box-shadow:0 8px 16px rgba(0,0,0,0.5); }
+/* ========== ADMIN PANEL ========== */
+#adminPanel {
+    position:fixed;
+    top:50px;
+    right:20px;
+    width:320px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:#111;
+    border:2px solid #ffdd00;
+    border-radius:12px;
+    padding:1rem;
+    display:none;
+    z-index:1000;
+}
+#adminPanel h3 { text-align:center; margin-bottom:1rem; color:#ffdd00; }
+#adminPanel input, #adminPanel textarea { width:100%; margin-bottom:0.8rem; padding:0.6rem; border-radius:8px; border:none; background:#222; color:#fff; }
+#adminPanel button { width:100%; padding:0.6rem; margin-bottom:0.5rem; border:none; border-radius:10px; background:linear-gradient(90deg,#ffdd00,#ffaa00); color:#111; font-weight:bold; cursor:pointer; transition:0.3s; }
+#adminPanel button:hover { background: linear-gradient(90deg,#ffaa00,#ffdd00); transform:scale(1.05); }
 
-/* Tickets */
-.ticket { border-radius:12px; padding:1rem; background: linear-gradient(135deg,#111,#1c1c1c); margin-bottom:1rem; box-shadow:0 4px 8px rgba(0,0,0,0.3);}
-.ticket-messages { max-height:160px; overflow-y:auto; border-radius:8px; padding:.5rem; margin-bottom:.5rem; background:#222; color:#eee; }
+/* ========== LOGIN PANEL ========== */
+#loginOptions {
+    position:fixed;
+    top:20px;
+    right:20px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    z-index:1000;
+}
+.login-btn { background:linear-gradient(90deg,#555,#777); border:none; padding:0.6rem 1rem; border-radius:12px; cursor:pointer; font-weight:bold; transition:0.3s; }
+.login-btn:hover { background:linear-gradient(90deg,#777,#999); transform:scale(1.05); }
 
-/* Panel admin */
-#adminPanel { display:none; padding:2rem; border:2px solid #4b0082; border-radius:15px; margin-bottom:2rem; background:rgba(75,0,130,0.15); box-shadow:0 6px 12px rgba(0,0,0,0.4); }
-#adminPanel h2 { margin-bottom:1.5rem; }
+/* ========== CURSOR ========== */
+body { cursor: url('https://cdn-icons-png.flaticon.com/512/32/32339.png'), auto; }
 
-/* Inputs et boutons admin */
-.admin-section input, .admin-section textarea { width:100%; padding:.6rem; margin-bottom:.5rem; border-radius:8px; border:1px solid #999; background:#111; color:#eee; }
-.admin-section button { padding:.6rem 1.2rem; border:none; border-radius:10px; cursor:pointer; background:linear-gradient(90deg,#4b0082,#6a0dad); color:white; font-weight:bold; transition:0.3s; box-shadow:0 4px 8px rgba(0,0,0,0.3);}
-.admin-section button:hover { transform: translateY(-2px); box-shadow:0 6px 12px rgba(0,0,0,0.5); }
+/* ========== DARK MODE / LIGHT MODE ========== */
+body.light { background: linear-gradient(135deg,#eee,#ccc); color:#111; }
+body.light section { background:#ddd; color:#111; }
+body.light #adminPanel { background:#eee; color:#111; border-color:#333; }
+body.light #adminPanel button { color:#fff; }
 
-/* Mode sombre / clair */
-#modeToggle { position:fixed; top:15px; right:15px; padding:.6rem 1.2rem; border:none; border-radius:12px; cursor:pointer; background:linear-gradient(90deg,#ff6347,#ff4500); color:white; font-weight:bold; box-shadow:0 4px 8px rgba(0,0,0,0.3); transition:0.3s;}
-#modeToggle:hover { transform: translateY(-2px); box-shadow:0 6px 12px rgba(0,0,0,0.5); }
+/* ========== ANIMATIONS / BLAGUES ========= */
+.blague { position:fixed; bottom:10px; left:50%; transform:translateX(-50%); background:#ff0; color:#111; padding:0.5rem 1rem; border-radius:12px; box-shadow:0 2px 4px rgba(0,0,0,0.5); animation:fadeOut 3s forwards; z-index:2000; }
+@keyframes fadeOut { 0%{opacity:1;} 80%{opacity:1;} 100%{opacity:0; transform:translateX(-50%) translateY(-50px);} }
 </style>
 </head>
-<body class="dark">
+<body>
 
 <header>
-    <h1>Arthur et Jojo 🎬</h1>
+    <h1>Arthur & Jojo</h1>
+    <nav>
+        <button onclick="toggleTheme()">💡 Mode Clair/Sombre</button>
+    </nav>
 </header>
 
-<nav>
-    <button onclick="showSection('home')">Accueil</button>
-    <button onclick="showSection('admin')">Admin Panel</button>
-</nav>
-
-<button id="modeToggle" onclick="toggleMode()">Mode Clair/Sombre</button>
-
-<div class="container" id="home">
-    <h2>Bienvenue sur le site officiel d'Arthur et Jojo !</h2>
-    <p>Regardez nos vidéos et restez à jour avec nos dernières annonces.</p>
-
-    <h3>Vidéos récentes :</h3>
-    <div id="videos"></div>
-
-    <h3>Annonces :</h3>
-    <div id="annonces"></div>
-
-    <h3>Tickets :</h3>
-    <div id="tickets"></div>
-
-    <button class="ticket-btn" onclick="createTicket(prompt('Nom du ticket ?'))">Ouvrir un ticket 🎫</button>
+<div id="loginOptions">
+    <button id="userLogin" class="login-btn">Se connecter (Utilisateur)</button>
+    <button id="adminLogin" class="login-btn">Accès Administratif</button>
 </div>
 
-<div class="container" id="adminPanel">
-    <h2>💼 Panel Admin</h2>
-    <div class="admin-section">
-        <h3>Ajouter une annonce :</h3>
-        <input type="text" id="annonceInput" placeholder="Texte de l'annonce">
-        <button onclick="addAnnonce()">Ajouter</button>
-    </div>
-    <div class="admin-section">
-        <h3>Ajouter une vidéo :</h3>
-        <input type="text" id="videoInput" placeholder="Lien YouTube">
-        <button onclick="addVideo()">Ajouter</button>
-    </div>
-    <div class="admin-section">
-        <h3>Tickets :</h3>
-        <div id="adminTickets"></div>
-    </div>
+<main>
+    <section id="videos">
+        <h2>Dernières vidéos</h2>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/UCUk7-ajL9QI" title="Arthur & Jojo" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <section id="ticketsSection">
+        <h2>Tickets</h2>
+        <div id="ticketList"></div>
+        <button onclick="openTicket()">📩 Ouvrir un ticket</button>
+    </section>
+</main>
+
+<div id="adminPanel">
+    <h3>Admin Panel 🔒</h3>
+    <input type="text" id="newAnnouncement" placeholder="Nouvelle annonce">
+    <button onclick="addAnnouncement()">Ajouter Annonce</button>
+    <h4>Annonces</h4>
+    <div id="announcementList"></div>
 </div>
 
 <script>
-// ---- JS inchangé ----
-let annonces = JSON.parse(localStorage.getItem('annonces')) || [];
-let videos = JSON.parse(localStorage.getItem('videos')) || [];
-let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
-
-const home = document.getElementById('home');
-const adminPanel = document.getElementById('adminPanel');
-
-function showSection(section) {
-    if(section === 'home') { home.style.display='block'; adminPanel.style.display='none'; }
-    else { home.style.display='none'; adminPanel.style.display='block'; renderAdminTickets(); }
+// ========== THEME ==========
+function toggleTheme() {
+    document.body.classList.toggle('light');
 }
 
-function toggleMode(){ document.body.classList.toggle('dark'); document.body.classList.toggle('light'); }
-
-// Annonces
-function renderAnnonces() {
-    const container = document.getElementById('annonces');
-    container.innerHTML = annonces.map((a,i)=>`<div class="item-card">${a} <button onclick="deleteAnnonce(${i})">Supprimer</button></div>`).join('');
+// ========== BLAGUES ALÉATOIRES ==========
+function showBlague(msg) {
+    const div = document.createElement('div');
+    div.className='blague';
+    div.textContent=msg;
+    document.body.appendChild(div);
+    setTimeout(()=>div.remove(),3000);
 }
-function addAnnonce() { const input=document.getElementById('annonceInput'); if(input.value.trim()==='') return; annonces.push(input.value.trim()); input.value=''; localStorage.setItem('annonces',JSON.stringify(annonces)); renderAnnonces(); }
-function deleteAnnonce(i){ annonces.splice(i,1); localStorage.setItem('annonces',JSON.stringify(annonces)); renderAnnonces(); }
+setInterval(()=>{
+    const blagues=['😜 Coucou !','😂 Haha t’es là ?','🤔 Surprise !','🎉 Salut toi !'];
+    showBlague(blagues[Math.floor(Math.random()*blagues.length)]);
+},15000);
 
-// Vidéos
-function renderVideos() {
-    const container = document.getElementById('videos');
-    container.innerHTML = videos.map((v,i)=>`<div class="item-card"><iframe width="360" height="200" src="${v}" frameborder="0" allowfullscreen></iframe> <button onclick="deleteVideo(${i})">Supprimer</button></div>`).join('');
+// ========== TICKETS ==========
+let tickets=[];
+function openTicket() {
+    const name = prompt("Nom du ticket :");
+    if(!name) return;
+    const id = 'ticket-'+Date.now();
+    tickets.push({id,name,messages:[]});
+    renderTickets();
 }
-function addVideo() { const input=document.getElementById('videoInput'); if(input.value.trim()==='') return; videos.push(input.value.trim()); input.value=''; localStorage.setItem('videos',JSON.stringify(videos)); renderVideos(); }
-function deleteVideo(i){ videos.splice(i,1); localStorage.setItem('videos',JSON.stringify(videos)); renderVideos(); }
-
-// Tickets
 function renderTickets() {
-    const container=document.getElementById('tickets');
-    container.innerHTML=tickets.map((t,i)=>`<div class="ticket"><strong>${t.name}</strong>
-        <div class="ticket-messages">${t.messages.map(m=>`<div>${m}</div>`).join('')}</div>
-        <input type="text" id="ticketInput${i}" placeholder="Répondre..."><button onclick="sendMessage(${i})">Envoyer</button>
-    </div>`).join('');
+    const list = document.getElementById('ticketList');
+    list.innerHTML='';
+    tickets.forEach(t=>{
+        const div=document.createElement('div');
+        div.className='ticket';
+        div.innerHTML=`<span>${t.name}</span> <button onclick="openTicketChat('${t.id}')">💬 Ouvrir</button>`;
+        list.appendChild(div);
+    });
 }
-function renderAdminTickets() {
-    const container=document.getElementById('adminTickets');
-    container.innerHTML=tickets.map((t,i)=>`<div class="ticket dark"><strong>${t.name}</strong>
-        <div class="ticket-messages dark">${t.messages.map(m=>`<div>${m}</div>`).join('')}</div>
-        <input type="text" id="ticketAdminInput${i}" placeholder="Répondre..."><button onclick="sendAdminMessage(${i})">Envoyer</button>
-        <button onclick="deleteTicket(${i})">Supprimer</button>
-    </div>`).join('');
+function openTicketChat(id){
+    const ticket = tickets.find(t=>t.id===id);
+    const msg=prompt(`Discussion privée : ${ticket.name}\n\nÉcris ton message :`);
+    if(msg){
+        ticket.messages.push(msg);
+        alert('Message envoyé !');
+    }
 }
 
-function createTicket(name){ if(!name) return; tickets.push({name:name,messages:[]}); localStorage.setItem('tickets',JSON.stringify(tickets)); renderTickets(); }
-function sendMessage(i){ const input=document.getElementById('ticketInput'+i); if(!input.value.trim()) return; tickets[i].messages.push('Utilisateur : '+input.value); localStorage.setItem('tickets',JSON.stringify(tickets)); input.value=''; renderTickets(); renderAdminTickets(); }
-function sendAdminMessage(i){ const input=document.getElementById('ticketAdminInput'+i); if(!input.value.trim()) return; tickets[i].messages.push('Staff : '+input.value); localStorage.setItem('tickets',JSON.stringify(tickets)); input.value=''; renderTickets(); renderAdminTickets(); }
-function deleteTicket(i){ tickets.splice(i,1); localStorage.setItem('tickets',JSON.stringify(tickets)); renderTickets(); renderAdminTickets(); }
+// ========== ADMIN PANEL ==========
+let isAdmin=false;
+document.getElementById('adminLogin').addEventListener('click',()=>{
+    const code=prompt('Code Admin :');
+    if(code==='2516'){ 
+        isAdmin=true; 
+        document.getElementById('adminPanel').style.display='block';
+        alert('Accès Admin activé !');
+    } else alert('Code incorrect !');
+});
 
-renderAnnonces();
-renderVideos();
-renderTickets();
-showSection('home');
+// ========== ANNOUNCEMENTS ==========
+let announcements=[];
+function addAnnouncement(){
+    if(!isAdmin){ alert('❌ Accès Admin requis'); return; }
+    const text=document.getElementById('newAnnouncement').value.trim();
+    if(!text) return;
+    announcements.push(text);
+    document.getElementById('newAnnouncement').value='';
+    renderAnnouncements();
+}
+function renderAnnouncements(){
+    const list=document.getElementById('announcementList');
+    list.innerHTML='';
+    announcements.forEach((a,i)=>{
+        const div=document.createElement('div');
+        div.style.background='#333';
+        div.style.padding='0.5rem';
+        div.style.marginBottom='0.3rem';
+        div.style.borderRadius='8px';
+        div.style.display='flex';
+        div.style.justifyContent='space-between';
+        div.innerHTML=`<span>${a}</span> <button onclick="deleteAnnouncement(${i})">❌</button>`;
+        list.appendChild(div);
+    });
+}
+function deleteAnnouncement(i){
+    if(!isAdmin) return;
+    announcements.splice(i,1);
+    renderAnnouncements();
+}
 </script>
+
 </body>
 </html>

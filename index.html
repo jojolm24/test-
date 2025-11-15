@@ -5,215 +5,222 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arthur et Jojo - YouTube</title>
 <style>
-/* Reset et style de base */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f0f0; color: #111; transition: all 0.3s ease; }
-.dark { background: #121212; color: #eee; }
-header { background: linear-gradient(90deg,#ff7e5f,#feb47b); padding: 2rem; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-header h1 { font-size: 2.5rem; background: linear-gradient(90deg,#fff,#ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-header p { margin-top: 0.5rem; font-size: 1.2rem; }
+/* Reset & Base */
+* {margin:0; padding:0; box-sizing:border-box;}
+body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#121212; color:#eee; transition:0.3s;}
+a {color:#ff7e5f; text-decoration:none;}
+a:hover {text-decoration:underline;}
+
+/* Curseur PC */
+body {cursor: url('https://cdn-icons-png.flaticon.com/512/32/32332.png'), auto;}
+
+/* Header */
+header {padding:2rem; text-align:center; background:linear-gradient(90deg,#1c1c1c,#2c2c2c);}
+header h1 {font-size:2.5rem; color:#ff7e5f;}
+header p {margin-top:0.5rem; color:#ddd;}
 
 /* Navigation */
-nav { display: flex; justify-content: center; background:#222; }
-nav a { color: #fff; text-decoration: none; padding: 0.8rem 1.5rem; transition: 0.3s; }
-nav a:hover { background: rgba(255,255,255,0.2); border-radius: 10px; }
-
-/* Hero */
-.hero { text-align:center; padding:4rem 2rem; }
-.hero h2 { font-size:2rem; margin-bottom:1rem; }
-.hero a { text-decoration:none; background:#ff7e5f; color:white; padding:0.8rem 1.5rem; border-radius:20px; transition:0.3s; }
-.hero a:hover { transform:scale(1.05); }
+nav {display:flex; justify-content:center; gap:1rem; background:#1a1a1a; padding:1rem;}
+nav a {padding:0.6rem 1rem; border-radius:10px; transition:0.3s;}
+nav a:hover {background:#ff7e5f; color:#111;}
 
 /* Sections */
-section { padding:3rem 2rem; max-width:1000px; margin:2rem auto; background:#fff; border-radius:15px; box-shadow:0 4px 8px rgba(0,0,0,0.1); transition: all 0.3s ease; }
-.dark section { background:#1e1e1e; }
-section h2 { font-size:1.8rem; margin-bottom:1rem; background:linear-gradient(90deg,#ff7e5f,#feb47b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+section {padding:2rem; margin:1rem auto; max-width:1000px; background:#1e1e1e; border-radius:15px; box-shadow:0 4px 8px rgba(0,0,0,0.3);}
+section h2 {font-size:1.8rem; margin-bottom:1rem; color:#ff7e5f;}
+
+/* Hero */
+.hero {text-align:center; padding:3rem 1rem;}
+.hero a {display:inline-block; padding:0.8rem 1.5rem; background:#ff7e5f; border-radius:20px; margin-top:1rem; transition:0.3s;}
+.hero a:hover {transform:scale(1.05); background:#feb47b; color:#111;}
 
 /* Admin Panel */
-#adminPanel { display:none; padding:2rem; background:#fff; border-radius:15px; box-shadow:0 4px 12px rgba(0,0,0,0.2); max-width:900px; margin:2rem auto; transition:0.3s; }
-.dark #adminPanel { background:#2a2a2a; }
-.admin-tabs { display:flex; gap:1rem; margin-bottom:1rem; }
-.admin-tabs button { flex:1; padding:0.8rem; border:none; border-radius:10px; cursor:pointer; font-weight:bold; background:#ff7e5f; color:white; transition:0.3s; }
-.admin-tabs button.active { background:#feb47b; color:#111; }
-.admin-content { display:none; }
-.admin-content.active { display:block; }
+#adminPanel {display:none; padding:2rem; max-width:900px; margin:2rem auto; background:#2a2a2a; border-radius:15px; box-shadow:0 4px 12px rgba(0,0,0,0.4);}
+.admin-tabs {display:flex; gap:1rem; margin-bottom:1rem;}
+.admin-tabs button {flex:1; padding:0.8rem; border:none; border-radius:10px; cursor:pointer; font-weight:bold; background:#444; color:#eee; transition:0.3s;}
+.admin-tabs button.active {background:#ff7e5f; color:#111;}
+.admin-content {display:none;}
+.admin-content.active {display:block;}
 
 /* Inputs */
-input, textarea { width:100%; padding:0.8rem; border-radius:10px; border:1px solid #ccc; margin-bottom:1rem; background:#f0f0f0; color:#111; transition:0.3s; }
-.dark input, .dark textarea { background:#333; color:#eee; border:1px solid #555; }
-button { cursor:pointer; }
+input, textarea {width:100%; padding:0.8rem; border-radius:10px; border:none; margin-bottom:1rem; background:#333; color:#eee;}
+button {cursor:pointer; border:none; border-radius:10px; background:#ff7e5f; color:#111; padding:0.6rem 1.2rem; transition:0.3s;}
+button:hover {background:#feb47b; color:#111;}
 
 /* Tickets */
-.ticket-list { max-height:300px; overflow-y:auto; margin-bottom:1rem; }
-.ticket-item { padding:0.8rem; margin-bottom:0.5rem; border-radius:10px; background:#ff7e5f; color:white; display:flex; justify-content:space-between; align-items:center; }
-.dark .ticket-item { background:#ff4500; }
-
-/* Ticket discussion */
-#ticketDiscussion { display:none; flex-direction:column; gap:0.5rem; max-height:300px; overflow-y:auto; margin-bottom:1rem; }
-.ticket-message { padding:0.5rem 0.8rem; border-radius:10px; background:#eee; }
-.dark .ticket-message { background:#333; color:#eee; }
-#ticketInput { width:100%; padding:0.8rem; border-radius:10px; border:1px solid #ccc; margin-bottom:1rem; }
+.ticket-list {max-height:300px; overflow-y:auto; margin-bottom:1rem;}
+.ticket-item {padding:0.8rem; margin-bottom:0.5rem; border-radius:10px; background:#444; color:#fff; display:flex; justify-content:space-between; align-items:center; cursor:pointer; transition:0.3s;}
+.ticket-item:hover {background:#ff7e5f; color:#111;}
+#ticketDiscussion {display:none; flex-direction:column; gap:0.5rem; max-height:300px; overflow-y:auto; margin-bottom:1rem;}
+.ticket-message {padding:0.5rem 0.8rem; border-radius:10px; background:#333;}
+#ticketInput {width:100%; padding:0.8rem; border-radius:10px; border:none; background:#444; color:#eee;}
 
 /* Mode switch */
-#modeSwitch { position:fixed; top:20px; right:20px; padding:0.5rem 1rem; border-radius:10px; border:none; background:#ff7e5f; color:white; font-weight:bold; cursor:pointer; transition:0.3s; }
-#modeSwitch:hover { background:#feb47b; color:#111; }
+#modeSwitch {position:fixed; top:20px; right:20px; padding:0.5rem 1rem; border-radius:10px; border:none; background:#ff7e5f; color:white; font-weight:bold; cursor:pointer; transition:0.3s;}
+#modeSwitch:hover {background:#feb47b; color:#111;}
+.dark {background:#111; color:#eee;}
+.dark section {background:#1a1a1a;}
+.dark input, .dark textarea, .dark #ticketInput {background:#333; color:#eee;}
+.dark .ticket-item {background:#555;}
+.dark .ticket-message {background:#333; color:#eee;}
 
 /* Responsive */
-@media(max-width:768px){ nav { flex-direction:column; } }
+@media(max-width:768px){nav{flex-direction:column;}}
 </style>
 </head>
 <body>
 
 <header>
-    <h1>Arthur et Jojo 🎬</h1>
-    <p>Chaîne YouTube officielle - <a href="https://www.youtube.com/channel/UCUk7-ajL9QIou0-klV9EeGQ" target="_blank">Regarder ici</a></p>
+<h1>Arthur et Jojo 🎬</h1>
+<p>Chaîne YouTube officielle - <a href="https://www.youtube.com/channel/UCUk7-ajL9QIou0-klV9EeGQ" target="_blank">Voir les vidéos</a></p>
 </header>
 
 <nav>
-    <a href="#videos">Vidéos 🎥</a>
-    <a href="#annonces">Annonces 📢</a>
-    <a href="#tickets">Tickets 🎫</a>
-    <a href="#adminPanel">Admin 🔐</a>
+<a href="#videos">Vidéos 🎥</a>
+<a href="#annonces">Annonces 📢</a>
+<a href="#tickets">Tickets 🎫</a>
+<a href="#adminPanel">Admin 🔐</a>
 </nav>
 
 <div class="hero">
-    <h2>Bienvenue sur le site officiel d'Arthur et Jojo 🌟</h2>
-    <a href="https://www.youtube.com/channel/UCUk7-ajL9QIou0-klV9EeGQ" target="_blank">Voir les vidéos</a>
+<h2>Bienvenue sur le site officiel d'Arthur et Jojo 🌟</h2>
+<a href="https://www.youtube.com/channel/UCUk7-ajL9QIou0-klV9EeGQ" target="_blank">Voir les vidéos</a>
 </div>
 
 <section id="videos">
-    <h2>Vidéos récentes 🎬</h2>
-    <div id="videoList"></div>
+<h2>Vidéos récentes 🎬</h2>
+<div id="videoList"></div>
 </section>
 
 <section id="annonces">
-    <h2>Annonces 📢</h2>
-    <div id="annonceList"></div>
+<h2>Annonces 📢</h2>
+<div id="annonceList"></div>
 </section>
 
 <section id="tickets">
-    <h2>Tickets 🎫</h2>
-    <button onclick="createTicket()" style="padding:0.8rem 1.5rem;border:none;border-radius:10px;background:#ff7e5f;color:white;margin-bottom:1rem;">Ouvrir un nouveau ticket</button>
-    <div class="ticket-list" id="ticketList"></div>
-    <div id="ticketDiscussion">
-        <div id="discussionMessages"></div>
-        <input type="text" id="ticketInput" placeholder="Écrire un message...">
-        <button onclick="sendTicketMessage()" style="padding:0.8rem 1.5rem;border:none;border-radius:10px;background:#ff7e5f;color:white;">Envoyer</button>
-    </div>
+<h2>Tickets 🎫</h2>
+<button onclick="createTicket()">Ouvrir un nouveau ticket</button>
+<div class="ticket-list" id="ticketList"></div>
+<div id="ticketDiscussion">
+<div id="discussionMessages"></div>
+<input type="text" id="ticketInput" placeholder="Écrire un message...">
+<button onclick="sendTicketMessage()">Envoyer</button>
+</div>
 </section>
 
 <section id="adminPanel">
-    <div class="admin-tabs">
-        <button class="active" onclick="switchTab('annoncesTab', this)">Annonces 📢</button>
-        <button onclick="switchTab('videosTab', this)">Vidéos 🎥</button>
-        <button onclick="switchTab('ticketsTab', this)">Tickets 🎫</button>
-    </div>
-    <div id="annoncesTab" class="admin-content active">
-        <input type="text" id="annonceInput" placeholder="Nouvelle annonce...">
-        <button onclick="addAnnonce()" style="padding:0.8rem 1.5rem;background:#ff7e5f;color:white;border:none;border-radius:10px;">Ajouter annonce</button>
-    </div>
-    <div id="videosTab" class="admin-content">
-        <input type="text" id="videoInput" placeholder="Lien vidéo YouTube">
-        <button onclick="addVideo()" style="padding:0.8rem 1.5rem;background:#ff7e5f;color:white;border:none;border-radius:10px;">Ajouter vidéo</button>
-    </div>
-    <div id="ticketsTab" class="admin-content">
-        <p>Voir tous les tickets :</p>
-        <div class="ticket-list" id="adminTicketList"></div>
-    </div>
+<div class="admin-tabs">
+<button class="active" onclick="switchTab('annoncesTab', this)">Annonces 📢</button>
+<button onclick="switchTab('videosTab', this)">Vidéos 🎥</button>
+<button onclick="switchTab('ticketsTab', this)">Tickets 🎫</button>
+</div>
+<div id="annoncesTab" class="admin-content active">
+<input type="text" id="annonceInput" placeholder="Nouvelle annonce...">
+<button onclick="addAnnonce()">Ajouter annonce</button>
+</div>
+<div id="videosTab" class="admin-content">
+<input type="text" id="videoInput" placeholder="Lien vidéo YouTube">
+<button onclick="addVideo()">Ajouter vidéo</button>
+</div>
+<div id="ticketsTab" class="admin-content">
+<p>Voir tous les tickets :</p>
+<div class="ticket-list" id="adminTicketList"></div>
+</div>
 </section>
 
-<button id="modeSwitch" onclick="toggleMode()">Mode Sombre 🌙</button>
+<button id="modeSwitch" onclick="toggleMode()">Mode Clair 🌞</button>
 
 <script>
 // Mode sombre / clair
-function toggleMode() {
-    document.body.classList.toggle('dark');
+function toggleMode(){
+document.body.classList.toggle('dark');
+document.getElementById('modeSwitch').innerText=document.body.classList.contains('dark') ? 'Mode Clair 🌞' : 'Mode Sombre 🌙';
 }
 
 // Admin tabs
-function switchTab(tabId, btn) {
-    document.querySelectorAll('.admin-tabs button').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.admin-content').forEach(c=>c.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
+function switchTab(tabId, btn){
+document.querySelectorAll('.admin-tabs button').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+document.querySelectorAll('.admin-content').forEach(c=>c.classList.remove('active'));
+document.getElementById(tabId).classList.add('active');
 }
 
-// Stockage local
-let annonces = JSON.parse(localStorage.getItem('annonces'))||[];
-let videos = JSON.parse(localStorage.getItem('videos'))||[];
-let tickets = JSON.parse(localStorage.getItem('tickets'))||[];
-let currentTicketId = null;
+// LocalStorage
+let annonces=JSON.parse(localStorage.getItem('annonces'))||[];
+let videos=JSON.parse(localStorage.getItem('videos'))||[];
+let tickets=JSON.parse(localStorage.getItem('tickets'))||[];
+let currentTicketId=null;
 
-// Fonctions annonces
-function displayAnnonces() {
-    const list = document.getElementById('annonceList');
-    list.innerHTML = annonces.map((a,i)=>`<div style="padding:0.8rem;margin-bottom:0.5rem;border-radius:10px;background:#ffe4b5;">${a} <button onclick="deleteAnnonce(${i})" style="float:right;">❌</button></div>`).join('');
-    localStorage.setItem('annonces', JSON.stringify(annonces));
+// Annonces
+function displayAnnonces(){
+const list=document.getElementById('annonceList');
+list.innerHTML=annonces.map((a,i)=>`<div style="padding:0.8rem;margin-bottom:0.5rem;border-radius:10px;background:#333;color:#fff;">${a} <button onclick="deleteAnnonce(${i})">❌</button></div>`).join('');
+localStorage.setItem('annonces',JSON.stringify(annonces));
 }
 function addAnnonce(){
-    const val=document.getElementById('annonceInput').value.trim();
-    if(val){ annonces.push(val); document.getElementById('annonceInput').value=''; displayAnnonces(); displayAdminTickets(); }
+const val=document.getElementById('annonceInput').value.trim();
+if(val){annonces.push(val);document.getElementById('annonceInput').value='';displayAnnonces();displayAdminTickets();}
 }
-function deleteAnnonce(i){ annonces.splice(i,1); displayAnnonces(); }
+function deleteAnnonce(i){annonces.splice(i,1);displayAnnonces();}
 
-// Fonctions vidéos
+// Vidéos
 function displayVideos(){
-    const list=document.getElementById('videoList');
-    list.innerHTML=videos.map(v=>`<iframe width="100%" height="315" src="${v}" frameborder="0" allowfullscreen style="margin-bottom:1rem;"></iframe>`).join('');
-    localStorage.setItem('videos', JSON.stringify(videos));
+const list=document.getElementById('videoList');
+list.innerHTML=videos.map(v=>`<iframe width="100%" height="315" src="${v}" frameborder="0" allowfullscreen style="margin-bottom:1rem;"></iframe>`).join('');
+localStorage.setItem('videos',JSON.stringify(videos));
 }
 function addVideo(){
-    const val=document.getElementById('videoInput').value.trim();
-    if(val){ videos.push(val); document.getElementById('videoInput').value=''; displayVideos(); }
+const val=document.getElementById('videoInput').value.trim();
+if(val){videos.push(val);document.getElementById('videoInput').value='';displayVideos();}
 }
 
 // Tickets
 function createTicket(){
-    const id='TICKET-'+Math.floor(Math.random()*10000);
-    const newTicket={id:id, messages:[]};
-    tickets.push(newTicket);
-    currentTicketId=id;
-    displayTickets();
-    openTicket(id);
+const id='TICKET-'+Math.floor(Math.random()*10000);
+const newTicket={id:id,messages:[]};
+tickets.push(newTicket);
+currentTicketId=id;
+displayTickets();
+openTicket(id);
 }
 function displayTickets(){
-    const list=document.getElementById('ticketList');
-    list.innerHTML=tickets.map(t=>`<div class="ticket-item" onclick="openTicket('${t.id}')">${t.id}</div>`).join('');
-    localStorage.setItem('tickets', JSON.stringify(tickets));
+const list=document.getElementById('ticketList');
+list.innerHTML=tickets.map(t=>`<div class="ticket-item" onclick="openTicket('${t.id}')">${t.id}</div>`).join('');
+localStorage.setItem('tickets',JSON.stringify(tickets));
+displayAdminTickets();
 }
 function openTicket(id){
-    currentTicketId=id;
-    document.getElementById('ticketDiscussion').style.display='flex';
-    displayDiscussion();
+currentTicketId=id;
+document.getElementById('ticketDiscussion').style.display='flex';
+displayDiscussion();
 }
 function displayDiscussion(){
-    const ticket=tickets.find(t=>t.id===currentTicketId);
-    const div=document.getElementById('discussionMessages');
-    if(ticket){ div.innerHTML=ticket.messages.map(m=>`<div class="ticket-message">${m}</div>`).join(''); div.scrollTop=div.scrollHeight; }
+const ticket=tickets.find(t=>t.id===currentTicketId);
+const div=document.getElementById('discussionMessages');
+if(ticket){div.innerHTML=ticket.messages.map(m=>`<div class="ticket-message">${m}</div>`).join(''); div.scrollTop=div.scrollHeight;}
 }
 function sendTicketMessage(){
-    const val=document.getElementById('ticketInput').value.trim();
-    if(val && currentTicketId){
-        const ticket=tickets.find(t=>t.id===currentTicketId);
-        ticket.messages.push(val);
-        document.getElementById('ticketInput').value='';
-        displayDiscussion();
-        localStorage.setItem('tickets', JSON.stringify(tickets));
-    }
+const val=document.getElementById('ticketInput').value.trim();
+if(val && currentTicketId){
+const ticket=tickets.find(t=>t.id===currentTicketId);
+ticket.messages.push(val);
+document.getElementById('ticketInput').value='';
+displayDiscussion();
+localStorage.setItem('tickets',JSON.stringify(tickets));
+}
 }
 
-// Admin ticket view
+// Admin tickets
 function displayAdminTickets(){
-    const list=document.getElementById('adminTicketList');
-    list.innerHTML=tickets.map(t=>`<div class="ticket-item" onclick="openTicket('${t.id}')">${t.id} (${t.messages.length} messages)</div>`).join('');
+const list=document.getElementById('adminTicketList');
+list.innerHTML=tickets.map(t=>`<div class="ticket-item" onclick="openTicket('${t.id}')">${t.id} (${t.messages.length} messages)</div>`).join('');
 }
 
-// Initialisation
+// Init
 displayAnnonces();
 displayVideos();
 displayTickets();
-displayAdminTickets();
 </script>
-
 </body>
 </html>
+
+

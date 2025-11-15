@@ -1,254 +1,193 @@
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Discord Factory — Boutique de Bots</title>
-  <style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Segoe UI', sans-serif;
-        background: #0d0f17;
-        color: #fff;
-    }
+<!doctype html>  
+<html lang="fr">  
+<head>  
+  <meta charset="utf-8">  
+  <meta name="viewport" content="width=device-width,initial-scale=1">  
+  <title>Collège Jacques Prévert – Bergerac</title>  
+  <style>  
+    :root {  
+      --accent: #2b6cb0;  
+      --muted: #6b7280;  
+      --bg: #f7fafc;  
+      --card: #ffffff;  
+    }  
+    * { box-sizing: border-box; }  
+    body { font-family: Arial, sans-serif; margin: 0; background: var(--bg); color: #111; }  
+    header { background: var(--accent); color: white; padding: 20px; }  
+    .container { max-width: 1000px; margin: 0 auto; padding: 20px; }  
+    nav a { color: white; margin-right: 15px; text-decoration: none; }  
+    .hero { margin-top: 20px; }  
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }  
+    .card { background: var(--card); padding: 16px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }  
+    .btn { display: inline-block; padding: 8px 12px; background: var(--accent); color: white; text-decoration: none; border-radius: 6px; }  
+    .muted { color: var(--muted); font-size: 0.9em; }  
+  
+    /* Footer admin panel */  
+    .admin-panel { position: fixed; left: 20px; right: 20px; bottom: 20px; background: #fff; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); padding: 12px; transition: transform 0.3s; transform: translateY(80%); }  
+    .admin-panel.open { transform: translateY(0); }  
+    .admin-header { display: flex; justify-content: space-between; align-items: center; }  
+    .admin-body { margin-top: 10px; display: none; }  
+    .admin-body.open { display: block; }  
+    input, textarea { width: 100%; padding: 8px; margin-top: 6px; border: 1px solid #ccc; border-radius: 4px; }  
+  </style>  
+</head>  
+<body>  
+  <header>  
+    <div class="container">  
+      <h1>Collège Jacques Prévert – Bergerac</h1>  
+      <nav>  
+        <a href="#infos">Infos</a>  
+        <a href="#formations">Formations</a>  
+        <a href="#inclusion">Inclusion (ULIS)</a>  
+        <a href="#contact">Contact</a>  
+      </nav>  
+    </div>  
+  </header>  
+  
+  <main class="container">  
+    <section id="infos" class="card">  
+      <h2>Informations Générales</h2>  
+      <p><strong>Adresse :</strong> 18 rue Armand Got, 24100 Bergerac</p>  
+      <p><strong>Téléphone :</strong> 05 53 63 52 80 :contentReference[oaicite:0]{index=0}</p>  
+      <p><strong>Email :</strong> ce.0240996c@ac-bordeaux.fr :contentReference[oaicite:1]{index=1}</p>  
+      <p><strong>UAI :</strong> 0240996C :contentReference[oaicite:2]{index=2}</p>  
+      <p class="muted">Collège public – Académie de Bordeaux :contentReference[oaicite:3]{index=3}</p>  
+    </section>  
+  
+    <section id="formations" class="card">  
+      <h2>Formations & Langues</h2>  
+      <p>Le collège propose différentes classes dont :</p>  
+      <ul>  
+        <li>6ᵉ, 5ᵉ, 4ᵉ, 3ᵉ</li>  
+        <li>Unité ULIS (inclusion scolaire) :contentReference[oaicite:4]{index=4}</li>  
+      </ul>  
+      <p><strong>Langues vivantes :</strong> anglais, espagnol, italien :contentReference[oaicite:5]{index=5}</p>  
+    </section>  
+  
+    <section id="inclusion" class="card">  
+      <h2>Inclusion & Dispositifs Spéciaux</h2>  
+      <p>Le collège dispose d’une **ULIS** pour accompagner les élèves en situation de handicap. :contentReference[oaicite:6]{index=6}</p>  
+    </section>  
+  
+    <section id="contact" class="card">  
+      <h2>Contact & Inscriptions</h2>  
+      <p>Pour toute question ou inscription : </p>  
+      <p><strong>Email :</strong> ce.0240996c@ac-bordeaux.fr :contentReference[oaicite:7]{index=7}</p>  
+      <p><strong>Téléphone :</strong> 05 53 63 52 80 :contentReference[oaicite:8]{index=8}</p>  
+      <a href="https://blogpeda.ac-bordeaux.fr/collegejacquesprevert24/" class="btn" target="_blank">Visiter le site officiel</a>  
+    </section>  
 
-    header {
-        background: #111525;
-        padding: 20px;
-        text-align: center;
-        font-size: 28px;
-        font-weight: 700;
-        letter-spacing: 1px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    }
+    <section id="stats" class="card">  
+      <h2>Effectifs & Informations Chiffrées</h2>  
+      <p>Total d'élèves : ~493 (selon les données de l’académie) :contentReference[oaicite:9]{index=9}</p>  
+      <p>Restauration : demi-pension = 413 élèves externes selon le rapport formation. :contentReference[oaicite:10]{index=10}</p>  
+    </section>  
+  </main>  
+  
+  <!-- Panneau Admin au bas -->  
+  <div id="adminPanel" class="admin-panel">  
+    <div class="admin-header">  
+      <div><strong>Panneau Administratif Collège</strong></div>  
+      <button id="toggleAdmin">Ouvrir</button>  
+    </div>  
+    <div id="adminBody" class="admin-body">  
+      <h3>Gérer les Annonces</h3>  
+      <input type="text" id="annTitre" placeholder="Titre annonce">  
+      <textarea id="annContenu" placeholder="Contenu annonce"></textarea>  
+      <button id="addAnnonce">Ajouter annonce</button>  
+      <div id="annList" style="margin-top:12px;"></div>  
 
-    .container {
-        max-width: 1200px;
-        margin: auto;
-        padding: 20px;
-    }
+      <h3 style="margin-top:20px">Gérer les Documents</h3>  
+      <input type="text" id="docNom" placeholder="Nom du document">  
+      <input type="text" id="docLien" placeholder="Lien (URL)">  
+      <button id="addDoc">Ajouter document</button>  
+      <div id="docList" style="margin-top:12px;"></div>  
+    </div>  
+  </div>  
+  
+  <script>  
+    // Toggle panneau admin  
+    const panel = document.getElementById('adminPanel');  
+    const body = document.getElementById('adminBody');  
+    document.getElementById('toggleAdmin').onclick = () => {  
+      panel.classList.toggle('open');  
+      body.classList.toggle('open');  
+      document.getElementById('toggleAdmin').textContent = panel.classList.contains('open') ? 'Fermer' : 'Ouvrir';  
+    };  
 
-    .bot-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 20px;
-        margin-top: 20px;
-    }
+    // Stockage des annonces/doc dans localStorage (démo)  
+    function save(key, value) { localStorage.setItem(key, JSON.stringify(value)); }  
+    function load(key) { return JSON.parse(localStorage.getItem(key) || '[]'); }  
 
-    .bot-card {
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 18px;
-        padding: 20px;
-        backdrop-filter: blur(10px);
-        transition: 0.2s;
-    }
+    // Annonces  
+    const addA = document.getElementById('addAnnonce');  
+    const annList = document.getElementById('annList');  
+    addA.onclick = () => {  
+      const t = document.getElementById('annTitre').value;  
+      const c = document.getElementById('annContenu').value;  
+      if (t && c) {  
+        const arr = load('annonces');  
+        arr.push({ titre: t, contenu: c });  
+        save('annonces', arr);  
+        renderAnnonces();  
+        document.getElementById('annTitre').value = '';  
+        document.getElementById('annContenu').value = '';  
+      }  
+    };  
+    function renderAnnonces() {  
+      const arr = load('annonces');  
+      annList.innerHTML = '';  
+      arr.forEach((a, i) => {  
+        const div = document.createElement('div');  
+        div.classList.add('card');  
+        div.style.marginBottom = '8px';  
+        div.innerHTML = `<strong>${a.titre}</strong><p>${a.contenu}</p><button onclick="deleteAnnonce(${i})">Supprimer</button>`;  
+        annList.appendChild(div);  
+      });  
+    }  
+    function deleteAnnonce(i) {  
+      const arr = load('annonces');  
+      arr.splice(i, 1); save('annonces', arr); renderAnnonces();  
+    }  
 
-    .bot-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 0 15px rgba(0,0,0,0.4);
-    }
+    // Documents  
+    const addD = document.getElementById('addDoc');  
+    const docList = document.getElementById('docList');  
+    addD.onclick = () => {  
+      const n = document.getElementById('docNom').value;  
+      const l = document.getElementById('docLien').value;  
+      if (n && l) {  
+        const arr = load('docs');  
+        arr.push({ nom: n, lien: l });  
+        save('docs', arr);  
+        renderDocs();  
+        document.getElementById('docNom').value = '';  
+        document.getElementById('docLien').value = '';  
+      }  
+    };  
+    function renderDocs() {  
+      const arr = load('docs');  
+      docList.innerHTML = '';  
+      arr.forEach((d, i) => {  
+        const div = document.createElement('div');  
+        div.classList.add('card');  
+        div.style.marginBottom = '8px';  
+        div.innerHTML = `<strong>${d.nom}</strong> — <a href="${d.lien}" target="_blank">Voir</a><button onclick="deleteDoc(${i})">Supprimer</button>`;  
+        docList.appendChild(div);  
+      });  
+    }  
+    function deleteDoc(i) {  
+      const arr = load('docs');  
+      arr.splice(i, 1); save('docs', arr); renderDocs();  
+    }  
 
-    .bot-name {
-        font-size: 20px;
-        font-weight: 600;
-        margin-bottom: 8px;
-    }
+    // Init  
+    renderAnnonces();  
+    renderDocs();  
+  </script>  
+</body>  
+</html>  
 
-    .bot-desc {
-        font-size: 14px;
-        opacity: 0.85;
-        margin-bottom: 15px;
-    }
-
-    button {
-        padding: 10px 14px;
-        border-radius: 10px;
-        border: none;
-        cursor: pointer;
-        background: #5865F2;
-        color: white;
-        font-weight: 600;
-        transition: 0.2s;
-    }
-
-    button:hover {
-        background: #4752C4;
-    }
-
-    #adminPanel {
-        margin-top: 40px;
-        background: rgba(255,255,255,0.05);
-        padding: 20px;
-        border-radius: 15px;
-        border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    input, textarea {
-        width: 100%;
-        padding: 10px;
-        border-radius: 8px;
-        border: none;
-        margin-bottom: 12px;
-        background: rgba(255,255,255,0.08);
-        color: white;
-    }
-
-</style>
-</head>
-<body>
-  <header>
-    <h1>Discord Factory — Boutique de Bots</h1>
-    <p>Ajoute des bots gratuits à ton serveur</p>
-  </header>
-
-  <div class="container">
-
-    <h2>Bots disponibles</h2>
-    <section id="catalog" class="grid"></section>
-
-    <aside id="cartPanel">
-      <h3>Panier (gratuit)</h3>
-      <div id="cartList"></div>
-      <button id="checkoutBtn">Télécharger les bots</button>
-    </aside>
-
-    <!-- LOGIN ADMIN -->
-    <div id="adminLogin" style="display:none;">
-      <h2>Connexion Admin</h2>
-      <input id="loginPass" type="password" placeholder="Mot de passe admin">
-      <button id="loginBtn">Se connecter</button>
-    </div>
-
-    <!-- PANEL ADMIN -->
-    <div id="adminPanel" style="display:none;">
-      <h2>Admin — Ajouter / Modifier un bot</h2>
-      <input id="botName" placeholder="Nom du bot">
-      <textarea id="botDesc" placeholder="Description du bot"></textarea>
-      <input id="botCategory" placeholder="Catégorie (modération, musique…)">
-      <input id="botLink" placeholder="Lien d'installation / invite du bot">
-      <button id="addBotBtn">Ajouter / Mettre à jour</button>
-    </div>
-
-  </div>
-
-<script>
-  /* ------------------------------ */
-  /*        DONNÉES BOTS          */
-  /* ------------------------------ */
-  let bots = [
-    {id:1,name:"Modération+",desc:"Bot de modération complet.",cat:"modération",link:"#"},
-    {id:2,name:"MusicMaster",desc:"Bot musique premium.",cat:"musique",link:"#"},
-    {id:3,name:"FunZone",desc:"Mini-jeux et commandes fun.",cat:"fun",link:"#"}
-  ];
-
-  let cart = [];
-
-  /* ------------------------------ */
-  /*       AFFICHAGE BOUTIQUE       */
-  /* ------------------------------ */
-  function renderCatalog(){
-    const root = document.getElementById('catalog');
-    root.innerHTML = '';
-    bots.forEach(b=>{
-      const div = document.createElement('div');
-      div.className = 'card';
-      div.innerHTML = `<h3>${b.name}</h3><p>${b.desc}</p><small>${b.cat}</small><br><button onclick="addToCart(${b.id})">Ajouter au panier</button>`;
-      root.appendChild(div);
-    })
-  }
-
-  function addToCart(id){
-    const b = bots.find(x=>x.id===id);
-    if(!cart.includes(b)) cart.push(b);
-    renderCart();
-  }
-
-  function renderCart(){
-    const root = document.getElementById('cartList');
-    root.innerHTML = cart.length===0 ? '<p>Aucun bot ajouté</p>' : '';
-    cart.forEach(b=>{
-      const div = document.createElement('div');
-      div.innerHTML = `<strong>${b.name}</strong> <button onclick="removeBot(${b.id})">Retirer</button>`;
-      root.appendChild(div);
-    })
-  }
-
-  function removeBot(id){ cart = cart.filter(b=>b.id!==id); renderCart(); }
-
-  document.getElementById('checkoutBtn').onclick = ()=>{
-    if(cart.length===0) return alert("Aucun bot dans le panier.");
-    let list = cart.map(b=>`${b.name}: ${b.link}`).join("
-");
-    alert("Bots à installer :
-"+list);
-  };
-
-  /* ------------------------------ */
-  /*      SYSTÈME ADMIN OPTION 3    */
-  /* ------------------------------ */
-
-  // Si aucun mot de passe n'existe, on demande d'en créer un
-  if(!localStorage.getItem('adminPass')){
-    const newPass = prompt("Créer un mot de passe admin :");
-    if(newPass){ localStorage.setItem('adminPass',newPass); alert("Mot de passe admin créé !"); }
-    else alert("Aucun mot de passe créé — Admin désactivé.");
-  }
-
-  const adminPanel = document.getElementById('adminPanel');
-  const adminLogin = document.getElementById('adminLogin');
-
-  function showLogin(){ adminLogin.style.display='block'; }
-  function showAdmin(){ adminPanel.style.display='block'; adminLogin.style.display='none'; }
-
-  // Affiche la page login si mot de passe existe
-  showLogin();
-
-  document.getElementById('loginBtn').onclick = ()=>{
-    const typed = document.getElementById('loginPass').value;
-    const real = localStorage.getItem('adminPass');
-
-    if(typed === real){
-      alert("Connexion Admin réussie !");
-      showAdmin();
-    } else {
-      alert("Mot de passe incorrect.");
-    }
-  };
-
-  /* ------------------------------ */
-  /*      AJOUT / MODIF BOT         */
-  /* ------------------------------ */
-  document.getElementById('addBotBtn').onclick = ()=>{
-    const n = botName.value.trim();
-    const d = botDesc.value.trim();
-    const c = botCategory.value.trim();
-    const l = botLink.value.trim();
-
-    if(!n||!d||!c||!l) return alert("Remplis tous les champs.");
-
-    const exists = bots.find(b=>b.name.toLowerCase()===n.toLowerCase());
-
-    if(exists){
-      exists.desc = d;
-      exists.cat = c;
-      exists.link = l;
-      alert("Bot mis à jour !");
-    } else {
-      bots.push({id:Date.now(),name:n,desc:d,cat:c,link:l});
-      alert("Bot ajouté !");
-    }
-
-    renderCatalog();
-  }
-
-  renderCatalog();
-  renderCart();
-</script>
-
-</body>
-</html>
 
 
 

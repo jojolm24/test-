@@ -1,278 +1,404 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>MP All Dashboard</title>
-<style>
-/* --- Body et polices --- */
-body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #0d0d0d, #1a1a1a); /* noir dégradé */
-    font-family: 'Segoe UI', sans-serif;
-    color: #fff;
-    cursor: url('https://upload.wikimedia.org/wikipedia/commons/1/14/Blue_cursor.png'), auto;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paris RP :flag_fr:  </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%232563eb" d="M12 2L2 7v10c0 5.5 3.8 10.7 10 12 6.2-1.3 10-6.5 10-12V7l-10-5z"/><path fill="white" d="M12 4L4 8v9c0 4.5 3 8.5 8 10 5-1.5 8-5.5 8-10V8l-8-4z"/></svg>'), auto;
+        }
 
-/* Header */
-header {
-    background: linear-gradient(135deg, #000, #222);
-    padding: 50px 20px;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(255,255,255,0.1);
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0055A4 0%, #FFFFFF 50%, #EF4135 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
 
-header h1 {
-    margin: 0;
-    font-size: 3em;
-    background: linear-gradient(90deg, #43b581, #7289da);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+        a, button {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path fill="%231d4ed8" d="M12 2L2 7v10c0 5.5 3.8 10.7 10 12 6.2-1.3 10-6.5 10-12V7l-10-5z"/><path fill="white" d="M12 4L4 8v9c0 4.5 3 8.5 8 10 5-1.5 8-5.5 8-10V8l-8-4z"/></svg>'), pointer !important;
+        }
 
-/* Container */
-.container {
-    max-width: 1000px;
-    margin: -50px auto 50px auto;
-    padding: 30px;
-    text-align: center;
-}
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(0, 85, 164, 0.95) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(239, 65, 53, 0.95) 100%);
+            position: relative;
+            overflow: hidden;
+        }
 
-/* Présentation */
-.intro h2 {
-    font-size: 2.2em;
-    margin-bottom: 20px;
-    background: linear-gradient(90deg, #00f, #0af);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="2" fill="rgba(37,99,235,0.2)"/></svg>') repeat;
+            animation: float 20s linear infinite;
+        }
 
-.intro p {
-    font-size: 1.2em;
-    color: #ccc;
-    line-height: 1.6em;
-    margin-bottom: 40px;
-}
+        @keyframes float {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100px); }
+        }
 
-/* Cartes fonctionnalités */
-.cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-}
+        .logo {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(37, 99, 235, 0.8), 0 0 40px rgba(239, 65, 53, 0.5);
+            animation: glow 2s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+            color: #0055A4;
+        }
 
-.card {
-    background: linear-gradient(145deg, #222, #111);
-    padding: 25px;
-    width: 240px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
-    cursor: pointer;
-}
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px rgba(37, 99, 235, 0.8), 0 0 40px rgba(239, 65, 53, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(37, 99, 235, 1), 0 0 60px rgba(239, 65, 53, 0.8); }
+        }
 
-.card:hover {
-    transform: translateY(-10px) scale(1.05);
-    background: linear-gradient(145deg, #333, #222);
-    box-shadow: 0 0 25px rgba(66, 185, 129, 0.7);
-}
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+            color: #1e40af;
+            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+        }
 
-.card .emoji {
-    font-size: 2.8em;
-    transition: transform 0.3s;
-}
+        .cta-button {
+            display: inline-block;
+            padding: 18px 50px;
+            background: linear-gradient(45deg, #2563eb, #1d4ed8);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
+            position: relative;
+            z-index: 1;
+            margin: 10px;
+            border: 2px solid white;
+        }
 
-.card:hover .emoji {
-    transform: rotate(15deg) scale(1.3);
-}
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.6);
+            background: linear-gradient(45deg, #1d4ed8, #2563eb);
+        }
 
-.card h3 {
-    margin: 15px 0 10px 0;
-    font-size: 1.3em;
-    background: linear-gradient(90deg, #43b581, #7289da);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+        .server-info {
+            padding: 80px 20px;
+            background: linear-gradient(180deg, rgba(0, 85, 164, 0.9) 0%, rgba(29, 78, 216, 0.9) 100%);
+        }
 
-.card p {
-    font-size: 1em;
-    color: #ccc;
-    line-height: 1.4em;
-}
+        .info-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-/* Liens et boutons */
-.links {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 50px;
-    flex-wrap: wrap;
-}
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            color: white;
+        }
 
-.links a, .links button {
-    text-decoration: none;
-    color: #fff;
-    background: linear-gradient(135deg, #43b581, #7289da);
-    padding: 12px 25px;
-    border-radius: 12px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: 0.3s;
-    cursor: pointer;
-    border: none;
-}
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
 
-.links a:hover, .links button:hover {
-    transform: scale(1.05);
-    background: linear-gradient(135deg, #00f, #0af);
-}
+        .info-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+        }
 
-/* --- Modal --- */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 100;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.85);
-    justify-content: center;
-    align-items: center;
-}
+        .info-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.4);
+            border-color: rgba(239, 65, 53, 0.6);
+        }
 
-.modal-content {
-    background: linear-gradient(135deg, #222, #111);
-    padding: 30px;
-    border-radius: 20px;
-    max-width: 500px;
-    color: #fff;
-    text-align: left;
-    position: relative;
-    box-shadow: 0 0 30px rgba(0, 170, 255, 0.7);
-}
+        .info-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
 
-.modal-content h3 {
-    margin-top: 0;
-    background: linear-gradient(90deg, #00f, #0af);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+        .info-label {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-.modal-content p {
-    color: #ccc;
-    margin-top: 15px;
-}
+        .info-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
 
-.close {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 1.5em;
-    cursor: pointer;
-    color: #0af;
-}
-</style>
+        .code-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 30px;
+            border-radius: 10px;
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+            margin-top: 10px;
+            border: 2px solid #EF4135;
+        }
+
+        .jobs-section {
+            padding: 80px 20px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(239, 65, 53, 0.2) 100%);
+        }
+
+        .jobs-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .job-card {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(239, 65, 53, 0.1));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 3px solid rgba(37, 99, 235, 0.3);
+        }
+
+        .job-card:hover {
+            transform: translateY(-10px);
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(239, 65, 53, 0.2));
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.3);
+            border-color: #EF4135;
+        }
+
+        .job-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .job-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #0055A4;
+            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
+        }
+
+        .job-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #1e40af;
+        }
+
+        .features {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(180deg, rgba(0, 85, 164, 0.8) 0%, rgba(29, 78, 216, 0.8) 100%);
+        }
+
+        .features h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .features-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .feature-item:hover {
+            background: rgba(239, 65, 53, 0.3);
+            transform: scale(1.05);
+            border-color: white;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(180deg, rgba(239, 65, 53, 0.9) 0%, rgba(0, 85, 164, 0.9) 100%);
+        }
+
+        .footer p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .jobs-grid, .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<header>
-    <h1>🚀 MP All Dashboard 🌟</h1>
-</header>
-
-<div class="container">
-    <div class="intro">
-        <h2>Présentation du MP All 💌</h2>
-        <p>
-            Le <strong>MP All</strong> permet d'envoyer un message privé à tous les membres d'un serveur Discord en un seul clic.
-            Idéal pour les annonces, événements ou communications importantes. ⚠️ Utilisez-le de manière responsable.
-        </p>
+    <div class="hero">
+        <div class="logo">🇫🇷 PARIS RP 🇫🇷</div>
+        <div class="tagline">Un monde ouvert où ton destin t'appartient !</div>
+        <a href="https://discord.gg/rwEptaHq" class="cta-button" target="_blank">🎮 REJOINS-NOUS MAINTENANT</a>
     </div>
 
-    <div class="cards">
-        <div class="card" onclick="openModal('messages')">
-            <div class="emoji">💬</div>
-            <h3>Messages rapides</h3>
-            <p>Clique pour plus d'infos</p>
-        </div>
-        <div class="card" onclick="openModal('ciblage')">
-            <div class="emoji">🎯</div>
-            <h3>Ciblage précis</h3>
-            <p>Clique pour plus d'infos</p>
-        </div>
-        <div class="card" onclick="openModal('securite')">
-            <div class="emoji">🛡️</div>
-            <h3>Sécurité</h3>
-            <p>Clique pour plus d'infos</p>
-        </div>
-        <div class="card" onclick="openModal('support')">
-            <div class="emoji">🌐</div>
-            <h3>Support officiel</h3>
-            <p>Clique pour plus d'infos</p>
+    <div class="server-info">
+        <div class="info-container">
+            <h2 class="section-title">📊 Informations Serveur</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🎮</div>
+                    <div class="info-label">Code Serveur</div>
+                    <div class="info-value">
+                        <div class="code-box">tnrgapw2</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">👥</div>
+                    <div class="info-label">Joueurs Actifs</div>
+                    <div class="info-value">140+ Membres</div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">🌍</div>
+                    <div class="info-label">Type de Jeu</div>
+                    <div class="info-value">Roleplay / EH</div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <div class="info-label">Statut</div>
+                    <div class="info-value">🟢 EN LIGNE 24/7</div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">🎯</div>
+                    <div class="info-label">Version</div>
+                    <div class="info-value">Emergency Hamburg</div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">🏆</div>
+                    <div class="info-label">Serveur</div>
+                    <div class="info-value">Serveur Français</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="links">
-        <a href="https://discord.com/oauth2/authorize?client_id=1411799874827059301&scope=bot" target="_blank">🤖 Ajouter le Bot</a>
-        <a href="https://discord.gg/hwgKfR8whC" target="_blank">💎 Rejoindre le Serveur</a>
+    <div class="jobs-section">
+        <div class="jobs-container">
+            <h2 class="section-title" style="color: #0055A4;">Choisis Ton Métier</h2>
+            <div class="jobs-grid">
+                <div class="job-card">
+                    <div class="job-icon">🚓</div>
+                    <h3 class="job-title">Policier</h3>
+                    <p class="job-description">Poursuis les criminels, fais régner la loi et protège la ville ! Deviens le gardien de la paix.</p>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-icon">💣</div>
+                    <h3 class="job-title">Criminel</h3>
+                    <p class="job-description">Braquages, stratégies, évasions... La ville n'attend que ton génie du chaos !</p>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-icon">🚒</div>
+                    <h3 class="job-title">Pompier Héros</h3>
+                    <p class="job-description">Combats les flammes, sauve des vies et deviens une légende !</p>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-icon">🔧</div>
+                    <h3 class="job-title">ADAC / Dépanneur</h3>
+                    <p class="job-description">Remorque, répare, aide les joueurs en détresse et impose ton style sur les routes !</p>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-icon">🚌</div>
+                    <h3 class="job-title">Chauffeur Pro</h3>
+                    <p class="job-description">Transporte les habitants, effectue tes trajets et gagne ta vie honnêtement... ou pas !</p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
-<!-- Modale -->
-<div id="modal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h3 id="modal-title"></h3>
-        <p id="modal-text"></p>
+    <div class="features">
+        <h2>Pourquoi Paris RP ?</h2>
+        <div class="features-list">
+            <div class="feature-item">🌆 Serveur Ultra-Actif</div>
+            <div class="feature-item">🎯 Métiers Variés</div>
+            <div class="feature-item">🎉 Events Réguliers</div>
+            <div class="feature-item">👥 Communauté en Or</div>
+            <div class="feature-item">⚡ Action Continue</div>
+            <div class="feature-item">✨ Fun Garanti</div>
+            <div class="feature-item">🇫🇷 100% Français</div>
+            <div class="feature-item">🎮 Staff Actif</div>
+        </div>
     </div>
-</div>
 
-<script>
-function loginDiscord() {
-    const clientId = '1411799874827059301';
-    const redirectUri = encodeURIComponent('https://tonsite.com/callback'); 
-    const url = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=identify+email`;
-    window.location.href = url;
-}
-
-// Modal logic
-const modal = document.getElementById('modal');
-const modalTitle = document.getElementById('modal-title');
-const modalText = document.getElementById('modal-text');
-
-function openModal(type) {
-    if(type === 'messages') {
-        modalTitle.textContent = "💬 Messages rapides";
-        modalText.textContent = "Envoyez vos messages privés à tous les membres rapidement et facilement, sans avoir à passer un par un.";
-    } else if(type === 'ciblage') {
-        modalTitle.textContent = "🎯 Ciblage précis";
-        modalText.textContent = "Vous pouvez cibler des rôles spécifiques ou des membres précis pour envoyer vos messages de manière ciblée et efficace.";
-    } else if(type === 'securite') {
-        modalTitle.textContent = "🛡️ Sécurité";
-        modalText.textContent = "Le système protège votre bot contre l’abus et le spam. Utilisez les fonctionnalités de manière responsable.";
-    } else if(type === 'support') {
-        modalTitle.textContent = "🌐 Support officiel";
-        modalText.textContent = "Rejoignez le serveur officiel pour obtenir de l’aide, des annonces et des nouveautés directement de l’équipe du MP All.";
-    }
-    modal.style.display = "flex";
-}
-
-function closeModal() {
-    modal.style.display = "none";
-}
-
-window.onclick = function(event) {
-    if (event.target == modal) {
-        closeModal();
-    }
-}
-</script>
-
+    <div class="footer">
+        <p>👉 Rejoins-nous maintenant et écris TON histoire !</p>
+        <p>✨ Aventure, action et fun garantis ! ✨</p>
+        <a href="https://discord.gg/rwEptaHq" class="cta-button" target="_blank">💬 DISCORD - REJOINDRE</a>
+    </div>
 </body>
 </html>
-
-
-</body>
-</html>
-

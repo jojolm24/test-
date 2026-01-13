@@ -3,402 +3,332 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paris RP :flag_fr:  </title>
+    <title>Discord Factory - Gestion de Tickets</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%232563eb" d="M12 2L2 7v10c0 5.5 3.8 10.7 10 12 6.2-1.3 10-6.5 10-12V7l-10-5z"/><path fill="white" d="M12 4L4 8v9c0 4.5 3 8.5 8 10 5-1.5 8-5.5 8-10V8l-8-4z"/></svg>'), auto;
+        /* --- CSS : STYLE DISCORD --- */
+        :root {
+            --bg-dark: #36393f;
+            --bg-darker: #2f3136;
+            --bg-light: #40444b;
+            --accent: #5865F2; /* Le "Blurple" de Discord */
+            --accent-hover: #4752c4;
+            --text-main: #dcddde;
+            --text-muted: #72767d;
+            --red: #ed4245;
+            --green: #3ba55c;
         }
 
         body {
+            margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0055A4 0%, #FFFFFF 50%, #EF4135 100%);
-            color: #fff;
-            overflow-x: hidden;
-        }
-
-        a, button {
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path fill="%231d4ed8" d="M12 2L2 7v10c0 5.5 3.8 10.7 10 12 6.2-1.3 10-6.5 10-12V7l-10-5z"/><path fill="white" d="M12 4L4 8v9c0 4.5 3 8.5 8 10 5-1.5 8-5.5 8-10V8l-8-4z"/></svg>'), pointer !important;
-        }
-
-        .hero {
-            min-height: 100vh;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, rgba(0, 85, 164, 0.95) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(239, 65, 53, 0.95) 100%);
-            position: relative;
+            height: 100vh;
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="2" fill="rgba(37,99,235,0.2)"/></svg>') repeat;
-            animation: float 20s linear infinite;
-        }
-
-        @keyframes float {
-            from { transform: translateY(0); }
-            to { transform: translateY(-100px); }
-        }
-
-        .logo {
-            font-size: 4rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px rgba(37, 99, 235, 0.8), 0 0 40px rgba(239, 65, 53, 0.5);
-            animation: glow 2s ease-in-out infinite;
-            position: relative;
-            z-index: 1;
-            color: #0055A4;
-        }
-
-        @keyframes glow {
-            0%, 100% { text-shadow: 0 0 20px rgba(37, 99, 235, 0.8), 0 0 40px rgba(239, 65, 53, 0.5); }
-            50% { text-shadow: 0 0 40px rgba(37, 99, 235, 1), 0 0 60px rgba(239, 65, 53, 0.8); }
-        }
-
-        .tagline {
-            font-size: 1.5rem;
-            margin-bottom: 40px;
-            position: relative;
-            z-index: 1;
-            color: #1e40af;
-            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 18px 50px;
-            background: linear-gradient(45deg, #2563eb, #1d4ed8);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
-            position: relative;
-            z-index: 1;
-            margin: 10px;
-            border: 2px solid white;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.6);
-            background: linear-gradient(45deg, #1d4ed8, #2563eb);
-        }
-
-        .server-info {
-            padding: 80px 20px;
-            background: linear-gradient(180deg, rgba(0, 85, 164, 0.9) 0%, rgba(29, 78, 216, 0.9) 100%);
-        }
-
-        .info-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 60px;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-            color: white;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .info-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            transition: all 0.3s ease;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            text-align: center;
-        }
-
-        .info-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.4);
-            border-color: rgba(239, 65, 53, 0.6);
-        }
-
-        .info-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        .info-label {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .info-value {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .code-box {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px 30px;
-            border-radius: 10px;
-            display: inline-block;
-            font-family: 'Courier New', monospace;
-            font-size: 1.5rem;
-            letter-spacing: 3px;
-            margin-top: 10px;
-            border: 2px solid #EF4135;
-        }
-
-        .jobs-section {
-            padding: 80px 20px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(239, 65, 53, 0.2) 100%);
-        }
-
-        .jobs-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .jobs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .job-card {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(239, 65, 53, 0.1));
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            transition: all 0.3s ease;
-            border: 3px solid rgba(37, 99, 235, 0.3);
-        }
-
-        .job-card:hover {
-            transform: translateY(-10px);
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(239, 65, 53, 0.2));
-            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.3);
-            border-color: #EF4135;
-        }
-
-        .job-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        .job-title {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: #0055A4;
-            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
-        }
-
-        .job-description {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #1e40af;
-        }
-
-        .features {
-            text-align: center;
-            padding: 60px 20px;
-            background: linear-gradient(180deg, rgba(0, 85, 164, 0.8) 0%, rgba(29, 78, 216, 0.8) 100%);
-        }
-
-        .features h2 {
-            font-size: 2.5rem;
-            margin-bottom: 40px;
-            color: white;
-        }
-
-        .features-list {
+        /* Sidebar simple pour le look */
+        .sidebar {
+            width: 72px;
+            background-color: #202225;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 15px;
+        }
+
+        .server-icon {
+            width: 48px;
+            height: 48px;
+            background-color: var(--bg-dark);
+            border-radius: 50%;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto;
+            cursor: pointer;
+            transition: 0.2s;
+            color: var(--text-main);
+            font-weight: bold;
         }
 
-        .feature-item {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 20px 30px;
-            border-radius: 15px;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+        .server-icon:hover {
+            border-radius: 16px;
+            background-color: var(--accent);
         }
 
-        .feature-item:hover {
-            background: rgba(239, 65, 53, 0.3);
-            transform: scale(1.05);
-            border-color: white;
+        /* Contenu Principal */
+        .main-content {
+            flex: 1;
+            background-color: var(--bg-dark);
+            display: flex;
+            flex-direction: column;
         }
 
-        .footer {
-            text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(180deg, rgba(239, 65, 53, 0.9) 0%, rgba(0, 85, 164, 0.9) 100%);
+        .header {
+            height: 48px;
+            background-color: var(--bg-dark);
+            border-bottom: 1px solid #202225;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            font-weight: bold;
+            box-shadow: 0 1px 0 rgba(4,4,5,0.2);
         }
 
-        .footer p {
-            font-size: 1.1rem;
+        .ticket-area {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: var(--bg-dark);
+        }
+
+        /* Bouton Créer */
+        .btn-create {
+            background-color: var(--green);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
             margin-bottom: 20px;
+            transition: 0.2s;
+        }
+        .btn-create:hover { background-color: #2d7d46; }
+
+        /* Liste des tickets */
+        .ticket-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
         }
 
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 2.5rem;
-            }
-
-            .tagline {
-                font-size: 1.2rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .jobs-grid, .info-grid {
-                grid-template-columns: 1fr;
-            }
+        .ticket-card {
+            background-color: var(--bg-light);
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
+
+        .ticket-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .ticket-desc {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            white-space: pre-wrap; /* Garde les retours à la ligne */
+        }
+
+        .ticket-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8em;
+            color: var(--text-muted);
+        }
+
+        .btn-close {
+            background-color: var(--red);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .btn-close:hover { opacity: 0.8; }
+
+        /* Modal (Fenêtre pop-up) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal {
+            background-color: var(--bg-darker);
+            padding: 20px;
+            border-radius: 5px;
+            width: 400px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .modal h2 { margin-top: 0; color: white; }
+        
+        input, textarea {
+            width: 100%;
+            background-color: var(--bg-light);
+            border: 1px solid #202225;
+            color: white;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 3px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus { outline: none; border-color: var(--accent); }
+
+        .modal-buttons { display: flex; justify-content: flex-end; gap: 10px; }
+        .btn-cancel { background: transparent; color: white; border: none; cursor: pointer; }
+        .btn-submit { background-color: var(--accent); color: white; border: none; padding: 8px 16px; border-radius: 3px; cursor: pointer; }
+        
     </style>
 </head>
 <body>
-    <div class="hero">
-        <div class="logo">🇫🇷 PARIS RP 🇫🇷</div>
-        <div class="tagline">Un monde ouvert où ton destin t'appartient !</div>
-        <a href="https://discord.gg/rwEptaHq" class="cta-button" target="_blank">🎮 REJOINS-NOUS MAINTENANT</a>
+
+    <div class="sidebar">
+        <div class="server-icon" style="background-color: #5865F2;">DF</div>
+        <div class="server-icon">+</div>
     </div>
 
-    <div class="server-info">
-        <div class="info-container">
-            <h2 class="section-title">📊 Informations Serveur</h2>
-            <div class="info-grid">
-                <div class="info-card">
-                    <div class="info-icon">🎮</div>
-                    <div class="info-label">Code Serveur</div>
-                    <div class="info-value">
-                        <div class="code-box">tnrgapw2</div>
+    <div class="main-content">
+        <div class="header">
+            # salon-tickets
+        </div>
+
+        <div class="ticket-area">
+            <h1>Discord Factory Support</h1>
+            <p style="color: var(--text-muted);">Créez un ticket pour obtenir de l'aide. Vos tickets sont sauvegardés localement.</p>
+            
+            <button class="btn-create" onclick="openModal()">+ Créer un ticket</button>
+
+            <div id="ticketContainer" class="ticket-grid">
+                </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h2>Nouveau Ticket</h2>
+            <label>Sujet</label>
+            <input type="text" id="ticketSubject" placeholder="Ex: Problème de connexion">
+            
+            <label>Description</label>
+            <textarea id="ticketDesc" rows="4" placeholder="Décrivez votre problème..."></textarea>
+            
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeModal()">Annuler</button>
+                <button class="btn-submit" onclick="createTicket()">Créer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- JAVASCRIPT : LOGIQUE & SAUVEGARDE ---
+
+        // 1. Initialisation : On charge les tickets sauvegardés ou on crée une liste vide
+        let tickets = JSON.parse(localStorage.getItem('discordFactoryTickets')) || [];
+
+        // Au chargement de la page, on affiche les tickets existants
+        document.addEventListener('DOMContentLoaded', renderTickets);
+
+        // Fonctions pour gérer la modale (fenêtre)
+        const modal = document.getElementById('modalOverlay');
+        const subjectInput = document.getElementById('ticketSubject');
+        const descInput = document.getElementById('ticketDesc');
+
+        function openModal() {
+            modal.style.display = 'flex';
+            subjectInput.focus();
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            subjectInput.value = '';
+            descInput.value = '';
+        }
+
+        // 2. Fonction pour créer un ticket
+        function createTicket() {
+            const subject = subjectInput.value.trim();
+            const desc = descInput.value.trim();
+
+            if (subject === "" || desc === "") {
+                alert("Merci de remplir tous les champs !");
+                return;
+            }
+
+            // Création de l'objet ticket
+            const newTicket = {
+                id: Date.now(), // Utilise l'heure comme ID unique
+                title: subject,
+                description: desc,
+                date: new Date().toLocaleDateString('fr-FR')
+            };
+
+            // Ajout à la liste et sauvegarde
+            tickets.push(newTicket);
+            saveData();
+            
+            // Mise à jour de l'affichage et fermeture
+            renderTickets();
+            closeModal();
+        }
+
+        // 3. Fonction pour supprimer un ticket
+        function deleteTicket(id) {
+            if(confirm("Voulez-vous vraiment fermer ce ticket ?")) {
+                tickets = tickets.filter(ticket => ticket.id !== id);
+                saveData();
+                renderTickets();
+            }
+        }
+
+        // 4. Fonction de sauvegarde dans le LocalStorage
+        function saveData() {
+            localStorage.setItem('discordFactoryTickets', JSON.stringify(tickets));
+        }
+
+        // 5. Fonction d'affichage (Rendu HTML)
+        function renderTickets() {
+            const container = document.getElementById('ticketContainer');
+            container.innerHTML = ''; // On vide l'affichage actuel
+
+            if (tickets.length === 0) {
+                container.innerHTML = '<p style="color:var(--text-muted)">Aucun ticket ouvert.</p>';
+                return;
+            }
+
+            // On boucle sur chaque ticket pour créer son HTML
+            tickets.forEach(ticket => {
+                const card = document.createElement('div');
+                card.className = 'ticket-card';
+                card.innerHTML = `
+                    <div>
+                        <div class="ticket-title">${escapeHtml(ticket.title)}</div>
+                        <div class="ticket-desc">${escapeHtml(ticket.description)}</div>
                     </div>
-                </div>
+                    <div class="ticket-footer">
+                        <span>📅 ${ticket.date} | ID: ${ticket.id}</span>
+                        <button class="btn-close" onclick="deleteTicket(${ticket.id})">Fermer</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
 
-                <div class="info-card">
-                    <div class="info-icon">👥</div>
-                    <div class="info-label">Joueurs Actifs</div>
-                    <div class="info-value">140+ Membres</div>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-icon">🌍</div>
-                    <div class="info-label">Type de Jeu</div>
-                    <div class="info-value">Roleplay / EH</div>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-icon">⚡</div>
-                    <div class="info-label">Statut</div>
-                    <div class="info-value">🟢 EN LIGNE 24/7</div>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-icon">🎯</div>
-                    <div class="info-label">Version</div>
-                    <div class="info-value">Emergency Hamburg</div>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-icon">🏆</div>
-                    <div class="info-label">Serveur</div>
-                    <div class="info-value">Serveur Français</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="jobs-section">
-        <div class="jobs-container">
-            <h2 class="section-title" style="color: #0055A4;">Choisis Ton Métier</h2>
-            <div class="jobs-grid">
-                <div class="job-card">
-                    <div class="job-icon">🚓</div>
-                    <h3 class="job-title">Policier</h3>
-                    <p class="job-description">Poursuis les criminels, fais régner la loi et protège la ville ! Deviens le gardien de la paix.</p>
-                </div>
-
-                <div class="job-card">
-                    <div class="job-icon">💣</div>
-                    <h3 class="job-title">Criminel</h3>
-                    <p class="job-description">Braquages, stratégies, évasions... La ville n'attend que ton génie du chaos !</p>
-                </div>
-
-                <div class="job-card">
-                    <div class="job-icon">🚒</div>
-                    <h3 class="job-title">Pompier Héros</h3>
-                    <p class="job-description">Combats les flammes, sauve des vies et deviens une légende !</p>
-                </div>
-
-                <div class="job-card">
-                    <div class="job-icon">🔧</div>
-                    <h3 class="job-title">ADAC / Dépanneur</h3>
-                    <p class="job-description">Remorque, répare, aide les joueurs en détresse et impose ton style sur les routes !</p>
-                </div>
-
-                <div class="job-card">
-                    <div class="job-icon">🚌</div>
-                    <h3 class="job-title">Chauffeur Pro</h3>
-                    <p class="job-description">Transporte les habitants, effectue tes trajets et gagne ta vie honnêtement... ou pas !</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="features">
-        <h2>Pourquoi Paris RP ?</h2>
-        <div class="features-list">
-            <div class="feature-item">🌆 Serveur Ultra-Actif</div>
-            <div class="feature-item">🎯 Métiers Variés</div>
-            <div class="feature-item">🎉 Events Réguliers</div>
-            <div class="feature-item">👥 Communauté en Or</div>
-            <div class="feature-item">⚡ Action Continue</div>
-            <div class="feature-item">✨ Fun Garanti</div>
-            <div class="feature-item">🇫🇷 100% Français</div>
-            <div class="feature-item">🎮 Staff Actif</div>
-        </div>
-    </div>
-
-    <div class="footer">
-        <p>👉 Rejoins-nous maintenant et écris TON histoire !</p>
-        <p>✨ Aventure, action et fun garantis ! ✨</p>
-        <a href="https://discord.gg/rwEptaHq" class="cta-button" target="_blank">💬 DISCORD - REJOINDRE</a>
-    </div>
+        // Sécurité pour éviter l'injection de code HTML dans les inputs
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
 </body>
 </html>

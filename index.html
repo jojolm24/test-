@@ -3,411 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discord Factory - Chat System</title>
+    <title>Support Factory</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* --- CONFIGURATION & DESIGN SYSTEM --- */
+        /* DESIGN SOMBRE ÉPURÉ */
         :root {
-            --bg-tertiary: #202225;
-            --bg-secondary: #2f3136;
-            --bg-primary: #36393f;
-            --bg-input: #40444b;
-            --channel-hover: #393c43;
-            --channel-selected: #393c43;
-            --divider: #202225;
-            --accent: #5865F2;
-            --accent-hover: #4752c4;
-            --text-normal: #dcddde;
-            --text-muted: #72767d;
-            --danger: #ed4245;
-            --success: #3ba55c;
+            --bg-dark: #202225;
+            --bg-medium: #2f3136;
+            --bg-light: #36393f;
+            --primary: #5865F2;
+            --text: #dcddde;
+            --green: #3ba55c;
+            --red: #ed4245;
         }
-
-        * { box-sizing: border-box; }
-        body { margin: 0; font-family: 'Segoe UI', 'Helvetica Neue', sans-serif; background: var(--bg-primary); color: var(--text-normal); height: 100vh; overflow: hidden; display: flex; }
-
-        /* --- ÉCRAN DE CONNEXION --- */
-        #auth-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://c4.wallpaperflare.com/wallpaper/259/788/336/discord-logo-logo-glitch-glitch-art-wallpaper-preview.jpg') center/cover;
-            display: flex; align-items: center; justify-content: center; z-index: 1000;
-        }
-        .auth-box {
-            background: var(--bg-primary); padding: 32px; border-radius: 5px;
-            width: 400px; box-shadow: 0 2px 10px 0 rgba(0,0,0,0.2);
-            text-align: center;
-        }
-        .auth-box h2 { margin-top: 0; color: white; margin-bottom: 8px; }
-        .auth-box p { color: var(--text-muted); margin-bottom: 20px; }
-        .input-group { text-align: left; margin-bottom: 15px; }
-        .input-group label { display: block; color: var(--text-muted); text-transform: uppercase; font-size: 12px; font-weight: bold; margin-bottom: 8px; }
-        .input-field { width: 100%; padding: 10px; background: var(--bg-tertiary); border: 1px solid rgba(0,0,0,0.3); color: white; border-radius: 3px; height: 40px; }
-        .btn-full { width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 3px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        .btn-full:hover { background: var(--accent-hover); }
-        .toggle-auth { margin-top: 15px; font-size: 14px; color: var(--accent); cursor: pointer; }
-        .toggle-auth:hover { text-decoration: underline; }
-
-        /* --- LAYOUT PRINCIPAL --- */
-        #app-interface { display: none; width: 100%; height: 100%; display: flex; }
         
-        /* Sidebar Serveurs (Gauche extrême) */
-        .server-sidebar { width: 72px; background: var(--bg-tertiary); display: flex; flex-direction: column; align-items: center; padding-top: 12px; }
-        .app-icon { width: 48px; height: 48px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .app-icon:hover { border-radius: 16px; }
+        body { margin: 0; font-family: sans-serif; background: var(--bg-medium); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
         
-        /* Sidebar Canaux (Milieu gauche) */
-        .channel-sidebar { width: 240px; background: var(--bg-secondary); display: flex; flex-direction: column; }
-        .server-header { height: 48px; padding: 0 16px; display: flex; align-items: center; font-weight: bold; box-shadow: 0 1px 0 rgba(4,4,5,0.2); font-size: 15px; justify-content: space-between; }
-        .channel-list { flex: 1; padding: 10px 8px; overflow-y: auto; }
+        /* LOGIN SCREEN */
+        #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100; }
+        .login-box { background: var(--bg-light); padding: 30px; border-radius: 8px; width: 300px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        input { width: 100%; padding: 10px; margin: 10px 0; background: var(--bg-dark); border: 1px solid #202225; color: white; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: var(--primary); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 5px; }
+        button:hover { opacity: 0.9; }
+        .switch-btn { background: transparent; color: var(--primary); margin-top: 10px; font-size: 0.9em; }
+
+        /* APP LAYOUT */
+        #app { display: none; width: 100%; height: 100%; }
         
-        .channel-category { color: var(--text-muted); font-size: 12px; font-weight: bold; text-transform: uppercase; margin: 16px 8px 8px 8px; display: flex; justify-content: space-between; align-items: center; }
-        .channel-category i { cursor: pointer; }
-        .channel-item { display: flex; align-items: center; padding: 6px 8px; border-radius: 4px; color: var(--text-muted); cursor: pointer; margin-bottom: 2px; }
-        .channel-item:hover { background-color: var(--channel-hover); color: var(--text-normal); }
-        .channel-item.active { background-color: var(--channel-selected); color: white; }
-        .channel-hash { color: var(--text-muted); margin-right: 6px; font-size: 18px; }
+        /* SIDEBAR (LISTE DES TICKETS) */
+        .sidebar { width: 300px; background: var(--bg-dark); display: flex; flex-direction: column; border-right: 1px solid #1e1f22; }
+        .sidebar-header { padding: 20px; border-bottom: 1px solid #2f3136; background: #18191c; }
+        .role-badge { font-size: 0.7em; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; font-weight: bold; margin-left: 5px; }
+        .role-admin { background: var(--red); color: white; }
+        .role-support { background: var(--green); color: white; }
+        .role-user { background: var(--primary); color: white; }
 
-        /* Zone Utilisateur (Bas de sidebar) */
-        .user-panel { background: #292b2f; height: 52px; padding: 0 8px; display: flex; align-items: center; justify-content: space-between; }
-        .user-info { display: flex; align-items: center; gap: 8px; }
-        .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 14px; position: relative; }
-        .status-dot { width: 10px; height: 10px; background: var(--success); border-radius: 50%; position: absolute; bottom: -2px; right: -2px; border: 2px solid #292b2f; }
-        .username { font-size: 14px; font-weight: bold; }
-        .user-tag { font-size: 12px; color: var(--text-muted); }
-        .btn-logout { background: transparent; border: none; color: var(--text-muted); cursor: pointer; }
-        .btn-logout:hover { color: var(--danger); }
+        .ticket-list { flex: 1; overflow-y: auto; padding: 10px; }
+        .ticket-item { padding: 12px; margin-bottom: 5px; background: var(--bg-medium); border-radius: 4px; cursor: pointer; border-left: 3px solid var(--primary); }
+        .ticket-item:hover { background: #40444b; }
+        .ticket-item.active { background: #40444b; border-left-color: white; }
+        .ticket-item small { color: #72767d; display: block; margin-top: 4px; }
 
-        /* Zone de Chat (Droite) */
-        .chat-area { flex: 1; display: flex; flex-direction: column; background: var(--bg-primary); }
-        .chat-header { height: 48px; padding: 0 16px; display: flex; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.2); box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-        .chat-header h3 { font-size: 16px; font-weight: bold; margin: 0; display: flex; align-items: center; }
+        /* CHAT AREA */
+        .chat-area { flex: 1; display: flex; flex-direction: column; background: var(--bg-light); }
+        .chat-header { height: 60px; border-bottom: 1px solid #2f3136; display: flex; align-items: center; padding: 0 20px; font-weight: bold; font-size: 1.2em; justify-content: space-between; }
+        .messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
         
-        .messages-container { flex: 1; overflow-y: auto; padding: 20px 0; display: flex; flex-direction: column; }
-        .message { padding: 8px 16px; margin-top: 4px; display: flex; }
-        .message:hover { background: rgba(4,4,5,0.07); }
-        .msg-avatar { width: 40px; height: 40px; border-radius: 50%; background: teal; margin-right: 16px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; }
-        .msg-content { flex: 1; }
-        .msg-header { display: flex; align-items: baseline; margin-bottom: 4px; }
-        .msg-username { font-weight: bold; margin-right: 8px; cursor: pointer; }
-        .msg-username:hover { text-decoration: underline; }
-        .msg-timestamp { font-size: 12px; color: var(--text-muted); }
-        .msg-text { font-size: 16px; line-height: 1.375rem; white-space: pre-wrap; color: #dcddde; }
-
-        /* Zone de saisie */
-        .input-area { padding: 0 16px 24px 16px; }
-        .chat-input-wrapper { background: var(--bg-input); border-radius: 8px; padding: 11px; display: flex; align-items: center; }
-        .chat-input { background: transparent; border: none; color: white; width: 100%; font-size: 15px; font-family: inherit; resize: none; height: 22px; max-height: 140px; }
-        .chat-input:focus { outline: none; }
-
-        /* Placeholder vide */
-        .empty-state { text-align: center; margin-top: 100px; color: var(--text-muted); }
+        .msg { padding: 10px 15px; border-radius: 8px; max-width: 70%; line-height: 1.4; }
+        .msg.self { align-self: flex-end; background: var(--primary); color: white; }
+        .msg.other { align-self: flex-start; background: var(--bg-medium); }
+        .msg-info { font-size: 0.75em; margin-bottom: 4px; opacity: 0.7; font-weight: bold; }
         
-        /* Modal Création Ticket */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: none; align-items: center; justify-content: center; }
-        .modal { background: var(--bg-primary); width: 440px; border-radius: 5px; padding: 20px; box-shadow: 0 0 0 1px rgba(32,34,37,.6), 0 2px 10px 0 rgba(0,0,0,.2); }
+        .input-area { padding: 20px; background: var(--bg-light); border-top: 1px solid #2f3136; display: flex; gap: 10px; }
+        
+        /* ADMIN PANEL */
+        .admin-panel { background: #2d2f35; padding: 15px; margin-top: auto; border-top: 1px solid #1e1f22; }
+        .admin-title { font-size: 0.8em; color: #aaa; text-transform: uppercase; margin-bottom: 10px; display: block; font-weight: bold; }
+
     </style>
 </head>
 <body>
 
-    <div id="auth-screen">
-        <div class="auth-box">
-            <h2 id="auth-title">Bienvenue !</h2>
-            <p id="auth-subtitle">Nous sommes ravis de vous revoir !</p>
-            
-            <div class="input-group">
-                <label>NOM D'UTILISATEUR</label>
-                <input type="text" id="username-input" class="input-field">
-            </div>
-            <div class="input-group">
-                <label>MOT DE PASSE</label>
-                <input type="password" id="password-input" class="input-field">
-            </div>
-            
-            <button class="btn-full" onclick="handleAuth()">Se connecter</button>
-            <div class="toggle-auth" onclick="toggleAuthMode()">Besoin d'un compte ? S'inscrire</div>
+    <div id="login-screen">
+        <div class="login-box">
+            <h2 id="login-title">Connexion</h2>
+            <input type="text" id="username" placeholder="Identifiant">
+            <input type="password" id="password" placeholder="Mot de passe">
+            <button onclick="login()">Entrer</button>
+            <button class="switch-btn" onclick="toggleRegister()" id="toggle-btn">Pas de compte ? Créer un compte</button>
         </div>
     </div>
 
-    <div id="app-interface" style="display: none;">
-        <div class="server-sidebar">
-            <div class="app-icon" title="Discord Factory">DF</div>
-        </div>
-
-        <div class="channel-sidebar">
-            <div class="server-header">
-                <span>Discord Factory</span>
+    <div id="app">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div style="font-size: 1.2em; font-weight: bold;">Support Factory</div>
+                <div style="margin-top: 5px; font-size: 0.9em; color: #aaa;">
+                    Connecté: <span id="current-user-display" style="color:white;"></span>
+                </div>
+                <button onclick="logout()" style="background:#2f3136; margin-top:10px; font-size:0.8em;">Déconnexion</button>
             </div>
             
-            <div class="channel-list">
-                <div class="channel-item" onclick="switchChannel('general')">
-                    <span class="channel-hash">#</span> général
-                </div>
-
-                <div class="channel-category">
-                    <span>TICKETS</span>
-                    <i class="fas fa-plus" onclick="openTicketModal()" title="Créer un ticket"></i>
-                </div>
-                <div id="ticket-list">
-                    </div>
+            <div style="padding:10px;">
+                <button onclick="createNewTicket()" style="background:var(--green);">+ Nouveau Ticket</button>
             </div>
 
-            <div class="user-panel">
-                <div class="user-info">
-                    <div class="avatar"><span id="current-user-initial">U</span><div class="status-dot"></div></div>
-                    <div>
-                        <div class="username" id="current-username">User</div>
-                        <div class="user-tag">#0000</div>
-                    </div>
+            <div class="ticket-list" id="ticket-list">
                 </div>
-                <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+
+            <div id="admin-zone" class="admin-panel" style="display:none;">
+                <span class="admin-title">🔒 ADMIN PANEL (Ajout Support)</span>
+                <input type="text" id="new-support-name" placeholder="Nom du support" style="font-size:0.8em; margin:2px 0;">
+                <input type="password" id="new-support-pass" placeholder="Mot de passe" style="font-size:0.8em; margin:2px 0;">
+                <button onclick="addSupportMember()" style="background:var(--primary); font-size:0.8em;">Ajouter au Staff</button>
             </div>
         </div>
 
         <div class="chat-area">
             <div class="chat-header">
-                <h3 id="chat-title"><span class="channel-hash">#</span> général</h3>
+                <span id="chat-title">Sélectionnez un ticket</span>
+                <span id="ticket-id-display" style="font-size:0.6em; color:#72767d;"></span>
             </div>
-            
-            <div class="messages-container" id="messages-container">
-                <div class="empty-state">Sélectionnez un salon pour commencer.</div>
-            </div>
-
-            <div class="input-area">
-                <div class="chat-input-wrapper">
-                    <input type="text" class="chat-input" id="message-input" placeholder="Envoyer un message..." onkeypress="handleEnter(event)">
+            <div class="messages" id="messages">
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="ticketModal">
-        <div class="modal">
-            <h2 style="color:white; margin-top:0;">Créer un Ticket</h2>
-            <div class="input-group">
-                <label>SUJET DU TICKET</label>
-                <input type="text" id="ticket-subject" class="input-field" placeholder="Ex: Problème de connexion">
-            </div>
-            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-                <button onclick="document.getElementById('ticketModal').style.display='none'" style="background:transparent; color:white; border:none; cursor:pointer;">Annuler</button>
-                <button class="btn-full" style="width: auto; padding: 10px 20px;" onclick="createTicket()">Créer</button>
+            <div class="input-area" id="input-area" style="display:none;">
+                <input type="text" id="msg-input" placeholder="Écrivez votre message..." onkeypress="if(event.key==='Enter') sendMsg()">
+                <button onclick="sendMsg()" style="width: 80px;">Envoyer</button>
             </div>
         </div>
     </div>
 
     <script>
-        /* --- GESTION DES DONNÉES (Base de données locale) --- */
-        const DB = {
-            users: JSON.parse(localStorage.getItem('df_users')) || [],
-            tickets: JSON.parse(localStorage.getItem('df_tickets')) || [],
-            messages: JSON.parse(localStorage.getItem('df_messages')) || [],
-            currentUser: JSON.parse(localStorage.getItem('df_current_user')) || null
+        // --- BASE DE DONNÉES LOCALE ---
+        // On initialise avec le compte admin _jojo_fr s'il n'existe pas
+        let DB = JSON.parse(localStorage.getItem('sf_db')) || {
+            users: [
+                { user: '_jojo_fr', pass: '2516', role: 'admin' } // Compte Admin pré-créé
+            ],
+            tickets: []
         };
 
-        function saveDB() {
-            localStorage.setItem('df_users', JSON.stringify(DB.users));
-            localStorage.setItem('df_tickets', JSON.stringify(DB.tickets));
-            localStorage.setItem('df_messages', JSON.stringify(DB.messages));
-            if(DB.currentUser) localStorage.setItem('df_current_user', JSON.stringify(DB.currentUser));
+        let currentUser = null;
+        let currentTicketId = null;
+        let isRegistering = false;
+
+        function save() { localStorage.setItem('sf_db', JSON.stringify(DB)); }
+
+        // --- AUTHENTIFICATION ---
+        function toggleRegister() {
+            isRegistering = !isRegistering;
+            document.getElementById('login-title').innerText = isRegistering ? "Inscription Membre" : "Connexion";
+            document.getElementById('toggle-btn').innerText = isRegistering ? "Retour Connexion" : "Pas de compte ? Créer un compte";
         }
 
-        /* --- AUTHENTIFICATION --- */
-        let isLoginMode = true;
+        function login() {
+            const userIn = document.getElementById('username').value.trim();
+            const passIn = document.getElementById('password').value.trim();
 
-        function checkSession() {
-            if (DB.currentUser) {
-                document.getElementById('auth-screen').style.display = 'none';
-                document.getElementById('app-interface').style.display = 'flex';
-                loadApp();
-            }
-        }
+            if (!userIn || !passIn) return alert('Champs vides !');
 
-        function toggleAuthMode() {
-            isLoginMode = !isLoginMode;
-            document.getElementById('auth-title').innerText = isLoginMode ? 'Bienvenue !' : 'Créer un compte';
-            document.getElementById('auth-subtitle').innerText = isLoginMode ? 'Nous sommes ravis de vous revoir !' : 'Rejoignez Discord Factory';
-            document.querySelector('.btn-full').innerText = isLoginMode ? 'Se connecter' : "S'inscrire";
-            document.querySelector('.toggle-auth').innerText = isLoginMode ? "Besoin d'un compte ? S'inscrire" : "Déjà un compte ? Se connecter";
-        }
-
-        function handleAuth() {
-            const userIn = document.getElementById('username-input').value.trim();
-            const passIn = document.getElementById('password-input').value.trim();
-
-            if (!userIn || !passIn) return alert("Remplissez tout !");
-
-            if (isLoginMode) {
-                // Login
-                const user = DB.users.find(u => u.username === userIn && u.password === passIn);
-                if (user) {
-                    DB.currentUser = user;
-                    saveDB();
-                    checkSession();
-                } else {
-                    alert("Identifiants incorrects");
-                }
+            if (isRegistering) {
+                if (DB.users.find(u => u.user === userIn)) return alert('Utilisateur déjà pris !');
+                DB.users.push({ user: userIn, pass: passIn, role: 'member' });
+                save();
+                alert('Compte créé ! Connectez-vous.');
+                toggleRegister();
             } else {
-                // Inscription
-                if (DB.users.find(u => u.username === userIn)) return alert("Ce nom est déjà pris");
-                
-                const newUser = {
-                    id: Date.now(),
-                    username: userIn,
-                    password: passIn,
-                    color: '#' + Math.floor(Math.random()*16777215).toString(16) // Couleur aléatoire
-                };
-                DB.users.push(newUser);
-                DB.currentUser = newUser;
-                saveDB();
-                checkSession();
+                const found = DB.users.find(u => u.user === userIn && u.pass === passIn);
+                if (found) {
+                    currentUser = found;
+                    initApp();
+                } else {
+                    alert('Identifiants incorrects.');
+                }
             }
         }
 
-        function logout() {
-            DB.currentUser = null;
-            localStorage.removeItem('df_current_user');
-            location.reload();
-        }
+        function logout() { location.reload(); }
 
-        /* --- LOGIQUE DE L'APPLICATION --- */
-        let activeChannelId = 'general';
+        // --- FONCTION ADMIN (Ajout Support) ---
+        function addSupportMember() {
+            // Sécurité : Seul _jojo_fr peut faire ça (vérifié aussi visuellement)
+            if (currentUser.role !== 'admin') return; 
 
-        function loadApp() {
-            // Setup User UI
-            document.getElementById('current-username').innerText = DB.currentUser.username;
-            document.getElementById('current-user-initial').innerText = DB.currentUser.username[0].toUpperCase();
-            document.querySelector('.avatar').style.backgroundColor = DB.currentUser.color;
+            const name = document.getElementById('new-support-name').value;
+            const pass = document.getElementById('new-support-pass').value;
 
-            renderChannelList();
-            switchChannel('general'); // Charge le général par défaut
-        }
-
-        function renderChannelList() {
-            const list = document.getElementById('ticket-list');
-            list.innerHTML = '';
-
-            DB.tickets.forEach(ticket => {
-                const div = document.createElement('div');
-                div.className = `channel-item ${activeChannelId == ticket.id ? 'active' : ''}`;
-                div.onclick = () => switchChannel(ticket.id);
-                div.innerHTML = `<span class="channel-hash"><i class="fas fa-ticket-alt" style="font-size:14px;"></i></span> ${ticket.name}`;
-                list.appendChild(div);
-            });
-        }
-
-        function switchChannel(channelId) {
-            activeChannelId = channelId;
+            if(!name || !pass) return alert("Remplir nom et mot de passe");
             
-            // Mise à jour visuelle sidebar
-            document.querySelectorAll('.channel-item').forEach(el => el.classList.remove('active'));
-            // Note: C'est une simplification, idéalement on cible l'élément spécifique
-            renderChannelList(); 
+            DB.users.push({ user: name, pass: pass, role: 'support' });
+            save();
+            alert(`✅ ${name} ajouté à l'équipe Support !`);
+            document.getElementById('new-support-name').value = '';
+            document.getElementById('new-support-pass').value = '';
+        }
 
-            // Mise à jour Header
-            const channelName = channelId === 'general' ? 'général' : DB.tickets.find(t => t.id == channelId)?.name || 'Inconnu';
-            document.getElementById('chat-title').innerHTML = `<span class="channel-hash">#</span> ${channelName}`;
+        // --- LOGIQUE APPLICATION ---
+        function initApp() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('app').style.display = 'flex';
             
-            renderMessages();
+            // Affichage badges
+            let badgeColor = currentUser.role === 'admin' ? 'red' : (currentUser.role === 'support' ? 'green' : 'gray');
+            let badgeText = currentUser.role.toUpperCase();
+            document.getElementById('current-user-display').innerHTML = 
+                `${currentUser.user} <span class="role-badge" style="background:${badgeColor}">${badgeText}</span>`;
+
+            // Afficher le panneau admin SEULEMENT pour _jojo_fr
+            if (currentUser.role === 'admin') {
+                document.getElementById('admin-zone').style.display = 'block';
+            }
+
+            renderTickets();
         }
 
-        /* --- SYSTEME DE TICKETS --- */
-        function openTicketModal() {
-            document.getElementById('ticketModal').style.display = 'flex';
-            document.getElementById('ticket-subject').focus();
-        }
-
-        function createTicket() {
-            const subject = document.getElementById('ticket-subject').value.trim();
+        function createNewTicket() {
+            const subject = prompt("Sujet du ticket (ex: Bug Boutique):");
             if (!subject) return;
 
             const newTicket = {
                 id: Date.now(),
-                name: subject.replace(/\s+/g, '-').toLowerCase(), // Format slug
-                creator: DB.currentUser.username,
-                createdAt: new Date().toISOString()
+                creator: currentUser.user,
+                subject: subject,
+                messages: [] // Messages vides au début
             };
-
-            DB.tickets.push(newTicket);
             
-            // Ajouter un message système de bienvenue
-            DB.messages.push({
-                channelId: newTicket.id,
-                username: "System Bot",
-                color: "#5865F2",
-                text: `Bienvenue ${DB.currentUser.username} !\nLe staff a été notifié de votre ticket "${subject}".\nPosez votre question ici.`,
-                timestamp: new Date().toLocaleTimeString()
+            // Message système auto
+            newTicket.messages.push({
+                sender: 'Système',
+                role: 'bot',
+                text: `Ticket "${subject}" créé par ${currentUser.user}. Un membre du staff va répondre.`
             });
 
-            saveDB();
-            document.getElementById('ticketModal').style.display = 'none';
-            document.getElementById('ticket-subject').value = '';
-            
-            renderChannelList();
-            switchChannel(newTicket.id);
+            DB.tickets.push(newTicket);
+            save();
+            renderTickets();
+            openTicket(newTicket.id);
         }
 
-        /* --- MESSAGERIE --- */
-        function handleEnter(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        }
+        function renderTickets() {
+            const list = document.getElementById('ticket-list');
+            list.innerHTML = '';
 
-        function sendMessage() {
-            const input = document.getElementById('message-input');
-            const text = input.value.trim();
-            if (!text) return;
-
-            const msg = {
-                channelId: activeChannelId,
-                username: DB.currentUser.username,
-                color: DB.currentUser.color,
-                text: text,
-                timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-            };
-
-            DB.messages.push(msg);
-            saveDB();
-            
-            input.value = '';
-            renderMessages();
-        }
-
-        function renderMessages() {
-            const container = document.getElementById('messages-container');
-            const channelMsgs = DB.messages.filter(m => m.channelId == activeChannelId);
-            
-            container.innerHTML = '';
-            
-            if (channelMsgs.length === 0) {
-                container.innerHTML = `<div class="empty-state">
-                    <div style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">Bienvenue dans #${activeChannelId === 'general' ? 'général' : DB.tickets.find(t => t.id == activeChannelId)?.name}</div>
-                    <div>C'est le début de l'histoire de ce salon.</div>
-                </div>`;
+            // FILTRE : 
+            // - Membre : voit SES tickets
+            // - Support/Admin : voient TOUS les tickets
+            let myTickets = [];
+            if (currentUser.role === 'member') {
+                myTickets = DB.tickets.filter(t => t.creator === currentUser.user);
             } else {
-                channelMsgs.forEach(msg => {
-                    const div = document.createElement('div');
-                    div.className = 'message';
-                    div.innerHTML = `
-                        <div class="msg-avatar" style="background-color: ${msg.color}">${msg.username[0].toUpperCase()}</div>
-                        <div class="msg-content">
-                            <div class="msg-header">
-                                <span class="msg-username" style="color:${msg.username === 'System Bot' ? '#5865F2' : 'white'}">${msg.username} ${msg.username === 'System Bot' ? '<span style="background:#5865F2; color:white; font-size:10px; padding:2px 4px; border-radius:3px;">BOT</span>' : ''}</span>
-                                <span class="msg-timestamp">${msg.timestamp}</span>
-                            </div>
-                            <div class="msg-text">${msg.text}</div>
-                        </div>
-                    `;
-                    container.appendChild(div);
-                });
+                myTickets = DB.tickets; // Voir tout
             }
+
+            if(myTickets.length === 0) list.innerHTML = '<div style="padding:10px; color:#777;">Aucun ticket.</div>';
+
+            myTickets.forEach(t => {
+                const div = document.createElement('div');
+                div.className = `ticket-item ${currentTicketId === t.id ? 'active' : ''}`;
+                div.onclick = () => openTicket(t.id);
+                div.innerHTML = `
+                    <div><strong>${t.subject}</strong></div>
+                    <small>Par: ${t.creator}</small>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function openTicket(id) {
+            currentTicketId = id;
+            renderTickets(); // Pour mettre à jour la classe "active"
+            document.getElementById('input-area').style.display = 'flex';
             
-            // Scroll auto vers le bas
+            const ticket = DB.tickets.find(t => t.id === id);
+            document.getElementById('chat-title').innerText = ticket.subject;
+            document.getElementById('ticket-id-display').innerText = "ID: " + ticket.id;
+
+            renderMessages(ticket);
+        }
+
+        function renderMessages(ticket) {
+            const container = document.getElementById('messages');
+            container.innerHTML = '';
+
+            ticket.messages.forEach(msg => {
+                const div = document.createElement('div');
+                const isMe = msg.sender === currentUser.user;
+                div.className = `msg ${isMe ? 'self' : 'other'}`;
+                
+                // Couleur du nom selon le rôle (approximatif pour l'historique)
+                let roleColor = '#aaa'; 
+                if(msg.role === 'admin') roleColor = '#ed4245';
+                if(msg.role === 'support') roleColor = '#3ba55c';
+                
+                div.innerHTML = `
+                    <div class="msg-info" style="color:${roleColor}">${msg.sender}</div>
+                    ${msg.text}
+                `;
+                container.appendChild(div);
+            });
             container.scrollTop = container.scrollHeight;
         }
 
-        // Lancement initial
-        checkSession();
+        function sendMsg() {
+            const input = document.getElementById('msg-input');
+            const text = input.value.trim();
+            if (!text || !currentTicketId) return;
 
+            const ticket = DB.tickets.find(t => t.id === currentTicketId);
+            ticket.messages.push({
+                sender: currentUser.user,
+                role: currentUser.role,
+                text: text
+            });
+            
+            save();
+            input.value = '';
+            renderMessages(ticket);
+        }
     </script>
 </body>
 </html>

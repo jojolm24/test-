@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dev Center OS</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Dev Center OS - Windows 11</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
@@ -15,267 +14,289 @@
         }
 
         :root {
-            --bg-primary: #1a1a1a;
-            --bg-secondary: #2d2d2d;
+            --bg-primary: #202020;
+            --bg-secondary: #2b2b2b;
             --bg-tertiary: #383838;
-            --accent-blue: #0078d4;
-            --accent-blue-hover: #106ebe;
+            --accent: #0067c0;
+            --accent-hover: #005a9e;
             --text-primary: #ffffff;
             --text-secondary: #b3b3b3;
-            --border-color: #4a4a4a;
-            --taskbar-bg: rgba(30, 30, 30, 0.95);
-            --window-bg: rgba(32, 32, 32, 0.98);
+            --border: rgba(255,255,255,0.08);
+            --taskbar-bg: rgba(25, 25, 25, 0.7);
+            --window-bg: rgba(32, 32, 32, 0.95);
+            --glass: rgba(255, 255, 255, 0.05);
         }
 
         [data-theme="light"] {
             --bg-primary: #f3f3f3;
             --bg-secondary: #ffffff;
-            --bg-tertiary: #e5e5e5;
+            --bg-tertiary: #e8e8e8;
             --text-primary: #000000;
             --text-secondary: #5a5a5a;
-            --border-color: #d1d1d1;
-            --taskbar-bg: rgba(243, 243, 243, 0.95);
-            --window-bg: rgba(255, 255, 255, 0.98);
+            --border: rgba(0,0,0,0.08);
+            --taskbar-bg: rgba(243, 243, 243, 0.7);
+            --window-bg: rgba(255, 255, 255, 0.95);
+            --glass: rgba(0, 0, 0, 0.03);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #2a2a2a;
+            --accent: #4cc2ff;
+            --text-primary: #ffffff;
+            --text-secondary: #999999;
+            --border: rgba(255,255,255,0.1);
+            --taskbar-bg: rgba(10, 10, 10, 0.7);
+            --window-bg: rgba(26, 26, 26, 0.95);
+            --glass: rgba(255, 255, 255, 0.07);
         }
 
         body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             overflow: hidden;
             height: 100vh;
-            transition: background 0.3s ease;
         }
 
-        .desktop {
-            width: 100%;
-            height: calc(100vh - 48px);
-            position: relative;
-            background-size: cover;
-            background-position: center;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%230078d4;stop-opacity:1" /><stop offset="100%" style="stop-color:%2300bcf2;stop-opacity:1" /></linearGradient></defs><rect width="1920" height="1080" fill="url(%23bg)"/></svg>');
-        }
-
-        /* Lock Screen */
+        /* LOCK SCREEN */
         .lock-screen {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 10000;
-            animation: fadeIn 0.5s ease;
         }
 
-        .lock-screen.hidden {
-            display: none;
-        }
+        .lock-screen.hidden { display: none; }
 
         .lock-time {
-            font-size: 120px;
-            font-weight: 300;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+            font-size: 140px;
+            font-weight: 200;
+            letter-spacing: -3px;
+            text-shadow: 0 4px 30px rgba(0,0,0,0.3);
         }
 
         .lock-date {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 400;
-            margin-bottom: 60px;
+            margin-bottom: 100px;
             opacity: 0.9;
         }
 
         .lock-avatar {
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            margin-bottom: 20px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(30px);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 60px;
-            border: 4px solid rgba(255,255,255,0.3);
+            font-size: 70px;
+            border: 3px solid rgba(255,255,255,0.2);
+            margin-bottom: 25px;
         }
 
         .lock-username {
-            font-size: 24px;
-            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 500;
+            margin-bottom: 40px;
         }
 
         .connect-btn {
-            padding: 14px 50px;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 6px;
+            padding: 18px 70px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(30px);
+            border: 2px solid rgba(255,255,255,0.25);
+            border-radius: 10px;
             color: white;
-            font-size: 18px;
+            font-size: 19px;
             cursor: pointer;
-            transition: all 0.3s ease;
             font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .connect-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.05);
+            background: rgba(255,255,255,0.25);
+            transform: scale(1.03);
         }
 
-        /* Discord Auth Screen */
+        /* DISCORD AUTH */
         .discord-auth {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: linear-gradient(135deg, #5865F2 0%, #7289DA 100%);
             display: none;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 9999;
         }
 
-        .discord-auth.active {
-            display: flex;
-        }
+        .discord-auth.active { display: flex; }
 
         .discord-card {
             background: white;
-            padding: 50px;
-            border-radius: 12px;
+            padding: 70px;
+            border-radius: 20px;
             text-align: center;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
-            max-width: 400px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.35);
+            animation: slideIn 0.4s ease;
         }
 
-        .discord-logo {
-            font-size: 80px;
-            margin-bottom: 20px;
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .discord-card h2 {
-            color: #2c2f33;
-            margin-bottom: 10px;
-            font-size: 28px;
-        }
-
-        .discord-card p {
-            color: #72767d;
-            margin-bottom: 30px;
-            font-size: 16px;
-        }
+        .discord-logo { font-size: 100px; margin-bottom: 30px; }
+        .discord-card h2 { color: #2c2f33; font-size: 36px; margin-bottom: 15px; }
+        .discord-card p { color: #72767d; font-size: 17px; margin-bottom: 40px; }
 
         .discord-connect-btn {
-            padding: 16px 40px;
+            padding: 20px 60px;
             background: #5865F2;
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
             color: white;
-            font-size: 18px;
-            cursor: pointer;
+            font-size: 19px;
             font-weight: 600;
-            transition: background 0.3s ease;
+            cursor: pointer;
             width: 100%;
+            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.4);
+            transition: all 0.3s;
         }
 
         .discord-connect-btn:hover {
             background: #4752C4;
+            transform: translateY(-3px);
         }
 
-        /* Windows */
+        /* DESKTOP */
+        .desktop {
+            width: 100%;
+            height: calc(100vh - 50px);
+            background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%);
+            background-size: cover;
+            background-position: center;
+            padding: 25px;
+        }
+
+        .desktop-icons {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 110px);
+            grid-auto-rows: 110px;
+            gap: 20px;
+        }
+
+        .desktop-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            border-radius: 10px;
+            padding: 12px;
+            transition: all 0.2s;
+            background: transparent;
+        }
+
+        .desktop-icon:hover {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            transform: translateY(-3px);
+        }
+
+        .desktop-icon-image {
+            font-size: 56px;
+            filter: drop-shadow(0 3px 10px rgba(0,0,0,0.4));
+        }
+
+        .desktop-icon-label {
+            font-size: 13px;
+            color: white;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* WINDOWS */
         .window {
             position: absolute;
             background: var(--window-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-color);
+            backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid var(--border);
             border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
             display: none;
-            min-width: 400px;
-            min-height: 300px;
-            transition: transform 0.3s ease;
+            flex-direction: column;
+            min-width: 450px;
+            min-height: 350px;
         }
 
         .window.active {
             display: flex;
-            flex-direction: column;
-            animation: windowOpen 0.3s ease;
+            animation: windowOpen 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes windowOpen {
+            from { opacity: 0; transform: scale(0.92); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .window.maximized {
             top: 0 !important;
             left: 0 !important;
             width: 100% !important;
-            height: calc(100vh - 48px) !important;
+            height: calc(100vh - 50px) !important;
             border-radius: 0;
         }
 
-        @keyframes windowOpen {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         .window-titlebar {
-            background: var(--bg-secondary);
-            padding: 10px 15px;
+            background: var(--glass);
+            padding: 14px 18px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
             cursor: move;
             user-select: none;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(15px);
         }
 
         .window-title {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 14px;
             font-size: 14px;
             font-weight: 500;
         }
 
-        .window-icon {
-            font-size: 16px;
-        }
+        .window-icon { font-size: 20px; }
 
         .window-controls {
             display: flex;
-            gap: 8px;
+            gap: 14px;
         }
 
         .window-controls button {
-            width: 36px;
-            height: 28px;
+            width: 48px;
+            height: 34px;
             background: transparent;
             border: none;
             color: var(--text-primary);
-            font-size: 12px;
+            font-size: 18px;
             cursor: pointer;
-            border-radius: 4px;
-            transition: background 0.2s ease;
+            border-radius: 7px;
+            transition: all 0.2s;
         }
 
         .window-controls button:hover {
-            background: var(--bg-tertiary);
+            background: var(--glass);
         }
 
         .window-controls .close-btn:hover {
@@ -286,127 +307,138 @@
         .window-content {
             flex: 1;
             overflow-y: auto;
-            padding: 20px;
+            padding: 25px;
         }
 
-        /* Taskbar */
+        /* TASKBAR - WINDOWS 11 CENTERED */
         .taskbar {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 48px;
+            height: 50px;
             background: var(--taskbar-bg);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border-color);
+            backdrop-filter: blur(40px) saturate(180%);
+            border-top: 1px solid var(--border);
             display: flex;
             align-items: center;
-            padding: 0 10px;
+            justify-content: center;
             z-index: 9000;
         }
 
+        .taskbar-center {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--glass);
+            padding: 5px 10px;
+            border-radius: 10px;
+            backdrop-filter: blur(15px);
+        }
+
         .start-btn {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             background: transparent;
             border: none;
             color: var(--text-primary);
-            font-size: 20px;
+            font-size: 22px;
             cursor: pointer;
-            border-radius: 4px;
-            transition: background 0.2s ease;
+            border-radius: 8px;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .start-btn:hover {
-            background: var(--bg-tertiary);
+            background: var(--glass);
+            transform: scale(1.08);
         }
 
         .search-box {
-            margin-left: 10px;
-            padding: 8px 15px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
+            padding: 11px 18px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 9px;
             color: var(--text-primary);
             width: 300px;
             font-size: 14px;
+            margin-left: 10px;
         }
 
-        .search-box::placeholder {
-            color: var(--text-secondary);
+        .search-box:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--bg-secondary);
         }
+
+        .search-box::placeholder { color: var(--text-secondary); }
 
         .taskbar-apps {
             display: flex;
-            gap: 5px;
-            margin-left: 20px;
+            gap: 6px;
+            margin-left: 10px;
         }
 
         .taskbar-app {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             background: transparent;
             border: none;
             color: var(--text-primary);
-            font-size: 20px;
+            font-size: 22px;
             cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.2s ease;
+            border-radius: 8px;
+            transition: all 0.2s;
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .taskbar-app:hover {
-            background: var(--bg-tertiary);
+            background: var(--glass);
+            transform: scale(1.08);
         }
 
         .taskbar-app.running::after {
             content: '';
             position: absolute;
-            bottom: 2px;
-            width: 4px;
-            height: 4px;
-            background: var(--accent-blue);
+            bottom: 4px;
+            width: 5px;
+            height: 5px;
+            background: var(--accent);
             border-radius: 50%;
         }
 
         .system-tray {
-            margin-left: auto;
+            position: absolute;
+            right: 15px;
             display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 0 10px;
+            gap: 18px;
             font-size: 13px;
         }
 
         .tray-icon {
             cursor: pointer;
-            padding: 5px;
-            border-radius: 4px;
-            transition: background 0.2s ease;
+            padding: 9px;
+            border-radius: 7px;
+            transition: all 0.2s;
         }
 
-        .tray-icon:hover {
-            background: var(--bg-tertiary);
-        }
+        .tray-icon:hover { background: var(--glass); }
 
-        /* Start Menu */
+        /* START MENU - WINDOWS 11 CENTERED */
         .start-menu {
             position: fixed;
-            bottom: 60px;
-            left: 10px;
-            width: 600px;
-            height: 650px;
+            bottom: 65px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 650px;
+            height: 700px;
             background: var(--window-bg);
-            backdrop-filter: blur(40px);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.45);
             display: none;
             flex-direction: column;
             z-index: 9100;
@@ -414,177 +446,180 @@
 
         .start-menu.active {
             display: flex;
-            animation: slideUp 0.3s ease;
+            animation: startOpen 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes startOpen {
+            from { opacity: 0; transform: translateX(-50%) translateY(25px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
 
         .start-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border-color);
+            padding: 28px;
+            border-bottom: 1px solid var(--border);
         }
 
         .start-user {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 18px;
         }
 
         .start-avatar {
-            width: 50px;
-            height: 50px;
-            background: var(--accent-blue);
+            width: 55px;
+            height: 55px;
+            background: var(--accent);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 26px;
         }
 
         .start-apps {
-            padding: 20px;
+            padding: 28px;
             flex: 1;
             overflow-y: auto;
         }
 
         .apps-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 18px;
         }
 
         .app-tile {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 15px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             aspect-ratio: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 12px;
         }
 
         .app-tile:hover {
             background: var(--bg-tertiary);
-            transform: scale(1.05);
+            transform: scale(1.06);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
         }
 
-        .app-tile-icon {
-            font-size: 32px;
-        }
+        .app-tile-icon { font-size: 40px; }
+        .app-tile-name { font-size: 12px; font-weight: 500; }
 
-        .app-tile-name {
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        /* Applications Styles */
-        .avis-form {
-            max-width: 600px;
-        }
-
+        /* FORMS */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             font-weight: 500;
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 12px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
+            padding: 16px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 10px;
             color: var(--text-primary);
-            font-size: 14px;
+            font-size: 15px;
             font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--bg-secondary);
         }
 
         .form-group textarea {
-            min-height: 150px;
+            min-height: 180px;
             resize: vertical;
         }
 
         .submit-btn {
-            padding: 12px 30px;
-            background: var(--accent-blue);
+            padding: 16px 40px;
+            background: var(--accent);
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
             color: white;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s;
+            box-shadow: 0 6px 18px rgba(0, 103, 192, 0.35);
         }
 
         .submit-btn:hover {
-            background: var(--accent-blue-hover);
+            background: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 103, 192, 0.45);
         }
 
-        .modules-grid {
-            display: grid;
-            gap: 20px;
+        .success-message {
+            background: #10b981;
+            color: white;
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
         }
+
+        .success-message.show { display: block; }
+
+        /* MODULES */
+        .modules-grid { display: grid; gap: 24px; }
 
         .module-card {
-            background: var(--bg-secondary);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 25px;
-            transition: all 0.3s ease;
+            background: var(--glass);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 32px;
+            transition: all 0.3s;
         }
 
         .module-card:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0,120,212,0.2);
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 16px 40px rgba(0,120,212,0.3);
         }
 
         .module-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 22px;
         }
 
         .module-name {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
-            color: var(--accent-blue);
+            color: var(--accent);
         }
 
         .module-price {
-            font-size: 16px;
+            font-size: 17px;
             color: var(--text-secondary);
+            font-weight: 500;
         }
 
         .module-features {
             list-style: none;
-            padding: 0;
         }
 
         .module-features li {
-            padding: 8px 0;
-            padding-left: 25px;
+            padding: 12px 0 12px 32px;
             position: relative;
         }
 
@@ -592,146 +627,313 @@
             content: '✓';
             position: absolute;
             left: 0;
-            color: var(--accent-blue);
+            color: var(--accent);
             font-weight: bold;
+            font-size: 20px;
         }
 
+        /* PARTNER */
         .partner-section {
-            background: linear-gradient(135deg, var(--accent-blue) 0%, #00bcf2 100%);
-            padding: 30px;
-            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent) 0%, #00bcf2 100%);
+            padding: 36px;
+            border-radius: 14px;
             color: white;
-            margin-bottom: 25px;
         }
 
         .partner-header {
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
             border-bottom: 2px solid rgba(255,255,255,0.3);
         }
 
-        .partner-founder {
-            font-size: 14px;
-            opacity: 0.9;
-            margin-bottom: 5px;
-        }
-
         .partner-content {
-            line-height: 1.8;
-            font-size: 15px;
-            margin-bottom: 25px;
+            line-height: 1.9;
+            font-size: 16px;
+            margin-bottom: 32px;
         }
 
         .partner-buttons {
             display: flex;
-            gap: 15px;
+            gap: 18px;
         }
 
         .partner-btn {
             flex: 1;
-            padding: 12px 25px;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
+            padding: 16px 32px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(15px);
             border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 8px;
+            border-radius: 10px;
             color: white;
             text-decoration: none;
             text-align: center;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             display: block;
         }
 
         .partner-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-3px);
         }
 
+        /* SETTINGS */
         .settings-section {
-            margin-bottom: 30px;
+            margin-bottom: 36px;
         }
 
         .settings-section h3 {
-            margin-bottom: 15px;
-            font-size: 18px;
+            margin-bottom: 20px;
+            font-size: 19px;
+            font-weight: 600;
         }
 
         .theme-selector,
         .wallpaper-selector {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 18px;
         }
 
-        .theme-option,
-        .wallpaper-option {
-            padding: 15px;
-            background: var(--bg-secondary);
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
+        .theme-option {
+            padding: 18px;
+            background: var(--glass);
+            border: 2px solid var(--border);
+            border-radius: 12px;
             cursor: pointer;
             text-align: center;
-            transition: all 0.3s ease;
+            font-weight: 500;
+            transition: all 0.3s;
         }
 
-        .theme-option:hover,
-        .wallpaper-option:hover {
-            border-color: var(--accent-blue);
+        .theme-option:hover {
+            border-color: var(--accent);
             transform: scale(1.05);
         }
 
-        .theme-option.active,
-        .wallpaper-option.active {
-            border-color: var(--accent-blue);
-            background: var(--accent-blue);
+        .theme-option.active {
+            border-color: var(--accent);
+            background: var(--accent);
             color: white;
+            box-shadow: 0 6px 18px rgba(0, 103, 192, 0.35);
         }
 
         .wallpaper-option {
-            height: 80px;
+            height: 100px;
             background-size: cover;
             background-position: center;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
             display: flex;
             align-items: flex-end;
-            padding: 8px;
-            font-size: 12px;
+            padding: 12px;
+            font-size: 13px;
             font-weight: 600;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+            text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+            transition: all 0.3s;
         }
 
+        .wallpaper-option:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .wallpaper-option.active {
+            border-color: var(--accent);
+            box-shadow: 0 6px 18px rgba(0, 103, 192, 0.35);
+        }
+
+        .file-upload-btn {
+            padding: 16px 32px;
+            background: var(--accent);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .file-input { display: none; }
+
+        /* GOOGLE */
         .google-frame {
             width: 100%;
             height: 100%;
             border: none;
+            background: white;
         }
 
-        .success-message {
-            background: #10b981;
+        /* DISCORD APP */
+        .discord-app {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .discord-topbar {
+            background: #2f3136;
+            padding: 14px 18px;
+            border-bottom: 1px solid #202225;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .discord-channel-name {
+            font-weight: 600;
+            color: #dcddde;
+            font-size: 16px;
+        }
+
+        .discord-main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .discord-sidebar {
+            width: 260px;
+            background: #2f3136;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #202225;
+        }
+
+        .discord-server-header {
+            padding: 18px;
+            border-bottom: 1px solid #202225;
+            font-weight: 700;
             color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            display: none;
-            animation: fadeIn 0.3s ease;
+            background: #36393f;
+            font-size: 16px;
         }
 
-        .success-message.show {
-            display: block;
+        .discord-channels {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
         }
 
-        /* Search Results */
+        .discord-channel {
+            padding: 10px 14px;
+            margin: 3px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #96989d;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+        }
+
+        .discord-channel:hover {
+            background: #36393f;
+            color: #dcddde;
+        }
+
+        .discord-channel.active {
+            background: #404249;
+            color: white;
+        }
+
+        .discord-chat {
+            flex: 1;
+            background: #36393f;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .discord-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .discord-message {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 14px;
+        }
+
+        .discord-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .discord-message-content { flex: 1; }
+
+        .discord-message-header {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        .discord-username {
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .discord-timestamp {
+            color: #72767d;
+            font-size: 12px;
+        }
+
+        .discord-message-text {
+            color: #dcddde;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+
+        .discord-input-container {
+            padding: 18px;
+            background: #36393f;
+        }
+
+        .discord-input {
+            width: 100%;
+            padding: 14px 18px;
+            background: #40444b;
+            border: none;
+            border-radius: 10px;
+            color: #dcddde;
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        .discord-input:focus { outline: none; }
+        .discord-input::placeholder { color: #72767d; }
+
+        /* SEARCH */
         .search-results {
             position: fixed;
-            top: 60px;
+            top: 80px;
             left: 50%;
             transform: translateX(-50%);
-            width: 500px;
-            max-height: 400px;
+            width: 550px;
+            max-height: 450px;
             background: var(--window-bg);
-            backdrop-filter: blur(40px);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.45);
             display: none;
             overflow-y: auto;
             z-index: 9200;
@@ -739,78 +941,189 @@
 
         .search-results.active {
             display: block;
-            animation: slideDown 0.3s ease;
+            animation: searchOpen 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
+        @keyframes searchOpen {
+            from { opacity: 0; transform: translateX(-50%) translateY(-15px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
 
         .search-result-item {
-            padding: 15px 20px;
+            padding: 18px 24px;
             cursor: pointer;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
-            gap: 15px;
-            transition: background 0.2s ease;
+            gap: 18px;
+            transition: background 0.2s;
         }
 
-        .search-result-item:hover {
-            background: var(--bg-secondary);
-        }
+        .search-result-item:hover { background: var(--glass); }
+        .search-result-item:last-child { border-bottom: none; }
+        .search-result-icon { font-size: 32px; }
 
-        .search-result-item:last-child {
-            border-bottom: none;
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 5px;
         }
-
-        .search-result-icon {
-            font-size: 24px;
-        }
-
-        .battery-indicator {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .battery-level {
-            font-size: 11px;
-        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
     </style>
 </head>
 <body>
-    <!-- Lock Screen -->
+    <!-- LOCK SCREEN -->
     <div class="lock-screen" id="lockScreen">
         <div class="lock-time" id="lockTime">12:00</div>
-        <div class="lock-date" id="lockDate">lundi 11 février</div>
+        <div class="lock-date" id="lockDate">lundi 12 février</div>
         <div class="lock-avatar">👤</div>
         <div class="lock-username">Utilisateur</div>
         <button class="connect-btn" onclick="showDiscordAuth()">Se connecter</button>
     </div>
 
-    <!-- Discord Auth Screen -->
+    <!-- DISCORD AUTH -->
     <div class="discord-auth" id="discordAuth">
         <div class="discord-card">
             <div class="discord-logo">💬</div>
             <h2>Dev Center</h2>
-            <p>Connectez-vous avec Discord pour continuer</p>
+            <p>Connectez-vous avec Discord pour accéder au système</p>
             <button class="discord-connect-btn" onclick="connectDiscord()">Se connecter à Discord</button>
         </div>
     </div>
 
-    <!-- Desktop -->
-    <div class="desktop" id="desktop"></div>
+    <!-- DESKTOP -->
+    <div class="desktop" id="desktop">
+        <div class="desktop-icons">
+            <div class="desktop-icon" ondblclick="openWindow('discordWindow')">
+                <div class="desktop-icon-image">💬</div>
+                <div class="desktop-icon-label">Discord</div>
+            </div>
+            <div class="desktop-icon" ondblclick="openWindow('avisWindow')">
+                <div class="desktop-icon-image">📝</div>
+                <div class="desktop-icon-label">Avis</div>
+            </div>
+            <div class="desktop-icon" ondblclick="openWindow('modulesWindow')">
+                <div class="desktop-icon-image">📦</div>
+                <div class="desktop-icon-label">Modules</div>
+            </div>
+            <div class="desktop-icon" ondblclick="openWindow('partnerWindow')">
+                <div class="desktop-icon-image">🤝</div>
+                <div class="desktop-icon-label">World of Tools</div>
+            </div>
+            <div class="desktop-icon" ondblclick="openWindow('settingsWindow')">
+                <div class="desktop-icon-image">⚙️</div>
+                <div class="desktop-icon-label">Paramètres</div>
+            </div>
+            <div class="desktop-icon" ondblclick="openWindow('googleWindow')">
+                <div class="desktop-icon-image">🔍</div>
+                <div class="desktop-icon-label">Google</div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Windows -->
-    <div class="window" id="avisWindow" style="width: 700px; height: 550px; top: 100px; left: 100px;">
+    <!-- DISCORD WINDOW -->
+    <div class="window" id="discordWindow" style="width: 1150px; height: 750px; top: 50px; left: 120px;">
+        <div class="window-titlebar">
+            <div class="window-title">
+                <span class="window-icon">💬</span>
+                <span>Discord - Dev Center</span>
+            </div>
+            <div class="window-controls">
+                <button onclick="minimizeWindow('discordWindow')">−</button>
+                <button onclick="maximizeWindow('discordWindow')">□</button>
+                <button class="close-btn" onclick="closeWindow('discordWindow')">×</button>
+            </div>
+        </div>
+        <div class="window-content" style="padding: 0;">
+            <div class="discord-app">
+                <div class="discord-topbar">
+                    <span style="font-size: 24px; color: #72767d;">#</span>
+                    <span class="discord-channel-name">général</span>
+                </div>
+                <div class="discord-main">
+                    <div class="discord-sidebar">
+                        <div class="discord-server-header">🎮 Dev Center</div>
+                        <div class="discord-channels">
+                            <div class="discord-channel active">
+                                <span style="font-size: 18px;">#</span>
+                                <span>général</span>
+                            </div>
+                            <div class="discord-channel">
+                                <span style="font-size: 18px;">#</span>
+                                <span>annonces</span>
+                            </div>
+                            <div class="discord-channel">
+                                <span style="font-size: 18px;">#</span>
+                                <span>support</span>
+                            </div>
+                            <div class="discord-channel">
+                                <span style="font-size: 18px;">#</span>
+                                <span>modules</span>
+                            </div>
+                            <div class="discord-channel">
+                                <span style="font-size: 18px;">#</span>
+                                <span>développement</span>
+                            </div>
+                            <div class="discord-channel" style="margin-top: 15px;">
+                                <span style="font-size: 18px;">🔊</span>
+                                <span>Vocal Général</span>
+                            </div>
+                            <div class="discord-channel">
+                                <span style="font-size: 18px;">🔊</span>
+                                <span>Salon VIP</span>
+                            </div>
+                            <div class="discord-channel">
+                                <span style="font-size: 18px;">🔊</span>
+                                <span>Gaming</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="discord-chat">
+                        <div class="discord-messages" id="discordMessages">
+                            <div class="discord-message">
+                                <div class="discord-avatar">👨‍💼</div>
+                                <div class="discord-message-content">
+                                    <div class="discord-message-header">
+                                        <span class="discord-username">Admin</span>
+                                        <span class="discord-timestamp">Aujourd'hui à 10:30</span>
+                                    </div>
+                                    <div class="discord-message-text">Bienvenue sur le serveur Dev Center ! 🎉 N'hésitez pas à consulter les différents modules disponibles.</div>
+                                </div>
+                            </div>
+                            <div class="discord-message">
+                                <div class="discord-avatar">🤖</div>
+                                <div class="discord-message-content">
+                                    <div class="discord-message-header">
+                                        <span class="discord-username">Dev Bot</span>
+                                        <span class="discord-timestamp">Aujourd'hui à 10:35</span>
+                                    </div>
+                                    <div class="discord-message-text">Pour voir la liste des commandes disponibles, tapez /help. Les modules Boss et Master offrent des avantages exclusifs !</div>
+                                </div>
+                            </div>
+                            <div class="discord-message">
+                                <div class="discord-avatar">👤</div>
+                                <div class="discord-message-content">
+                                    <div class="discord-message-header">
+                                        <span class="discord-username" id="discordChatUsername">Utilisateur</span>
+                                        <span class="discord-timestamp">Aujourd'hui à 10:42</span>
+                                    </div>
+                                    <div class="discord-message-text">Merci pour l'accueil ! J'ai hâte de découvrir toutes les fonctionnalités 😊</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="discord-input-container">
+                            <input type="text" class="discord-input" placeholder="Envoyer un message dans #général" onkeypress="sendDiscordMessage(event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AVIS WINDOW -->
+    <div class="window" id="avisWindow" style="width: 750px; height: 600px; top: 120px; left: 150px;">
         <div class="window-titlebar">
             <div class="window-title">
                 <span class="window-icon">📝</span>
@@ -823,30 +1136,31 @@
             </div>
         </div>
         <div class="window-content">
-            <form class="avis-form" onsubmit="submitAvis(event)">
+            <form onsubmit="submitAvis(event)">
                 <div class="form-group">
-                    <label for="avisName">Votre nom</label>
+                    <label>Votre nom</label>
                     <input type="text" id="avisName" required placeholder="Entrez votre nom">
                 </div>
                 <div class="form-group">
-                    <label for="avisRating">Note (1-5 étoiles)</label>
+                    <label>Note (1-5 étoiles)</label>
                     <input type="number" id="avisRating" min="1" max="5" required placeholder="5">
                 </div>
                 <div class="form-group">
-                    <label for="avisMessage">Votre avis</label>
-                    <textarea id="avisMessage" required placeholder="Partagez votre expérience..."></textarea>
+                    <label>Votre avis</label>
+                    <textarea id="avisMessage" required placeholder="Partagez votre expérience avec Dev Center..."></textarea>
                 </div>
-                <button type="submit" class="submit-btn">Envoyer l'avis</button>
+                <button type="submit" class="submit-btn">Envoyer mon avis</button>
                 <div class="success-message" id="avisSuccess">✓ Votre avis a été envoyé avec succès !</div>
             </form>
         </div>
     </div>
 
-    <div class="window" id="modulesWindow" style="width: 800px; height: 600px; top: 80px; left: 200px;">
+    <!-- MODULES WINDOW -->
+    <div class="window" id="modulesWindow" style="width: 850px; height: 650px; top: 90px; left: 220px;">
         <div class="window-titlebar">
             <div class="window-title">
                 <span class="window-icon">📦</span>
-                <span>Modules</span>
+                <span>Modules disponibles</span>
             </div>
             <div class="window-controls">
                 <button onclick="minimizeWindow('modulesWindow')">−</button>
@@ -862,7 +1176,7 @@
                         <div class="module-price">Gratuit</div>
                     </div>
                     <ul class="module-features">
-                        <li>Salon</li>
+                        <li>Salon personnalisé</li>
                         <li>Rôle personnalisé</li>
                         <li>Pas de permissions effectuées</li>
                     </ul>
@@ -874,9 +1188,9 @@
                         <div class="module-price">1 Boost requis</div>
                     </div>
                     <ul class="module-features">
-                        <li>Salon</li>
+                        <li>Salon personnalisé</li>
                         <li>Rôle personnalisé</li>
-                        <li>Permissions</li>
+                        <li>Permissions avancées</li>
                         <li>Système de suggestions</li>
                         <li>Support prioritaire</li>
                     </ul>
@@ -888,11 +1202,11 @@
                         <div class="module-price">2 Boosts requis</div>
                     </div>
                     <ul class="module-features">
-                        <li>Salon</li>
+                        <li>Salon personnalisé</li>
                         <li>Rôle personnalisé</li>
-                        <li>Permissions</li>
+                        <li>Permissions complètes</li>
                         <li>Commandes bot personnalisées</li>
-                        <li>Support prioritaire</li>
+                        <li>Support prioritaire VIP</li>
                         <li>Accès mp all</li>
                     </ul>
                 </div>
@@ -900,11 +1214,12 @@
         </div>
     </div>
 
-    <div class="window" id="partnerWindow" style="width: 750px; height: 580px; top: 120px; left: 250px;">
+    <!-- PARTNER WINDOW -->
+    <div class="window" id="partnerWindow" style="width: 800px; height: 620px; top: 140px; left: 280px;">
         <div class="window-titlebar">
             <div class="window-title">
                 <span class="window-icon">🤝</span>
-                <span>World of Tools</span>
+                <span>World of Tools - Partenaire Officiel</span>
             </div>
             <div class="window-controls">
                 <button onclick="minimizeWindow('partnerWindow')">−</button>
@@ -915,9 +1230,9 @@
         <div class="window-content">
             <div class="partner-section">
                 <div class="partner-header">
-                    <h2 style="margin-bottom: 10px; font-size: 28px;">⚡ World of Tools</h2>
-                    <div class="partner-founder">👤 Fondateur — Vipere (@non_dox)</div>
-                    <div class="partner-founder">ID: 1414040444878196857</div>
+                    <h2 style="font-size: 32px; margin-bottom: 12px;">⚡ World of Tools</h2>
+                    <div style="opacity: 0.95; margin-bottom: 8px;">👤 Fondateur — Vipere (@non_dox)</div>
+                    <div style="opacity: 0.95;">ID: 1414040444878196857</div>
                 </div>
                 <div class="partner-content">
                     World of Tools est partenaire officiel de Dev Center. Ce partenariat repose sur une vision commune : proposer des solutions innovantes, fiables et adaptées aux exigences des communautés Discord modernes.
@@ -927,18 +1242,19 @@
                     Au-delà d'un simple accord, il s'agit d'une alliance stratégique fondée sur le professionnalisme, l'amélioration continue et la volonté commune d'apporter une réelle valeur ajoutée aux utilisateurs.
                 </div>
                 <div class="partner-buttons">
-                    <a href="https://worls-tl.com/" target="_blank" class="partner-btn">🌐 Site Web</a>
-                    <a href="https://discord.com/invite/p5rqbbjmHU" target="_blank" class="partner-btn">💬 Discord</a>
+                    <a href="https://worls-tl.com/" target="_blank" class="partner-btn">🌐 Visiter le site</a>
+                    <a href="https://discord.com/invite/p5rqbbjmHU" target="_blank" class="partner-btn">💬 Rejoindre Discord</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="window" id="settingsWindow" style="width: 700px; height: 550px; top: 100px; left: 300px;">
+    <!-- SETTINGS WINDOW -->
+    <div class="window" id="settingsWindow" style="width: 750px; height: 650px; top: 110px; left: 320px;">
         <div class="window-titlebar">
             <div class="window-title">
                 <span class="window-icon">⚙️</span>
-                <span>Paramètres</span>
+                <span>Paramètres système</span>
             </div>
             <div class="window-controls">
                 <button onclick="minimizeWindow('settingsWindow')">−</button>
@@ -948,18 +1264,21 @@
         </div>
         <div class="window-content">
             <div class="settings-section">
-                <h3>Thème</h3>
+                <h3>🎨 Thème d'apparence</h3>
                 <div class="theme-selector">
-                    <div class="theme-option active" onclick="setTheme('dark')">
-                        🌙 Sombre
+                    <div class="theme-option active" onclick="setTheme('default')">
+                        🌓 Par défaut
                     </div>
                     <div class="theme-option" onclick="setTheme('light')">
                         ☀️ Clair
                     </div>
+                    <div class="theme-option" onclick="setTheme('dark')">
+                        🌙 Sombre
+                    </div>
                 </div>
             </div>
             <div class="settings-section">
-                <h3>Fond d'écran</h3>
+                <h3>🖼️ Fond d'écran</h3>
                 <div class="wallpaper-selector">
                     <div class="wallpaper-option active" onclick="setWallpaper('default')" style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%);">
                         Défaut
@@ -981,10 +1300,16 @@
                     </div>
                 </div>
             </div>
+            <div class="settings-section">
+                <h3>📁 Image personnalisée</h3>
+                <input type="file" id="customWallpaper" class="file-input" accept="image/*" onchange="setCustomWallpaper(event)">
+                <label for="customWallpaper" class="file-upload-btn">Choisir une image depuis mes fichiers</label>
+            </div>
         </div>
     </div>
 
-    <div class="window" id="googleWindow" style="width: 900px; height: 650px; top: 80px; left: 200px;">
+    <!-- GOOGLE WINDOW -->
+    <div class="window" id="googleWindow" style="width: 1100px; height: 750px; top: 70px; left: 180px;">
         <div class="window-titlebar">
             <div class="window-title">
                 <span class="window-icon">🔍</span>
@@ -997,44 +1322,49 @@
             </div>
         </div>
         <div class="window-content" style="padding: 0;">
-            <iframe src="https://www.google.com/webhp?igu=1" class="google-frame"></iframe>
+            <iframe src="https://www.google.com/webhp?igu=1" class="google-frame" allow="fullscreen"></iframe>
         </div>
     </div>
 
-    <!-- Taskbar -->
+    <!-- TASKBAR -->
     <div class="taskbar">
-        <button class="start-btn" onclick="toggleStartMenu()">🪟</button>
-        <input type="text" class="search-box" placeholder="Rechercher des applications..." id="searchBox" oninput="searchApps(this.value)">
-        <div class="taskbar-apps">
-            <button class="taskbar-app" onclick="openWindow('avisWindow')" title="Avis">📝</button>
-            <button class="taskbar-app" onclick="openWindow('modulesWindow')" title="Modules">📦</button>
-            <button class="taskbar-app" onclick="openWindow('partnerWindow')" title="World of Tools">🤝</button>
-            <button class="taskbar-app" onclick="openWindow('settingsWindow')" title="Paramètres">⚙️</button>
-            <button class="taskbar-app" onclick="openWindow('googleWindow')" title="Google">🔍</button>
+        <div class="taskbar-center">
+            <button class="start-btn" onclick="toggleStartMenu()">🪟</button>
+            <input type="text" class="search-box" placeholder="Rechercher" id="searchBox" oninput="searchApps(this.value)">
+            <div class="taskbar-apps">
+                <button class="taskbar-app" onclick="openWindow('discordWindow')" title="Discord">💬</button>
+                <button class="taskbar-app" onclick="openWindow('avisWindow')" title="Avis">📝</button>
+                <button class="taskbar-app" onclick="openWindow('modulesWindow')" title="Modules">📦</button>
+                <button class="taskbar-app" onclick="openWindow('partnerWindow')" title="World of Tools">🤝</button>
+                <button class="taskbar-app" onclick="openWindow('googleWindow')" title="Google">🔍</button>
+            </div>
         </div>
         <div class="system-tray">
             <span class="tray-icon">📶 Dev Center WiFi</span>
-            <span class="battery-indicator tray-icon">
-                <span>🔋</span>
-                <span class="battery-level" id="batteryLevel">100%</span>
+            <span class="tray-icon">
+                🔋 <span id="batteryLevel">100%</span>
             </span>
             <span class="tray-icon" id="taskbarTime">12:00</span>
         </div>
     </div>
 
-    <!-- Start Menu -->
+    <!-- START MENU -->
     <div class="start-menu" id="startMenu">
         <div class="start-header">
             <div class="start-user">
                 <div class="start-avatar">👤</div>
                 <div>
-                    <div style="font-weight: 600;">Utilisateur</div>
-                    <div style="font-size: 12px; color: var(--text-secondary);" id="discordUsername">Non connecté</div>
+                    <div style="font-weight: 600; font-size: 15px;">Utilisateur</div>
+                    <div style="font-size: 13px; color: var(--text-secondary);" id="discordUsername">Non connecté</div>
                 </div>
             </div>
         </div>
         <div class="start-apps">
             <div class="apps-grid">
+                <div class="app-tile" onclick="openWindow('discordWindow'); closeStartMenu()">
+                    <div class="app-tile-icon">💬</div>
+                    <div class="app-tile-name">Discord</div>
+                </div>
                 <div class="app-tile" onclick="openWindow('avisWindow'); closeStartMenu()">
                     <div class="app-tile-icon">📝</div>
                     <div class="app-tile-name">Avis</div>
@@ -1059,44 +1389,39 @@
         </div>
     </div>
 
-    <!-- Search Results -->
+    <!-- SEARCH RESULTS -->
     <div class="search-results" id="searchResults"></div>
 
     <script>
-        // Discord OAuth Configuration
         const DISCORD_CLIENT_ID = '1432479555079372920';
         const DISCORD_REDIRECT_URI = 'https://jojolm24.github.io/test-/';
         const DISCORD_CLIENT_SECRET = 'crszgWurxUwk8pizvUcQXNTCWruF8cry';
         const WEBHOOK_URL = 'https://discord.com/api/webhooks/1470398339437690883/BO4-s1zgnlGdszcdhp_GHGlGB7-oeWElx1OluZyA6SepV_Dl-ftXiljqXWKAboC35hTY';
 
-        // Initialize
         let draggedWindow = null;
         let dragOffsetX = 0;
         let dragOffsetY = 0;
-        let userData = null;
 
-        // Update time
+        // TIME UPDATE
         function updateTime() {
             const now = new Date();
-            const timeString = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-            const dateString = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
-            
-            document.getElementById('lockTime').textContent = timeString;
-            document.getElementById('lockDate').textContent = dateString;
-            document.getElementById('taskbarTime').textContent = timeString;
+            const time = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+            const date = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+            document.getElementById('lockTime').textContent = time;
+            document.getElementById('lockDate').textContent = date;
+            document.getElementById('taskbarTime').textContent = time;
         }
-
         setInterval(updateTime, 1000);
         updateTime();
 
-        // Battery simulation
-        let batteryLevel = 100;
+        // BATTERY
+        let battery = 100;
         setInterval(() => {
-            batteryLevel = Math.max(20, batteryLevel - Math.random() * 0.1);
-            document.getElementById('batteryLevel').textContent = Math.floor(batteryLevel) + '%';
+            battery = Math.max(20, battery - Math.random() * 0.1);
+            document.getElementById('batteryLevel').textContent = Math.floor(battery) + '%';
         }, 30000);
 
-        // Discord Auth
+        // DISCORD AUTH
         function showDiscordAuth() {
             document.getElementById('lockScreen').classList.add('hidden');
             document.getElementById('discordAuth').classList.add('active');
@@ -1104,22 +1429,18 @@
 
         function connectDiscord() {
             const scope = 'identify email';
-            const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(DISCORD_REDIRECT_URI)}&response_type=code&scope=${encodeURIComponent(scope)}`;
-            window.location.href = authUrl;
+            window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(DISCORD_REDIRECT_URI)}&response_type=code&scope=${encodeURIComponent(scope)}`;
         }
 
-        // Check for OAuth callback
         window.addEventListener('load', async () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const code = urlParams.get('code');
+            const params = new URLSearchParams(window.location.search);
+            const code = params.get('code');
 
             if (code) {
                 try {
-                    const tokenResponse = await fetch('https://discord.com/api/oauth2/token', {
+                    const tokenRes = await fetch('https://discord.com/api/oauth2/token', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                         body: new URLSearchParams({
                             client_id: DISCORD_CLIENT_ID,
                             client_secret: DISCORD_CLIENT_SECRET,
@@ -1129,65 +1450,61 @@
                         }),
                     });
 
-                    const tokenData = await tokenResponse.json();
+                    const tokenData = await tokenRes.json();
                     
                     if (tokenData.access_token) {
-                        const userResponse = await fetch('https://discord.com/api/users/@me', {
-                            headers: {
-                                Authorization: `Bearer ${tokenData.access_token}`,
-                            },
+                        const userRes = await fetch('https://discord.com/api/users/@me', {
+                            headers: { Authorization: `Bearer ${tokenData.access_token}` },
                         });
 
-                        userData = await userResponse.json();
+                        const user = await userRes.json();
                         
-                        document.getElementById('discordUsername').textContent = userData.username;
-                        document.querySelector('.lock-username').textContent = userData.username;
+                        document.getElementById('discordUsername').textContent = user.username;
+                        document.getElementById('discordChatUsername').textContent = user.username;
+                        document.querySelector('.lock-username').textContent = user.username;
                         
                         document.getElementById('lockScreen').classList.add('hidden');
                         document.getElementById('discordAuth').classList.remove('active');
                         
-                        // Clean URL
                         window.history.replaceState({}, document.title, DISCORD_REDIRECT_URI);
                     }
                 } catch (error) {
                     console.error('Erreur OAuth:', error);
-                    alert('Erreur de connexion. Veuillez réessayer.');
+                    alert('Erreur de connexion');
                 }
             }
         });
 
-        // Window Management
-        function openWindow(windowId) {
-            const win = document.getElementById(windowId);
+        // WINDOW MANAGEMENT
+        function openWindow(id) {
+            const win = document.getElementById(id);
             win.classList.add('active');
             bringToFront(win);
         }
 
-        function closeWindow(windowId) {
-            document.getElementById(windowId).classList.remove('active');
+        function closeWindow(id) {
+            document.getElementById(id).classList.remove('active');
         }
 
-        function minimizeWindow(windowId) {
-            document.getElementById(windowId).classList.remove('active');
+        function minimizeWindow(id) {
+            document.getElementById(id).classList.remove('active');
         }
 
-        function maximizeWindow(windowId) {
-            const win = document.getElementById(windowId);
-            win.classList.toggle('maximized');
+        function maximizeWindow(id) {
+            document.getElementById(id).classList.toggle('maximized');
         }
 
         function bringToFront(win) {
-            const windows = document.querySelectorAll('.window');
-            windows.forEach(w => w.style.zIndex = 100);
+            document.querySelectorAll('.window').forEach(w => w.style.zIndex = 100);
             win.style.zIndex = 101;
         }
 
-        // Window Dragging
-        document.querySelectorAll('.window-titlebar').forEach(titlebar => {
-            titlebar.addEventListener('mousedown', (e) => {
+        // DRAGGING
+        document.querySelectorAll('.window-titlebar').forEach(bar => {
+            bar.addEventListener('mousedown', (e) => {
                 if (e.target.closest('.window-controls')) return;
                 
-                draggedWindow = titlebar.closest('.window');
+                draggedWindow = bar.closest('.window');
                 const rect = draggedWindow.getBoundingClientRect();
                 dragOffsetX = e.clientX - rect.left;
                 dragOffsetY = e.clientY - rect.top;
@@ -1195,52 +1512,48 @@
                 bringToFront(draggedWindow);
                 
                 document.addEventListener('mousemove', dragWindow);
-                document.addEventListener('mouseup', stopDragging);
+                document.addEventListener('mouseup', stopDrag);
             });
         });
 
         function dragWindow(e) {
             if (!draggedWindow || draggedWindow.classList.contains('maximized')) return;
-            
             draggedWindow.style.left = (e.clientX - dragOffsetX) + 'px';
             draggedWindow.style.top = (e.clientY - dragOffsetY) + 'px';
         }
 
-        function stopDragging() {
+        function stopDrag() {
             draggedWindow = null;
             document.removeEventListener('mousemove', dragWindow);
-            document.removeEventListener('mouseup', stopDragging);
+            document.removeEventListener('mouseup', stopDrag);
         }
 
-        // Start Menu
+        // START MENU
         function toggleStartMenu() {
-            const menu = document.getElementById('startMenu');
-            menu.classList.toggle('active');
+            document.getElementById('startMenu').classList.toggle('active');
         }
 
         function closeStartMenu() {
             document.getElementById('startMenu').classList.remove('active');
         }
 
-        // Close menus when clicking outside
         document.addEventListener('click', (e) => {
-            const startMenu = document.getElementById('startMenu');
-            const startBtn = document.querySelector('.start-btn');
-            
-            if (!startMenu.contains(e.target) && !startBtn.contains(e.target)) {
+            const menu = document.getElementById('startMenu');
+            const btn = document.querySelector('.start-btn');
+            if (!menu.contains(e.target) && !btn.contains(e.target)) {
                 closeStartMenu();
             }
 
-            const searchResults = document.getElementById('searchResults');
-            const searchBox = document.getElementById('searchBox');
-            
-            if (!searchResults.contains(e.target) && !searchBox.contains(e.target)) {
-                searchResults.classList.remove('active');
+            const results = document.getElementById('searchResults');
+            const box = document.getElementById('searchBox');
+            if (!results.contains(e.target) && !box.contains(e.target)) {
+                results.classList.remove('active');
             }
         });
 
-        // Search Apps
+        // SEARCH
         const apps = [
+            { name: 'Discord', icon: '💬', window: 'discordWindow' },
             { name: 'Avis', icon: '📝', window: 'avisWindow' },
             { name: 'Modules', icon: '📦', window: 'modulesWindow' },
             { name: 'World of Tools', icon: '🤝', window: 'partnerWindow' },
@@ -1249,10 +1562,10 @@
         ];
 
         function searchApps(query) {
-            const searchResults = document.getElementById('searchResults');
+            const results = document.getElementById('searchResults');
             
             if (!query.trim()) {
-                searchResults.classList.remove('active');
+                results.classList.remove('active');
                 return;
             }
 
@@ -1261,9 +1574,9 @@
             );
 
             if (filtered.length === 0) {
-                searchResults.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary);">Aucun résultat</div>';
+                results.innerHTML = '<div style="padding: 25px; text-align: center; color: var(--text-secondary);">Aucun résultat</div>';
             } else {
-                searchResults.innerHTML = filtered.map(app => `
+                results.innerHTML = filtered.map(app => `
                     <div class="search-result-item" onclick="openWindow('${app.window}'); document.getElementById('searchResults').classList.remove('active'); document.getElementById('searchBox').value = '';">
                         <span class="search-result-icon">${app.icon}</span>
                         <span>${app.name}</span>
@@ -1271,10 +1584,10 @@
                 `).join('');
             }
 
-            searchResults.classList.add('active');
+            results.classList.add('active');
         }
 
-        // Submit Avis
+        // AVIS
         async function submitAvis(e) {
             e.preventDefault();
             
@@ -1282,38 +1595,21 @@
             const rating = document.getElementById('avisRating').value;
             const message = document.getElementById('avisMessage').value;
 
-            const stars = '⭐'.repeat(parseInt(rating));
-
             try {
                 await fetch(WEBHOOK_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         embeds: [{
                             title: '📝 Nouvel Avis',
                             color: 0x0078d4,
                             fields: [
-                                {
-                                    name: '👤 Utilisateur',
-                                    value: name,
-                                    inline: true
-                                },
-                                {
-                                    name: '⭐ Note',
-                                    value: stars,
-                                    inline: true
-                                },
-                                {
-                                    name: '💬 Message',
-                                    value: message
-                                }
+                                { name: '👤 Utilisateur', value: name, inline: true },
+                                { name: '⭐ Note', value: '⭐'.repeat(parseInt(rating)), inline: true },
+                                { name: '💬 Message', value: message }
                             ],
                             timestamp: new Date().toISOString(),
-                            footer: {
-                                text: 'Dev Center OS'
-                            }
+                            footer: { text: 'Dev Center OS' }
                         }]
                     })
                 });
@@ -1325,24 +1621,26 @@
                     document.getElementById('avisSuccess').classList.remove('show');
                 }, 3000);
             } catch (error) {
-                alert('Erreur lors de l\'envoi. Veuillez réessayer.');
+                alert('Erreur lors de l\'envoi');
             }
         }
 
-        // Settings
+        // SETTINGS
         function setTheme(theme) {
             document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
             event.target.classList.add('active');
             
             if (theme === 'light') {
                 document.body.setAttribute('data-theme', 'light');
+            } else if (theme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
             } else {
                 document.body.removeAttribute('data-theme');
             }
         }
 
         const wallpapers = {
-            default: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'><defs><linearGradient id='bg' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%230078d4;stop-opacity:1' /><stop offset='100%' style='stop-color:%2300bcf2;stop-opacity:1' /></linearGradient></defs><rect width='1920' height='1080' fill='url(%23bg)'/></svg>",
+            default: 'linear-gradient(135deg, #0078d4 0%, #00bcf2 100%)',
             gradient1: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             gradient2: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
             gradient3: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
@@ -1350,15 +1648,47 @@
             gradient5: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
         };
 
-        function setWallpaper(wallpaperId) {
+        function setWallpaper(id) {
             document.querySelectorAll('.wallpaper-option').forEach(opt => opt.classList.remove('active'));
             event.target.classList.add('active');
-            
-            const desktop = document.getElementById('desktop');
-            if (wallpaperId === 'default') {
-                desktop.style.backgroundImage = `url("${wallpapers[wallpaperId]}")`;
-            } else {
-                desktop.style.background = wallpapers[wallpaperId];
+            document.getElementById('desktop').style.background = wallpapers[id];
+        }
+
+        function setCustomWallpaper(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('desktop').style.backgroundImage = `url('${e.target.result}')`;
+                    document.querySelectorAll('.wallpaper-option').forEach(opt => opt.classList.remove('active'));
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // DISCORD CHAT
+        function sendDiscordMessage(event) {
+            if (event.key === 'Enter' && event.target.value.trim()) {
+                const container = document.getElementById('discordMessages');
+                const now = new Date();
+                const time = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+                const username = document.getElementById('discordChatUsername').textContent;
+                
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="discord-message">
+                        <div class="discord-avatar">👤</div>
+                        <div class="discord-message-content">
+                            <div class="discord-message-header">
+                                <span class="discord-username">${username}</span>
+                                <span class="discord-timestamp">Aujourd'hui à ${time}</span>
+                            </div>
+                            <div class="discord-message-text">${event.target.value}</div>
+                        </div>
+                    </div>
+                `);
+                
+                container.scrollTop = container.scrollHeight;
+                event.target.value = '';
             }
         }
     </script>
